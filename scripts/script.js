@@ -37,81 +37,81 @@ window.addEventListener("resize", resizeCanvas);
 
 if (gl) {
   const vertexShaderSource = `
-                attribute vec2 position;
-                void main() {
-                    gl_Position = vec4(position, 0.0, 1.0);
-                }
-            `;
+              attribute vec2 position;
+              void main() {
+                  gl_Position = vec4(position, 0.0, 1.0);
+              }
+          `;
 
   const fragmentShaderSource = `
-                precision mediump float;
-                uniform float time;
-                uniform vec2 resolution;
-                uniform vec2 mouse;
+              precision mediump float;
+              uniform float time;
+              uniform vec2 resolution;
+              uniform vec2 mouse;
 
-                float noise(vec2 p) {
-                    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
-                }
+              float noise(vec2 p) {
+                  return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+              }
 
-                float smoothNoise(vec2 p) {
-                    vec2 i = floor(p);
-                    vec2 f = fract(p);
-                    f = f * f * (3.0 - 2.0 * f);
-                    
-                    float a = noise(i);
-                    float b = noise(i + vec2(1.0, 0.0));
-                    float c = noise(i + vec2(0.0, 1.0));
-                    float d = noise(i + vec2(1.0, 1.0));
-                    
-                    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
-                }
+              float smoothNoise(vec2 p) {
+                  vec2 i = floor(p);
+                  vec2 f = fract(p);
+                  f = f * f * (3.0 - 2.0 * f);
+                  
+                  float a = noise(i);
+                  float b = noise(i + vec2(1.0, 0.0));
+                  float c = noise(i + vec2(0.0, 1.0));
+                  float d = noise(i + vec2(1.0, 1.0));
+                  
+                  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+              }
 
-                float fbm(vec2 p) {
-                    float value = 0.0;
-                    float amplitude = 0.5;
-                    float frequency = 1.0;
-                    
-                    for(int i = 0; i < 6; i++) {
-                        value += amplitude * smoothNoise(p * frequency);
-                        frequency *= 2.0;
-                        amplitude *= 0.5;
-                    }
-                    return value;
-                }
+              float fbm(vec2 p) {
+                  float value = 0.0;
+                  float amplitude = 0.5;
+                  float frequency = 1.0;
+                  
+                  for(int i = 0; i < 6; i++) {
+                      value += amplitude * smoothNoise(p * frequency);
+                      frequency *= 2.0;
+                      amplitude *= 0.5;
+                  }
+                  return value;
+              }
 
-                void main() {
-                    vec2 uv = gl_FragCoord.xy / resolution.xy;
-                    vec2 m = mouse / resolution.xy;
-                    
-                    float aspect = resolution.x / resolution.y;
-                    uv.x *= aspect;
-                    m.x *= aspect;
-                    
-                    vec2 p = uv * 3.0 - vec2(1.5 * aspect, 1.5);
-                    p += vec2(time * 0.05, time * 0.03);
-                    
-                    float dist = length(uv - m);
-                    p += (m - uv) * (1.0 - smoothstep(0.0, 0.3, dist)) * 0.2;
-                    
-                    float n = fbm(p);
-                    float n2 = fbm(p + vec2(time * 0.02, -time * 0.03) + n * 0.5);
-                    
-                    float pattern = n * 0.5 + n2 * 0.5;
-                    pattern = smoothstep(0.3, 0.7, pattern);
-                    
-                    vec3 color1 = vec3(0.05, 0.0, 0.15);
-                    vec3 color2 = vec3(0.0, 0.05, 0.1);
-                    vec3 color3 = vec3(0.1, 0.0, 0.05);
-                    
-                    vec3 finalColor = mix(color1, color2, pattern);
-                    finalColor = mix(finalColor, color3, n2 * 0.3);
-                    
-                    float vignette = 1.0 - length(uv - 0.5) * 0.8;
-                    finalColor *= vignette;
-                    
-                    gl_FragColor = vec4(finalColor, 1.0);
-                }
-            `;
+              void main() {
+                  vec2 uv = gl_FragCoord.xy / resolution.xy;
+                  vec2 m = mouse / resolution.xy;
+                  
+                  float aspect = resolution.x / resolution.y;
+                  uv.x *= aspect;
+                  m.x *= aspect;
+                  
+                  vec2 p = uv * 3.0 - vec2(1.5 * aspect, 1.5);
+                  p += vec2(time * 0.05, time * 0.03);
+                  
+                  float dist = length(uv - m);
+                  p += (m - uv) * (1.0 - smoothstep(0.0, 0.3, dist)) * 0.2;
+                  
+                  float n = fbm(p);
+                  float n2 = fbm(p + vec2(time * 0.02, -time * 0.03) + n * 0.5);
+                  
+                  float pattern = n * 0.5 + n2 * 0.5;
+                  pattern = smoothstep(0.3, 0.7, pattern);
+                  
+                  vec3 color1 = vec3(0.05, 0.0, 0.15);
+                  vec3 color2 = vec3(0.0, 0.05, 0.1);
+                  vec3 color3 = vec3(0.1, 0.0, 0.05);
+                  
+                  vec3 finalColor = mix(color1, color2, pattern);
+                  finalColor = mix(finalColor, color3, n2 * 0.3);
+                  
+                  float vignette = 1.0 - length(uv - 0.5) * 0.8;
+                  finalColor *= vignette;
+                  
+                  gl_FragColor = vec4(finalColor, 1.0);
+              }
+          `;
 
   function createShader(gl, type, source) {
     const shader = gl.createShader(type);
@@ -231,7 +231,8 @@ class TextScramble {
 }
 
 // Initialize scramble on title words
-window.addEventListener("load", () => {
+// FIX: Change 'load' to 'DOMContentLoaded' to run animations much sooner
+document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("loaded");
 
   const titleSpans = document.querySelectorAll(".hero-content h1 span");
@@ -256,3 +257,4 @@ document.querySelectorAll(".info-item, .email-display").forEach((item) => {
     cursorDot.style.transform = "scale(1)";
   });
 });
+//

@@ -72,6 +72,8 @@ body {
   position: relative;
   z-index: 2;
   min-height: 100vh;
+  /* FIX: GLOBAL TOP PADDING to prevent overlap on LAPTOP and PHONE */
+  padding-top: 100px; 
 }
 
 nav {
@@ -82,7 +84,9 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 100;
+  /* FIX: Ensure high z-index and solid background */
+  z-index: 1000; 
+  background: #000;
   mix-blend-mode: difference;
 }
 
@@ -126,6 +130,8 @@ section {
 
 .hero-content h1 span {
   display: block;
+  /* FIX: Prevent characters from breaking lines during scramble */
+  white-space: nowrap; 
 }
 
 .subtitle {
@@ -246,13 +252,20 @@ footer {
   }
 }
 
+/* --- MOBILE SPECIFIC STYLES AND FIXES --- */
 @media (max-width: 768px) {
   nav {
     padding: 20px 30px;
+    mix-blend-mode: normal; /* Disable blend mode on mobile for cleaner look */
   }
 
   section {
     padding: 40px 30px;
+  }
+  
+  .hero-content h1 {
+    font-size: clamp(40px, 10vw, 80px); 
+    margin-bottom: 40px; 
   }
 
   .info-grid {
@@ -268,8 +281,15 @@ footer {
   footer {
     padding: 60px 30px 30px;
   }
+
+  /* FIX: HIDE CUSTOM CURSOR ELEMENTS ON TOUCH DEVICES */
+  .cursor-dot,
+  .cursor-outline {
+    display: none !important;
+  }
 }
 
+/* --- CUSTOM CURSOR STYLES (LAPTOP/DESKTOP ONLY) --- */
 .cursor-dot {
   width: 8px;
   height: 8px;
