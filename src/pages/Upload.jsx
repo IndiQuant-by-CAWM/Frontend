@@ -29,7 +29,7 @@ export default function Upload() {
   }
 
   return (
-    <div className="upload-page">
+    <div className="upload-page container mx-auto px-4 py-8 max-w-2xl">
       <h1>📤 Submit Your Predictions</h1>
       <p>Upload your CSV file with stock predictions</p>
 

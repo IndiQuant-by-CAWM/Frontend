@@ -1,0 +1,4 @@
+.auth-page{display:flex;justify-content:center;align-items:center;height:70vh}
+.auth-form{width:320px;padding:1.25rem;border-radius:.5rem;background:rgba(255,255,255,0.03)}
+.auth-form label{display:block;margin:0.5rem 0}
+.auth-form input{width:100%;padding:.5rem;border-radius:.375rem;border:1px solid #374151;background:transparent;color:inherit}

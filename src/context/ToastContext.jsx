@@ -29,3 +29,6 @@ export function useToastContext() {
   }
   return context;
 }
+
+// Alias for backward compatibility with components importing `useToast`
+export const useToast = useToastContext;

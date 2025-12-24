@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useToast } from '../context/ToastContext';
 import './UploadArea.css';
 
@@ -7,6 +7,7 @@ export default function UploadArea({ onUpload, tournamentId }) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const { showToast } = useToast();
+  const inputRef = useRef();
 
   const downloadTemplate = () => {
     const csv = 'Stock_ID,Score\nINFY,0.85\nTCS,0.72\nRELIANCE,-0.43\nHDFC,0.56\nITC,0.23';
@@ -36,26 +37,26 @@ export default function UploadArea({ onUpload, tournamentId }) {
     setDragActive(false);
 
     const files = e.dataTransfer.files;
-    if (files && files) {
-      handleFile(files);
+    if (files && files.length > 0) {
+      handleFile(files[0]);
     }
   };
 
-  const handleFile = (file) => {
-    if (!file.name.endsWith('.csv')) {
+  const handleFile = (fileOrList) => {
+    const chosen = fileOrList && fileOrList.length !== undefined ? fileOrList[0] : fileOrList;
+    if (!chosen || !chosen.name || !chosen.name.endsWith('.csv')) {
       showToast('Please upload a CSV file', 'error');
       return;
     }
 
-    setFile(file);
+    setFile(chosen);
 
-    // Read file preview
     const reader = new FileReader();
     reader.onload = (e) => {
       const lines = e.target.result.split('\n').slice(0, 6);
       setPreview(lines.join('\n'));
     };
-    reader.readAsText(file);
+    reader.readAsText(chosen);
   };
 
   const handleSubmit = async () => {
@@ -73,33 +74,45 @@ export default function UploadArea({ onUpload, tournamentId }) {
       setPreview(null);
       showToast('Submission Successful 🎯', 'success');
     } catch (error) {
-      showToast(error.message, 'error');
+      showToast(error.message || 'Upload failed', 'error');
     }
   };
 
   return (
     <div className="upload-area">
-      <div
+      <label
+        htmlFor="file-input"
         className={`upload-zone ${dragActive ? 'active' : ''}`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
         onDrop={handleDrop}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            inputRef.current?.click();
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label="Upload CSV file"
       >
         <div className="upload-icon">📤</div>
         <h3>Drag & Drop your CSV here</h3>
-        <p>or click to select a file</p>
+        <p>or press Enter / click to select a file</p>
         <input
+          id="file-input"
+          ref={inputRef}
           type="file"
           accept=".csv"
           className="upload-input"
-          onChange={(e) => handleFile(e.target.files)}
+          onChange={(e) => handleFile(e.target.files[0])}
+          style={{display:'none'}}
         />
-      </div>
+      </label>
 
       {file && (
         <div className="upload-preview">
-          <h4>File: {file.name}</h4>
+          <h4>File: {file.name} • {(file.size / 1024).toFixed(1)} KB</h4>
           <pre>{preview}</pre>
           <button onClick={handleSubmit} className="btn btn-primary">
             Submit Prediction
@@ -107,9 +120,10 @@ export default function UploadArea({ onUpload, tournamentId }) {
         </div>
       )}
 
-      <button onClick={downloadTemplate} className="btn btn-secondary btn-download">
-        📥 Download Template
-      </button>
+      <div style={{display:'flex',gap:'0.5rem',marginTop:'0.75rem'}}>
+        <button onClick={() => inputRef.current?.click()} className="btn btn-secondary">Choose File</button>
+        <button onClick={downloadTemplate} className="btn btn-secondary btn-download">📥 Download Template</button>
+      </div>
     </div>
   );
 }

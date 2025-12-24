@@ -30,7 +30,7 @@ export default function Profile() {
   if (!profile) return <div>Loading...</div>;
 
   return (
-    <div className="profile-page">
+    <div className="profile-page container mx-auto px-4 py-8 max-w-4xl">
       {/* Header */}
       <div className="profile-header">
         <img

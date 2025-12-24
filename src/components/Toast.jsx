@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useToastContext } from '../context/ToastContext';
 import './Toast.css';
 
@@ -6,7 +6,7 @@ export default function Toast() {
   const { toasts, removeToast } = useToastContext();
 
   return (
-    <div className="toast-container">
+    <div className="toast-container" aria-live="polite" aria-atomic="true">
       {toasts.map((toast) => (
         <ToastItem
           key={toast.id}
@@ -32,10 +32,10 @@ function ToastItem({ toast, onClose }) {
   };
 
   return (
-    <div className={`toast toast-${toast.type}`}>
-      <span className="toast-icon">{icons[toast.type]}</span>
+    <div className={`toast toast-${toast.type}`} role="status" aria-live="polite">
+      <span className="toast-icon" aria-hidden>{icons[toast.type]}</span>
       <span className="toast-message">{toast.message}</span>
-      <button onClick={onClose} className="toast-close">×</button>
+      <button onClick={onClose} className="toast-close" aria-label="Dismiss notification">×</button>
     </div>
   );
 }

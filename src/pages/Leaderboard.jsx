@@ -12,7 +12,7 @@ export default function Leaderboard() {
   }, [period]);
 
   return (
-    <div className="leaderboard-page">
+    <div className="leaderboard-page container mx-auto px-4 py-8 max-w-4xl">
       <div className="leaderboard-header">
         <h1>🏆 Global Leaderboard</h1>
         <p>Top performers on the IndiQuant platform</p>

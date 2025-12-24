@@ -1,0 +1,5 @@
+.leaderboard-page{padding:1rem}
+.leaderboard-header{margin-bottom:1rem}
+.leaderboard-page .period-selector{display:flex;gap:.5rem;margin-bottom:1rem}
+.period-btn{padding:.5rem 1rem;border-radius:.375rem}
+.period-btn.active{background:#111827;color:#fff}
