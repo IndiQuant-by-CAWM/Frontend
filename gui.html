@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IndiQuant - Data Fetch GUI</title>
+    <style>
+      body{font-family: Arial, sans-serif; margin:20px}
+      .file-list button{margin-right:8px}
+      pre{background:#f5f5f5;padding:12px;border-radius:4px;max-height:400px;overflow:auto}
+    </style>
+  </head>
+  <body>
+    <h2>Training Data GUI</h2>
+    <p>Lists CSV files from Features/data and lets you preview, download, or upload CSVs.</p>
+
+    <div>
+      <button id="refresh">Refresh file list</button>
+    </div>
+
+    <div class="file-list" id="files"></div>
+
+    <h3>Preview</h3>
+    <pre id="preview">No file selected</pre>
+
+    <h3>Upload CSV</h3>
+    <form id="uploadForm">
+      <input type="file" name="file" id="fileInput" accept=".csv" />
+      <button type="submit">Upload</button>
+    </form>
+    <div id="uploadResult"></div>
+
+    <script src="/app_gui.js"></script>
+  </body>
+</html>
