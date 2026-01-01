@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTournament } from '../hooks/useTournament';
 import Countdown from '../components/Countdown';
+import BatchProgress from '../components/BatchProgress';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -13,6 +14,9 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
+      {/* Batch Processing Status */}
+      <BatchProgress />
+
       {/* Quick Stats */}
       <section className="stats-section">
         <div className="stat-card">
