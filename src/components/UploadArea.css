@@ -1,5 +1,0 @@
-.upload-area{display:flex;flex-direction:column;gap:.75rem}
-.upload-zone{border:2px dashed #374151;padding:1rem;border-radius:.5rem}
-.upload-zone.active{background:rgba(255,255,255,0.02)}
-.upload-preview pre{background:#0f172a;padding:.5rem;border-radius:.375rem;max-height:120px;overflow:auto}
-.btn-download{margin-top:.5rem}

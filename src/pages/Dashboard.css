@@ -1,4 +1,0 @@
-.dashboard{padding:1rem}
-.stats-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
-.tournaments-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
-.tournament-card{padding:1rem;border-radius:.5rem;background:rgba(255,255,255,0.02)}

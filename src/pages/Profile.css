@@ -1,5 +1,0 @@
-.profile-page{padding:1rem}
-.profile-header{display:flex;gap:1rem;align-items:center}
-.profile-avatar{width:96px;height:96px;border-radius:9999px}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-top:1rem}
-.chart-section{margin-top:1.5rem}
