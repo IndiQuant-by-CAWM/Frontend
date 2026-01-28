@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - IndiQuant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="scripts/script.js" defer></script>
+</head>
+<body>
+    <div class="grain"></div>
+    <canvas id="webgl-container"></canvas>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="wrapper">
+        <nav>
+            <div class="brand">INDIQUANT</div>
+            <div class="nav-links">
+                <a href="index.html">HOME</a>
+                <div class="status-indicator">IN DEVELOPMENT</div>
+            </div>
+        </nav>
+
+        <section>
+            <div class="team-content">
+                <h1>OUR TEAM</h1>
+
+                <p class="team-subtitle">
+                    Meet the visionaries, builders, and strategists behind IndiQuant.
+                </p>
+
+                <!-- Leadership & Founding Team -->
+                <div class="team-section">
+                    <h2 class="section-title">Leadership & Founding Team</h2>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>RM</h3>
+                            <p class="role">Founder, CEO & Product Lead</p>
+                            <p class="bio">Founder of IndiQuant, leading product vision and overall strategy. Background in AI/ML with hands-on experience in quantitative trading systems and Indian derivatives markets.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Diganta Sarkar</h3>
+                            <p class="role">Chief Financial Officer</p>
+                            <p class="bio">Oversees financial strategy, compliance, and capital management at IndiQuant, ensuring sustainable growth and operational discipline.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Soumyadeep Roy</h3>
+                            <p class="role">Chief Sales Officer</p>
+                            <p class="bio">Leads sales strategy, partnerships, and customer acquisition initiatives, driving IndiQuant's go-to-market execution.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Abir Saha</h3>
+                            <p class="role">Chief Marketing Officer</p>
+                            <p class="bio">Heads brand strategy, marketing, and user growth, shaping IndiQuant's public presence and market positioning.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Soumak Haldar</h3>
+                            <p class="role">Founding Backend Developer</p>
+                            <p class="bio">Founding backend engineer responsible for building and maintaining IndiQuant's core systems, APIs, and data infrastructure.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Founding Team -->
+                <div class="team-section">
+                    <h2 class="section-title">Core Founding Team</h2>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Edgar Meva</h3>
+                            <p class="role">Platform Engineer</p>
+                            <p class="bio">Platform engineer focused on scalable backend architecture, infrastructure reliability, and system performance.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Sanskaran Kulkarni</h3>
+                            <p class="role">Quant Researcher</p>
+                            <p class="bio">Quantitative researcher working on strategy development, modeling, and data-driven trading insights.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Jay Salvi</h3>
+                            <p class="role">Quant Researcher</p>
+                            <p class="bio">Quant researcher specializing in market analysis, strategy validation, and research-driven execution frameworks.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advisory Committee -->
+                <div class="team-section">
+                    <h2 class="section-title">Advisory Committee</h2>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Dr. Gour Sundar Mitra Thakur</h3>
+                            <p class="role">AI Advisor</p>
+                            <p class="bio">Provides strategic guidance on artificial intelligence, machine learning, and research direction.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Bijay Gupta</h3>
+                            <p class="role">Business Advisor</p>
+                            <p class="bio">Advises on business strategy, operations, and long-term organizational growth.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Anandaprova Majumdar</h3>
+                            <p class="role">Funding Advisor</p>
+                            <p class="bio">Supports fundraising strategy, investor relations, and capital planning.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interns -->
+                <div class="team-section">
+                    <h2 class="section-title">Interns</h2>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Syed Rafat Halim</h3>
+                            <p class="role">Machine Learning Intern</p>
+                            <p class="bio">Machine Learning intern supporting model development, experimentation, and data analysis.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="member-photo"></div>
+                            <h3>Nasrin Pherdowsi</h3>
+                            <p class="role">Quant / ML Intern</p>
+                            <p class="bio">Quant and Machine Learning intern supporting quantitative research, modeling, and analytical initiatives.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            © 2025 INDIQUANT · MUMBAI, MAHARASHTRA
+        </footer>
+    </div>
+</body>
+</html>

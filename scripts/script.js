@@ -236,14 +236,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("loaded");
 
   const titleSpans = document.querySelectorAll(".hero-content h1 span");
-  const phrases = ["COLLECTIVE", "INTELLIGENCE", "LAYER"];
+  if (titleSpans.length > 0) {
+    const phrases = ["COLLECTIVE", "INTELLIGENCE", "LAYER"];
 
-  titleSpans.forEach((span, i) => {
-    const fx = new TextScramble(span);
-    setTimeout(() => {
-      fx.setText(phrases[i]);
-    }, i * 200);
-  });
+    titleSpans.forEach((span, i) => {
+      const fx = new TextScramble(span);
+      setTimeout(() => {
+        fx.setText(phrases[i]);
+      }, i * 200);
+    });
+  }
 });
 
 // Hover effects
