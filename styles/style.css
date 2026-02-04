@@ -468,3 +468,284 @@ footer {
   opacity: 0.7;
   font-weight: 300;
 }
+
+/* --- CARD BEAM ANIMATION SECTION --- */
+.beam-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.beam-content {
+  max-width: 1400px;
+  width: 100%;
+  text-align: center;
+}
+
+.beam-content h2 {
+  font-size: clamp(40px, 8vw, 80px);
+  font-weight: 600;
+  margin-bottom: 80px;
+  letter-spacing: -0.02em;
+  opacity: 0.9;
+}
+
+.card-beam-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.beam {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.6) 0%, rgba(0, 125, 121, 0.4) 50%, transparent 100%);
+  filter: blur(20px) brightness(1.8);
+  pointer-events: none;
+  z-index: 10;
+  animation: beam-pulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes beam-pulse {
+  from { 
+    opacity: 0.6;
+    filter: blur(20px) brightness(1.8);
+  }
+  to { 
+    opacity: 1;
+    filter: blur(25px) brightness(2.2);
+  }
+}
+
+.card-track {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+  animation: card-slide 20s linear infinite;
+}
+
+@keyframes card-slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.beam-card {
+  min-width: 300px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.beam-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.beam-card.in-beam {
+  background: rgba(0, 255, 204, 0.08);
+  border-color: rgba(0, 255, 204, 0.4);
+  box-shadow: 0 0 60px 20px rgba(0, 255, 204, 0.2), 
+              0 0 100px 30px rgba(0, 125, 121, 0.15);
+  transform: scale(1.05);
+}
+
+.beam-card.in-beam::before {
+  opacity: 1;
+}
+
+.beam-card.in-beam .card-inner {
+  opacity: 0;
+}
+
+.beam-card.in-beam::after {
+  content: attr(data-code);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(0, 255, 204, 0.9);
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+  animation: code-glitch 0.3s infinite;
+}
+
+@keyframes code-glitch {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+    transform: translate(-50%, -50%);
+  }
+  25% {
+    text-shadow: -2px 0 20px rgba(0, 255, 204, 0.8);
+    transform: translate(-52%, -50%);
+  }
+  75% {
+    text-shadow: 2px 0 20px rgba(0, 255, 204, 0.8);
+    transform: translate(-48%, -50%);
+  }
+}
+
+.card-inner {
+  transition: opacity 0.4s;
+  text-align: left;
+}
+
+.beam-card h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  letter-spacing: -0.02em;
+}
+
+.beam-card p {
+  font-size: 15px;
+  opacity: 0.6;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* --- STAGGER GRID ANIMATION SECTION --- */
+.stagger-grid-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  position: relative;
+}
+
+.stagger-content {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+}
+
+.stagger-content h2 {
+  font-size: clamp(40px, 8vw, 80px);
+  font-weight: 600;
+  margin-bottom: 80px;
+  letter-spacing: -0.02em;
+  opacity: 0.9;
+}
+
+.stagger-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.grid-dot {
+  width: 100%;
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+  position: relative;
+  transform: scale(0.3);
+}
+
+.grid-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background: rgba(0, 255, 204, 0.3);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.grid-dot:hover {
+  background: rgba(0, 255, 204, 0.2);
+  border-color: rgba(0, 255, 204, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+}
+
+.grid-dot:hover::after {
+  opacity: 1;
+}
+
+/* Mobile responsiveness for new sections */
+@media (max-width: 768px) {
+  .beam-section {
+    padding: 60px 30px;
+  }
+
+  .beam-content h2 {
+    font-size: clamp(32px, 8vw, 60px);
+    margin-bottom: 40px;
+  }
+
+  .card-beam-container {
+    height: 300px;
+  }
+
+  .beam-card {
+    min-width: 250px;
+    height: 180px;
+    padding: 20px;
+  }
+
+  .beam-card h3 {
+    font-size: 20px;
+  }
+
+  .beam-card.in-beam::after {
+    font-size: 16px;
+  }
+
+  .stagger-grid-section {
+    padding: 60px 30px;
+  }
+
+  .stagger-content h2 {
+    font-size: clamp(32px, 8vw, 60px);
+    margin-bottom: 40px;
+  }
+
+  .stagger-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+  }
+}

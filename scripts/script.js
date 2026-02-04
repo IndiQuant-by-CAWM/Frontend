@@ -259,4 +259,105 @@ document.querySelectorAll(".info-item, .email-display").forEach((item) => {
     cursorDot.style.transform = "scale(1)";
   });
 });
-//
+
+// Card Beam Animation
+function initCardBeamAnimation() {
+  const cards = document.querySelectorAll('.beam-card');
+  const beam = document.querySelector('.beam');
+  
+  if (!cards.length || !beam) return;
+  
+  function checkCardInBeam() {
+    const beamRect = beam.getBoundingClientRect();
+    
+    cards.forEach(card => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const beamCenter = beamRect.left + beamRect.width / 2;
+      const distance = Math.abs(cardCenter - beamCenter);
+      
+      if (distance < beamRect.width / 2 + cardRect.width / 2) {
+        card.classList.add('in-beam');
+      } else {
+        card.classList.remove('in-beam');
+      }
+    });
+  }
+  
+  // Check continuously
+  setInterval(checkCardInBeam, 100);
+}
+
+// Stagger Grid Animation with anime.js
+function initStaggerGridAnimation() {
+  if (typeof anime === 'undefined') return;
+  
+  const gridDots = document.querySelectorAll('.grid-dot');
+  if (!gridDots.length) return;
+  
+  // Initial animation
+  anime({
+    targets: '.grid-dot',
+    scale: [
+      { value: 0.1, easing: 'easeOutSine', duration: 500 },
+      { value: 1, easing: 'easeInOutQuad', duration: 1200 }
+    ],
+    delay: anime.stagger(100, {
+      grid: [10, 7],
+      from: 'center'
+    }),
+    loop: false
+  });
+  
+  // Continuous pulse animation
+  anime({
+    targets: '.grid-dot',
+    scale: [
+      { value: 1, duration: 800 },
+      { value: 0.8, duration: 800 },
+      { value: 1, duration: 800 }
+    ],
+    opacity: [
+      { value: 1, duration: 800 },
+      { value: 0.5, duration: 800 },
+      { value: 1, duration: 800 }
+    ],
+    delay: anime.stagger(150, {
+      grid: [10, 7],
+      from: 'center',
+      direction: 'reverse'
+    }),
+    loop: true,
+    easing: 'easeInOutQuad'
+  });
+  
+  // Hover interaction
+  gridDots.forEach(dot => {
+    dot.addEventListener('mouseenter', () => {
+      anime({
+        targets: dot,
+        scale: 1.5,
+        duration: 300,
+        easing: 'easeOutElastic(1, .6)'
+      });
+    });
+    
+    dot.addEventListener('mouseleave', () => {
+      anime({
+        targets: dot,
+        scale: 1,
+        duration: 300,
+        easing: 'easeOutElastic(1, .6)'
+      });
+    });
+  });
+}
+
+// Initialize beam and stagger animations after DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  // Delay initialization to ensure everything is loaded
+  setTimeout(() => {
+    initCardBeamAnimation();
+    initStaggerGridAnimation();
+  }, 500);
+});
