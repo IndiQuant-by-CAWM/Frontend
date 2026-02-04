@@ -282,10 +282,11 @@ function initCardBeamAnimation() {
         card.classList.remove('in-beam');
       }
     });
+    
+    requestAnimationFrame(checkCardInBeam);
   }
   
-  // Check continuously
-  setInterval(checkCardInBeam, 100);
+  checkCardInBeam();
 }
 
 // Stagger Grid Animation with anime.js
@@ -353,11 +354,33 @@ function initStaggerGridAnimation() {
   });
 }
 
+// Dynamically generate grid dots for stagger animation
+function generateGridDots() {
+  const gridContainer = document.querySelector('.stagger-grid');
+  if (!gridContainer) return;
+  
+  // Only generate if not already populated
+  if (gridContainer.children.length > 0) return;
+  
+  const GRID_SIZE = 70; // 10 columns x 7 rows
+  
+  for (let i = 0; i < GRID_SIZE; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'grid-dot';
+    dot.setAttribute('data-index', i.toString());
+    gridContainer.appendChild(dot);
+  }
+}
+
 // Initialize beam and stagger animations after DOM is ready
+const ANIMATION_INIT_DELAY = 500; // Delay to ensure all DOM elements and styles are fully loaded
 document.addEventListener("DOMContentLoaded", () => {
+  // Generate grid dots dynamically
+  generateGridDots();
+  
   // Delay initialization to ensure everything is loaded
   setTimeout(() => {
     initCardBeamAnimation();
     initStaggerGridAnimation();
-  }, 500);
+  }, ANIMATION_INIT_DELAY);
 });
