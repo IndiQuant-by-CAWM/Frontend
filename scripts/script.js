@@ -235,6 +235,25 @@ class TextScramble {
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("loaded");
 
+  const nav = document.querySelector("nav");
+  const heroContent = document.querySelector(".hero-content, .team-content");
+  const heroH1 = document.querySelector(".hero-content h1, .team-content h1");
+  const updateNavState = () => {
+    if (!nav || !heroH1) return;
+    const navHeight = nav.offsetHeight;
+    const heroRect = heroH1.getBoundingClientRect();
+    const heroTop = heroRect.top;
+    const heroBottom = heroRect.bottom;
+    if (heroTop <= navHeight && heroBottom > navHeight) {
+      nav.classList.add("scrolled");
+    } else {
+      nav.classList.remove("scrolled");
+    }
+  };
+
+  updateNavState();
+  window.addEventListener("scroll", updateNavState, { passive: true });
+
   const titleSpans = document.querySelectorAll(".hero-content h1 span");
   if (titleSpans.length > 0) {
     const phrases = ["COLLECTIVE", "INTELLIGENCE", "LAYER"];
