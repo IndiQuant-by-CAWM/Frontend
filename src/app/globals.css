@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+
+  --color-ink: #070b10;
+  --color-panel: #0b121b;
+  --color-panel-soft: #101a26;
+  --color-panel-strong: #0f1f34;
+  --color-grid: #1d2a3f;
+  --color-border: #20314c;
+  --color-line: #27476f;
+  --color-primary: #5a9dd7;
+  --color-primary-strong: #86bdeb;
+  --color-ink-50: #f2f7ff;
+  --color-ink-300: #aebfd3;
+  --color-ink-500: #7f95ae;
+  --color-success: #5fb289;
+  --color-warning: #d6b35f;
+}
+
+body {
+  font-family: var(--font-plex-sans), sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a,
+button {
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease,
+    opacity 180ms ease, transform 180ms ease;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.terminal-label {
+  font-family: var(--font-plex-mono), monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel {
+  border: 1px solid var(--color-border);
+  background: linear-gradient(180deg, rgba(18, 30, 45, 0.82) 0%, rgba(12, 20, 30, 0.82) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
