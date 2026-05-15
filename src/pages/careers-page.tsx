@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { careerRoles } from "@/lib/mock-data";
 import { SectionShell } from "@/components/ui/section-shell";
+import { careerRoles } from "@/lib/mock-data";
+import { usePageMeta } from "@/lib/use-page-meta";
 
-export const metadata: Metadata = {
-  title: "Careers",
-  description: "Mission-driven engineering and research opportunities at IndiQuant.",
-};
+export function CareersPage() {
+  usePageMeta({
+    title: "Careers",
+    description: "Mission-driven engineering and research opportunities at IndiQuant.",
+  });
 
-export default function CareersPage() {
   return (
     <>
       <SectionShell

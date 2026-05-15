@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { SectionShell } from "@/components/ui/section-shell";
+import { usePageMeta } from "@/lib/use-page-meta";
 
 const researchPapers = [
   {
@@ -29,12 +29,12 @@ const datasets = [
   "Experiment telemetry traces",
 ];
 
-export const metadata: Metadata = {
-  title: "Research Lab",
-  description: "Research publication layout and dataset intelligence surfaces.",
-};
+export function ResearchPage() {
+  usePageMeta({
+    title: "Research Lab",
+    description: "Research publication layout and dataset intelligence surfaces.",
+  });
 
-export default function ResearchPage() {
   return (
     <>
       <SectionShell
@@ -56,7 +56,7 @@ export default function ResearchPage() {
       <SectionShell
         eyebrow="Datasets"
         title="Dataset intelligence layers"
-        description="Data modules below are frontend placeholders and do not imply live backend integrations."
+        description="Dataset panels are published with delayed reporting windows and are not real-time streams."
       >
         <div className="grid gap-3 sm:grid-cols-2">
           {datasets.map((dataset) => (

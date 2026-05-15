@@ -1,14 +1,13 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { leadershipProfiles } from "@/lib/mock-data";
 import { SectionShell } from "@/components/ui/section-shell";
+import { leadershipProfiles } from "@/lib/mock-data";
+import { usePageMeta } from "@/lib/use-page-meta";
 
-export const metadata: Metadata = {
-  title: "Team",
-  description: "Institutional team profiles and specialization map.",
-};
+export function TeamPage() {
+  usePageMeta({
+    title: "Team",
+    description: "Institutional team profiles and specialization map.",
+  });
 
-export default function TeamPage() {
   return (
     <SectionShell
       eyebrow="Team"
@@ -22,7 +21,7 @@ export default function TeamPage() {
             <div className="mb-4 flex items-center gap-4">
               <div className="relative h-14 w-14 overflow-hidden rounded-full border border-border bg-panel-soft">
                 {profile.image ? (
-                  <Image src={profile.image} alt={profile.name} fill sizes="56px" className="object-cover" />
+                  <img src={profile.image} alt={profile.name} className="h-full w-full object-cover" loading="lazy" />
                 ) : (
                   <div className="flex h-full items-center justify-center text-sm text-ink-300">
                     {profile.name

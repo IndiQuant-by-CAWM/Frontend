@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { SectionShell } from "@/components/ui/section-shell";
 
 const previewCards = [
@@ -33,7 +33,7 @@ export function ResearchLabSection() {
       </div>
       <div className="mt-6">
         <Link
-          href="/research"
+          to="/research"
           className="terminal-label rounded border border-line px-4 py-2 text-xs text-ink-50 hover:border-primary"
         >
           Open Research Lab

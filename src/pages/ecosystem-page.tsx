@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { productModules } from "@/lib/mock-data";
 import { SectionShell } from "@/components/ui/section-shell";
+import { productModules } from "@/lib/mock-data";
+import { usePageMeta } from "@/lib/use-page-meta";
 
-export const metadata: Metadata = {
-  title: "Product Ecosystem",
-  description: "Modular product surfaces connected to IndiQuant intelligence infrastructure.",
-};
+export function EcosystemPage() {
+  usePageMeta({
+    title: "Product Ecosystem",
+    description: "Modular product surfaces connected to IndiQuant intelligence infrastructure.",
+  });
 
-export default function EcosystemPage() {
   return (
     <SectionShell
       eyebrow="Ecosystem"

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Reveal } from "@/components/motion/reveal";
 
 export function HeroSection() {
@@ -17,13 +17,13 @@ export function HeroSection() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/research"
+              to="/research"
               className="terminal-label rounded border border-line bg-panel-soft px-4 py-2 text-xs text-ink-50 hover:border-primary"
             >
               Enter Research Lab
             </Link>
             <Link
-              href="/ecosystem"
+              to="/ecosystem"
               className="terminal-label rounded border border-border px-4 py-2 text-xs text-ink-300 hover:border-primary hover:text-primary-strong"
             >
               View Product Ecosystem
@@ -35,7 +35,7 @@ export function HeroSection() {
           <div className="mb-5 flex items-center justify-between">
             <p className="terminal-label text-[11px] text-ink-300">Intelligence Layer Snapshot</p>
             <span className="terminal-label rounded border border-line px-2 py-1 text-[10px] text-warning">
-              Frontend Demo
+              Delayed Data
             </span>
           </div>
           <div className="space-y-3 text-sm text-ink-300">
@@ -44,17 +44,24 @@ export function HeroSection() {
               <strong className="text-ink-50">23</strong>
             </div>
             <div className="flex items-center justify-between border-b border-border pb-2">
-              <span>Validation Nodes</span>
-              <strong className="text-ink-50">14</strong>
+              <span>Validation Nodes Online</span>
+              <strong className="text-ink-50">14 / 14</strong>
             </div>
             <div className="flex items-center justify-between border-b border-border pb-2">
-              <span>Model Cohorts</span>
+              <span>Model Cohorts in Rotation</span>
               <strong className="text-ink-50">6</strong>
+            </div>
+            <div className="flex items-center justify-between border-b border-border pb-2">
+              <span>Research Contributors</span>
+              <strong className="text-ink-50">186</strong>
             </div>
             <div className="flex items-center justify-between">
               <span>Consensus State</span>
               <strong className="text-success">Stable</strong>
             </div>
+            <p className="terminal-label pt-1 text-[10px] text-ink-500">
+              Operational insights shown with delayed market telemetry, not real-time streaming.
+            </p>
           </div>
         </Reveal>
       </div>

@@ -11,6 +11,7 @@ export interface DashboardMetric {
   value: number;
   deltaPct: number;
   unit?: string;
+  trend: number[];
 }
 
 export interface TimeSeriesPoint {
@@ -18,6 +19,22 @@ export interface TimeSeriesPoint {
   signals: number;
   experiments: number;
   contributors: number;
+  latency: number;
+}
+
+export interface DashboardAlert {
+  id: string;
+  type: "info" | "warning" | "success";
+  title: string;
+  detail: string;
+  at: string;
+}
+
+export interface InfrastructureStage {
+  id: string;
+  title: string;
+  detail: string;
+  throughput: string;
 }
 
 export interface ProductModule {
@@ -83,22 +100,133 @@ export const intelligenceModules: IntelligenceModule[] = [
 ];
 
 export const dashboardMetrics: DashboardMetric[] = [
-  { id: "signals", label: "Signals Processed", value: 18420, deltaPct: 4.8 },
-  { id: "contributors", label: "Research Contributors", value: 186, deltaPct: 2.4 },
-  { id: "experiments", label: "Active Experiments", value: 61, deltaPct: 7.1 },
-  { id: "models", label: "Models Running", value: 23, deltaPct: 3.2 },
-  { id: "markets", label: "Market Coverage", value: 312, deltaPct: 1.6, unit: "instruments" },
-  { id: "latency", label: "Pipeline Latency", value: 143, deltaPct: -2.3, unit: "ms" },
+  {
+    id: "signals",
+    label: "Signals Processed",
+    value: 18420,
+    deltaPct: 4.8,
+    trend: [132, 144, 150, 162, 168, 176, 188],
+  },
+  {
+    id: "contributors",
+    label: "Research Contributors",
+    value: 186,
+    deltaPct: 2.4,
+    trend: [148, 152, 158, 161, 167, 172, 186],
+  },
+  {
+    id: "experiments",
+    label: "Active Experiments",
+    value: 61,
+    deltaPct: 7.1,
+    trend: [42, 44, 47, 50, 54, 57, 61],
+  },
+  {
+    id: "models",
+    label: "Models Running",
+    value: 23,
+    deltaPct: 3.2,
+    trend: [18, 19, 19, 20, 22, 22, 23],
+  },
+  {
+    id: "markets",
+    label: "Market Coverage",
+    value: 312,
+    deltaPct: 1.6,
+    unit: "instruments",
+    trend: [286, 292, 296, 299, 304, 309, 312],
+  },
+  {
+    id: "latency",
+    label: "Pipeline Latency",
+    value: 143,
+    deltaPct: -2.3,
+    unit: "ms",
+    trend: [162, 158, 155, 151, 149, 146, 143],
+  },
+  {
+    id: "confidence",
+    label: "Consensus Confidence",
+    value: 82,
+    deltaPct: 1.1,
+    unit: "%",
+    trend: [76, 77, 78, 80, 81, 81, 82],
+  },
+  {
+    id: "anomaly",
+    label: "Anomaly Flags",
+    value: 3,
+    deltaPct: -25,
+    trend: [7, 6, 5, 5, 4, 3, 3],
+  },
+  {
+    id: "coverage-regime",
+    label: "Regime Buckets",
+    value: 9,
+    deltaPct: 0.0,
+    trend: [8, 8, 9, 9, 9, 9, 9],
+  },
 ];
 
 export const dashboardSeries: TimeSeriesPoint[] = [
-  { tick: "09:00", signals: 210, experiments: 42, contributors: 129 },
-  { tick: "10:00", signals: 268, experiments: 45, contributors: 136 },
-  { tick: "11:00", signals: 323, experiments: 49, contributors: 142 },
-  { tick: "12:00", signals: 370, experiments: 53, contributors: 148 },
-  { tick: "13:00", signals: 418, experiments: 55, contributors: 154 },
-  { tick: "14:00", signals: 449, experiments: 59, contributors: 165 },
-  { tick: "15:00", signals: 501, experiments: 61, contributors: 172 },
+  { tick: "09:00", signals: 210, experiments: 42, contributors: 129, latency: 169 },
+  { tick: "10:00", signals: 268, experiments: 45, contributors: 136, latency: 164 },
+  { tick: "11:00", signals: 323, experiments: 49, contributors: 142, latency: 160 },
+  { tick: "12:00", signals: 370, experiments: 53, contributors: 148, latency: 154 },
+  { tick: "13:00", signals: 418, experiments: 55, contributors: 154, latency: 151 },
+  { tick: "14:00", signals: 449, experiments: 59, contributors: 165, latency: 147 },
+  { tick: "15:00", signals: 501, experiments: 61, contributors: 172, latency: 143 },
+];
+
+export const dashboardAlerts: DashboardAlert[] = [
+  {
+    id: "alert-1",
+    type: "warning",
+    title: "Latency Spike Detected",
+    detail: "Ingestion node 03 exceeded threshold for 14m before auto-correction.",
+    at: "14:11",
+  },
+  {
+    id: "alert-2",
+    type: "success",
+    title: "Consensus Lock Stabilized",
+    detail: "Adaptive ensemble reached target confidence in volatility bucket B2.",
+    at: "13:44",
+  },
+  {
+    id: "alert-3",
+    type: "info",
+    title: "New Contributor Cohort",
+    detail: "6 additional validated contributors entered delayed validation lane C.",
+    at: "12:58",
+  },
+];
+
+export const infrastructureStages: InfrastructureStage[] = [
+  {
+    id: "ingestion",
+    title: "Ingestion + Normalization",
+    detail: "Market and contributor streams are normalized into deterministic feature contracts.",
+    throughput: "2.8M events/day",
+  },
+  {
+    id: "mesh",
+    title: "Experimentation Mesh",
+    detail: "Hypotheses are benchmarked across cohorts before inclusion into active stacks.",
+    throughput: "61 active tracks",
+  },
+  {
+    id: "consensus",
+    title: "Consensus Orchestrator",
+    detail: "Adaptive weighting composes validated signals into portfolio-grade intelligence.",
+    throughput: "23 model cohorts",
+  },
+  {
+    id: "observability",
+    title: "Observability + Attribution",
+    detail: "Telemetry and contribution quality remain visible through every pipeline stage.",
+    throughput: "18420 signals/day",
+  },
 ];
 
 export const productModules: ProductModule[] = [
