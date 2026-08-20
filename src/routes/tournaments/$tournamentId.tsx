@@ -8,6 +8,7 @@ import { RequireAuth } from "@/components/site/RequireAuth";
 import { Countdown } from "@/components/site/Countdown";
 import { Button } from "@/components/site/Button";
 import { useNow } from "@/hooks/use-now";
+import { parseServerTime } from "@/lib/time";
 import {
   ApiError,
   datasetsApi,
@@ -200,7 +201,11 @@ function SubmitPanel({ tournament, closeAt }: { tournament: Tournament; closeAt:
   // close timestamp on every upload). This disable exists so the UI does not
   // invite a submission it already knows will be rejected — it is never the
   // thing that actually enforces the deadline.
-  const closeMs = closeAt ? new Date(closeAt).getTime() : null;
+  // parseServerTime, not `new Date(...)`: Backend serializes naive UTC with no
+  // offset, which ECMAScript would otherwise read as the viewer's local time.
+  // At +05:30 that put the close instant 5.5h in the past and disabled this
+  // form for the whole window, for a file the server would have accepted.
+  const closeMs = parseServerTime(closeAt);
   const windowOpen = tournament.status === "SUBMISSION_OPEN" && (closeMs === null || closeMs > now);
 
   const mutation = useMutation<SubmissionResponse, unknown, File>({

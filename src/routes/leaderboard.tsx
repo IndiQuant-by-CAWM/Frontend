@@ -13,6 +13,8 @@ import {
   type PublicLeaderboardEntry,
   type Tournament,
 } from "@/lib/api";
+import { boardView } from "@/lib/leaderboard-view";
+import { formatServerTime } from "@/lib/time";
 import { useAuth } from "@/lib/useAuth";
 
 interface LeaderboardSearch {
@@ -197,7 +199,19 @@ function Board({ tournamentId }: { tournamentId: number }) {
     placeholderData: keepPreviousData,
   });
 
-  if (watch.isLoading) {
+  // A poll failure must never take a published board off the screen: React
+  // Query still holds `board.data`, and a reader losing the whole table to a
+  // transient 5xx is a worse disruption than the re-sort this page pins its
+  // snapshot to avoid. boardView encodes that precedence; the failure is
+  // reported as a staleness note under the table instead.
+  const view = boardView({
+    isLoading: watch.isLoading,
+    isNotFound: watch.error instanceof ApiError && watch.error.status === 404,
+    hasError: watch.error != null,
+    rows: board.data,
+  });
+
+  if (view.kind === "loading") {
     return (
       <div className="mt-10 flex items-center gap-2 py-16 text-sm text-white/40">
         <Loader2 className="h-4 w-4 animate-spin" /> Loading standings…
@@ -205,7 +219,7 @@ function Board({ tournamentId }: { tournamentId: number }) {
     );
   }
 
-  if (watch.error instanceof ApiError && watch.error.status === 404) {
+  if (view.kind === "unpublished") {
     return (
       <p className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-10 text-center text-sm text-white/45">
         No published results for round {tournamentId} yet.
@@ -213,7 +227,7 @@ function Board({ tournamentId }: { tournamentId: number }) {
     );
   }
 
-  if (watch.error) {
+  if (view.kind === "error") {
     return (
       <p className="mt-10 rounded-xl border border-[#ff8a8a]/25 bg-[#ff8a8a]/[0.06] px-5 py-4 text-sm text-[#ffb4b4]">
         {watch.error instanceof ApiError ? watch.error.message : "Failed to load the leaderboard."}
@@ -221,14 +235,15 @@ function Board({ tournamentId }: { tournamentId: number }) {
     );
   }
 
-  const rows = board.data;
-  if (!rows || rows.length === 0) {
+  if (view.kind === "empty") {
     return (
       <p className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-10 text-center text-sm text-white/45">
         This round scored with no ranked submissions.
       </p>
     );
   }
+
+  const rows = view.rows;
 
   return (
     <>
@@ -269,9 +284,17 @@ function Board({ tournamentId }: { tournamentId: number }) {
         </table>
       </div>
 
-      {watermark && (
+      {/* formatServerTime converts Backend's offset-less naive-UTC stamp
+          before rendering it in the reader's own timezone; `new Date(...)`
+          here silently showed a time shifted by the viewer's UTC offset. */}
+      {(watermark || view.stale) && (
         <p className="mt-4 font-mono text-[11px] text-white/30">
-          Published {new Date(watermark).toLocaleString()}
+          {watermark && <>Published {formatServerTime(watermark) ?? watermark}</>}
+          {view.stale && (
+            <span className={watermark ? "ml-2 text-white/25" : "text-white/25"}>
+              {watermark ? "· " : ""}live updates paused — could not reach the server
+            </span>
+          )}
         </p>
       )}
     </>

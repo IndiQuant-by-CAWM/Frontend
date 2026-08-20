@@ -1,6 +1,7 @@
 import { Clock } from "lucide-react";
 
 import { useNow } from "@/hooks/use-now";
+import { parseServerTime } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
 // The platform runs on a 1-hour cadence: submissions LOCK at
@@ -47,8 +48,10 @@ export function Countdown({
     );
   }
 
-  const targetMs = new Date(target).getTime();
-  if (Number.isNaN(targetMs)) {
+  // Backend timestamps are naive UTC; parseServerTime reads them as UTC
+  // rather than letting the browser assume local time (see lib/time.ts).
+  const targetMs = parseServerTime(target);
+  if (targetMs === null) {
     return <div className={cn("font-mono text-sm text-white/40", className)}>Not scheduled</div>;
   }
 
@@ -102,8 +105,10 @@ export function CountdownChip({
     return <span className={cn(base, "text-white/30", className)}>—</span>;
   }
 
-  const targetMs = new Date(target).getTime();
-  if (Number.isNaN(targetMs)) {
+  // Backend timestamps are naive UTC; parseServerTime reads them as UTC
+  // rather than letting the browser assume local time (see lib/time.ts).
+  const targetMs = parseServerTime(target);
+  if (targetMs === null) {
     return <span className={cn(base, "text-white/30", className)}>—</span>;
   }
 
