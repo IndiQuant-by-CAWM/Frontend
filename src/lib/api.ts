@@ -111,6 +111,7 @@ export interface Tournament {
   tournament_name: string;
   dataset_version: string;
   target_era: string;
+  horizon_minutes: number;
   status: TournamentStatus | string;
   submission_open_at: string | null;
   submission_close_at: string | null;
@@ -135,6 +136,33 @@ export interface LeaderboardEntry {
   rank: number | null;
   qualification_status: string | null;
   computed_at: string;
+}
+
+// The UNAUTHENTICATED leaderboard row. Backend serves this from a separate
+// pydantic model (not a filtered internal one) precisely so nothing else can
+// leak into it; this interface mirrors that model exactly and must stay a
+// subset of it. `display_name` is null for accounts that predate handles —
+// render that as anonymous, never as an email or an id.
+export interface PublicLeaderboardEntry {
+  display_name: string | null;
+  composite_score: number | null;
+  rank: number | null;
+  last_scored_at: string;
+}
+
+// Config of the tournament currently accepting submissions. `submission_close_at`
+// here is the authoritative close instant: Tournament.submission_close_at is not
+// stamped until the round actually locks, so while a window is open this is the
+// only place the close time exists.
+export interface CurrentDataset {
+  tournament_id: number;
+  tournament_name: string;
+  dataset_version: string;
+  target_era: string;
+  id_universe: string[];
+  feature_columns: string[];
+  row_count: number;
+  submission_close_at: string | null;
 }
 
 export interface TokenPair {
@@ -214,5 +242,23 @@ export const leaderboardApi = {
       API_BASE,
       `/leaderboard/?tournament_id=${encodeURIComponent(tournamentId)}`,
     );
+  },
+  // Public board — deliberately `auth: false`. Sending a stale bearer token
+  // here would trip the 401 branch above and sign the visitor out of a page
+  // that never needed them signed in. 404 until the round reaches SCORED.
+  getPublic(tournamentId: number): Promise<PublicLeaderboardEntry[]> {
+    return request<PublicLeaderboardEntry[]>(
+      API_BASE,
+      `/leaderboard/public?tournament_id=${encodeURIComponent(tournamentId)}`,
+      { auth: false },
+    );
+  },
+};
+
+export const datasetsApi = {
+  // 404s when no tournament is open — "what should I submit for right now?"
+  // has no honest answer between windows.
+  current(): Promise<CurrentDataset> {
+    return request<CurrentDataset>(API_BASE, "/datasets/current");
   },
 };

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { Clock } from "lucide-react";
 
+import { useNow } from "@/hooks/use-now";
 import { cn } from "@/lib/utils";
 
 // The platform runs on a 1-hour cadence: submissions LOCK at
@@ -16,15 +16,6 @@ function diffParts(ms: number) {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
   return { days, hours, minutes, seconds };
-}
-
-function useNow(intervalMs = 1000): number {
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), intervalMs);
-    return () => clearInterval(id);
-  }, [intervalMs]);
-  return now;
 }
 
 function Cell({ value, label }: { value: number; label: string }) {
