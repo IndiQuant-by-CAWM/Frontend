@@ -1,9 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 
 import { Button } from "@/components/site/Button";
 import { Field, Input } from "@/components/site/Field";
 import { AuthShell } from "@/components/site/AuthShell";
+import { authApi, ApiError } from "@/lib/api";
+import { setTokens } from "@/lib/auth";
 
 export const Route = createFileRoute("/sign-up")({
   head: () => ({
@@ -23,9 +25,14 @@ export const Route = createFileRoute("/sign-up")({
 });
 
 function SignUpPage() {
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<Record<string, string>>({});
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  const [formError, setFormError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setFormError(null);
     const f = new FormData(e.currentTarget);
     const next: Record<string, string> = {};
     if (!String(f.get("name") ?? "").trim()) next.name = "Please enter your name.";
@@ -34,7 +41,29 @@ function SignUpPage() {
     const pw = String(f.get("password") ?? "");
     if (pw.length < 8) next.password = "At least 8 characters.";
     setErrors(next);
+    if (Object.keys(next).length > 0) return;
+
+    setSubmitting(true);
+    try {
+      // Register, then log in to obtain a token pair (registration returns the
+      // user record, not tokens). The Auth service assigns the FORECASTER role.
+      await authApi.register(email, pw);
+      const tokens = await authApi.login(email, pw);
+      setTokens(tokens.access_token, tokens.refresh_token);
+      navigate({ to: "/tournaments" });
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 409) {
+        setFormError("An account with this email already exists. Try signing in.");
+      } else if (err instanceof ApiError) {
+        setFormError(err.message);
+      } else {
+        setFormError("Could not reach the server. Check your connection and try again.");
+      }
+    } finally {
+      setSubmitting(false);
+    }
   }
+
   return (
     <AuthShell
       eyebrow="Begin"
@@ -51,6 +80,11 @@ function SignUpPage() {
       }
     >
       <form onSubmit={onSubmit} noValidate className="space-y-6">
+        {formError && (
+          <p className="rounded-lg border border-[#ff8a8a]/30 bg-[#ff8a8a]/10 px-3 py-2 text-xs text-[#ff8a8a]">
+            {formError}
+          </p>
+        )}
         <Field label="Name" htmlFor="name" error={errors.name}>
           <Input id="name" name="name" autoComplete="name" placeholder="Your full name" />
         </Field>
@@ -60,8 +94,8 @@ function SignUpPage() {
         <Field label="Password" htmlFor="password" hint="8+ characters" error={errors.password}>
           <Input id="password" name="password" type="password" autoComplete="new-password" placeholder="••••••••" />
         </Field>
-        <Button type="submit" withArrow className="w-full">
-          Create account
+        <Button type="submit" withArrow className="w-full" disabled={submitting}>
+          {submitting ? "Creating account…" : "Create account"}
         </Button>
         <p className="text-center text-xs text-white/40">
           By continuing you agree to our terms and privacy policy.
