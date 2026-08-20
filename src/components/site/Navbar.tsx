@@ -7,6 +7,7 @@ import { Button } from "./Button";
 const links = [
   { href: "/about", label: "About" },
   { href: "/contributors", label: "Contributors" },
+  { href: "/leaderboard", label: "Leaderboard" },
   { href: "/investors", label: "Investors" },
   { href: "/faq", label: "FAQ" },
 ];
