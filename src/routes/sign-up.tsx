@@ -1,106 +1,61 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 
-import { Button } from "@/components/site/Button";
-import { Field, Input } from "@/components/site/Field";
 import { AuthShell } from "@/components/site/AuthShell";
-import { authApi, ApiError } from "@/lib/api";
-import { setTokens } from "@/lib/auth";
+import { Button } from "@/components/site/Button";
+import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
 
+/**
+ * Redirects to the participant platform.
+ *
+ * This page used to render a real registration form against this site's own API
+ * client, and in production that form could not work: the Pages workflow sets no
+ * VITE_AUTH_BASE, so the shipped bundle carries the localhost fallback and every
+ * visitor's browser calls its own machine. It failed silently, looking like a
+ * broken platform rather than a misconfigured one.
+ *
+ * Accounts, datasets and submissions all live on the platform, so rather than
+ * wire this marketing site up as a second front door to the same API, the route
+ * is kept -- old links and bookmarks still resolve -- and sends people where the
+ * application actually is.
+ *
+ * The redirect runs on mount, and the visible button covers the moment before
+ * that happens -- a slow load should still show somewhere to click rather than
+ * an apparently empty page. It is NOT a no-JavaScript fallback: this whole site
+ * is a client-rendered SPA, so a visitor without JavaScript sees nothing on any
+ * route, and a meta-refresh here (tried, and not emitted by this router's head
+ * handling) would not have changed that.
+ */
 export const Route = createFileRoute("/sign-up")({
   head: () => ({
     meta: [
       { title: "Create Account — IndiQuant" },
-      {
-        name: "description",
-        content: "Create your IndiQuant account and join the next research round.",
-      },
-      { property: "og:title", content: "Create Account — IndiQuant" },
-      { property: "og:url", content: "/sign-up" },
+      { name: "description", content: "Create your IndiQuant account on the participant platform." },
       { name: "robots", content: "noindex" },
     ],
-    links: [{ rel: "canonical", href: "/sign-up" }],
   }),
-  component: SignUpPage,
+  component: SignUpRedirect,
 });
 
-function SignUpPage() {
-  const navigate = useNavigate();
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [formError, setFormError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setFormError(null);
-    const f = new FormData(e.currentTarget);
-    const next: Record<string, string> = {};
-    if (!String(f.get("name") ?? "").trim()) next.name = "Please enter your name.";
-    const email = String(f.get("email") ?? "").trim();
-    if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "Enter a valid email.";
-    const pw = String(f.get("password") ?? "");
-    if (pw.length < 8) next.password = "At least 8 characters.";
-    setErrors(next);
-    if (Object.keys(next).length > 0) return;
-
-    setSubmitting(true);
-    try {
-      // Register, then log in to obtain a token pair (registration returns the
-      // user record, not tokens). The Auth service assigns the FORECASTER role.
-      await authApi.register(email, pw);
-      const tokens = await authApi.login(email, pw);
-      setTokens(tokens.access_token, tokens.refresh_token);
-      navigate({ to: "/tournaments" });
-    } catch (err) {
-      if (err instanceof ApiError && err.status === 409) {
-        setFormError("An account with this email already exists. Try signing in.");
-      } else if (err instanceof ApiError) {
-        setFormError(err.message);
-      } else {
-        setFormError("Could not reach the server. Check your connection and try again.");
-      }
-    } finally {
-      setSubmitting(false);
-    }
-  }
+function SignUpRedirect() {
+  useEffect(() => {
+    window.location.replace(PLATFORM_SIGNUP_URL);
+  }, []);
 
   return (
     <AuthShell
-      eyebrow="Begin"
-      title="Create your"
-      italic="account"
-      description="Join a research community that rewards signal on measurable outcomes."
-      footer={
-        <>
-          Already have an account?{" "}
-          <Link to="/sign-in" className="text-white underline-offset-4 hover:underline">
-            Sign in
-          </Link>
-        </>
-      }
+      eyebrow="Join IndiQuant"
+      title="Create Account"
+      description="Creating an account happens on the IndiQuant platform."
+      footer={null}
     >
-      <form onSubmit={onSubmit} noValidate className="space-y-6">
-        {formError && (
-          <p className="rounded-lg border border-[#ff8a8a]/30 bg-[#ff8a8a]/10 px-3 py-2 text-xs text-[#ff8a8a]">
-            {formError}
-          </p>
-        )}
-        <Field label="Name" htmlFor="name" error={errors.name}>
-          <Input id="name" name="name" autoComplete="name" placeholder="Your full name" />
-        </Field>
-        <Field label="Email" htmlFor="email" error={errors.email}>
-          <Input id="email" name="email" type="email" autoComplete="email" placeholder="you@domain.com" />
-        </Field>
-        <Field label="Password" htmlFor="password" hint="8+ characters" error={errors.password}>
-          <Input id="password" name="password" type="password" autoComplete="new-password" placeholder="••••••••" />
-        </Field>
-        <Button type="submit" withArrow className="w-full" disabled={submitting}>
-          {submitting ? "Creating account…" : "Create account"}
-        </Button>
-        <p className="text-center text-xs text-white/40">
-          By continuing you agree to our terms and privacy policy.
-        </p>
-      </form>
+      <p className="text-sm text-muted-foreground">
+        Creating an account happens on the IndiQuant platform. If you are not redirected
+        automatically, use the button below.
+      </p>
+      <Button as="a" href={PLATFORM_SIGNUP_URL} withArrow className="mt-4">
+        Continue to the platform
+      </Button>
     </AuthShell>
   );
 }

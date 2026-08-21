@@ -20,6 +20,7 @@ import {
   BookOpen,
 } from "lucide-react";
 
+import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
@@ -59,7 +60,7 @@ function ContributorsPage() {
         tail="alone."
         description="Contribute models to a live quantitative strategy. No titles, no gatekeepers — only measurable edge."
       >
-        <Button as="a" href="/sign-up" withArrow>
+        <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" withArrow>
           Create your account
         </Button>
         <Button as="a" href="/faq" variant="ghost">
@@ -377,7 +378,7 @@ function FinalCTA() {
               Create your account and start with the next research round.
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-              <Button as="a" href="/sign-up" withArrow>
+              <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" withArrow>
                 Create your account
               </Button>
               <Button as="a" href="/contact" variant="ghost">

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
@@ -128,7 +129,7 @@ function FAQPage() {
                 <Button as="a" href="/contact" withArrow>
                   Contact us
                 </Button>
-                <Button as="a" href="/sign-up" variant="ghost">
+                <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" variant="ghost">
                   Create an account
                 </Button>
               </div>
