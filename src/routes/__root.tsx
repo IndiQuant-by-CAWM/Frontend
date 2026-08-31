@@ -88,6 +88,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "A quantitative research hedge fund powered by crowdsourced AI for Indian equity markets.",
       },
       { property: "og:type", content: "website" },
+      // Absolute URLs: link previews are fetched by other people's servers,
+      // which cannot resolve a site-relative path.
+      { property: "og:url", content: "https://indiquantresearch.in/" },
+      { property: "og:image", content: "https://indiquantresearch.in/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content:
+          "IndiQuant — Many models. One truth. A quantitative research hedge fund for the Indian equity markets.",
+      },
+      { name: "twitter:image", content: "https://indiquantresearch.in/og-image.jpg" },
       { property: "og:site_name", content: "IndiQuant" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "IndiQuant — Crowdsourced AI Quantitative Research" },

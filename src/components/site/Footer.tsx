@@ -37,17 +37,17 @@ export function Footer() {
           </div>
 
           <nav aria-label="Platform" className="md:col-span-3">
-            <p className="font-mono text-[10px] tracking-[0.22em] text-white/40 uppercase">
+            <p className="font-mono text-[10px] tracking-[0.22em] text-white/60 uppercase">
               Platform
             </p>
-            <ul className="mt-5.5 flex flex-col gap-3 text-[15px]">
+            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3">
               {platform.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="break-words text-[var(--mint)]/80 transition-colors duration-200 hover:text-[var(--mint)] focus-visible:text-[var(--mint)] focus-visible:outline-none"
+                    className="flex min-h-[44px] items-center break-words text-[var(--mint)]/80 transition-colors duration-200 hover:text-[var(--mint)] focus-visible:text-[var(--mint)] focus-visible:outline-none md:min-h-0"
                   >
                     {l.label}
                   </a>
@@ -57,15 +57,15 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Explore" className="md:col-span-3">
-            <p className="font-mono text-[10px] tracking-[0.22em] text-white/40 uppercase">
+            <p className="font-mono text-[10px] tracking-[0.22em] text-white/60 uppercase">
               Explore
             </p>
-            <ul className="mt-5.5 flex flex-col gap-3 text-[15px]">
+            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3">
               {explore.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-white/72 transition-colors duration-200 hover:text-[var(--mint)] focus-visible:text-[var(--mint)] focus-visible:outline-none"
+                    className="flex min-h-[44px] items-center text-white/72 transition-colors duration-200 hover:text-[var(--mint)] focus-visible:text-[var(--mint)] focus-visible:outline-none md:min-h-0"
                   >
                     {l.label}
                   </a>
@@ -75,24 +75,26 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Desk" className="md:col-span-3">
-            <p className="font-mono text-[10px] tracking-[0.22em] text-white/40 uppercase">Desk</p>
-            <ul className="mt-5.5 flex flex-col gap-3 text-[15px]">
+            <p className="font-mono text-[10px] tracking-[0.22em] text-white/60 uppercase">Desk</p>
+            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3">
               {desk.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-white/72 transition-colors duration-200 hover:text-[var(--mint)] focus-visible:text-[var(--mint)] focus-visible:outline-none"
+                    className="flex min-h-[44px] items-center text-white/72 transition-colors duration-200 hover:text-[var(--mint)] focus-visible:text-[var(--mint)] focus-visible:outline-none md:min-h-0"
                   >
                     {l.label}
                   </a>
                 </li>
               ))}
-              <li className="text-white/45">Mumbai, Maharashtra</li>
+              <li className="flex min-h-[44px] items-center text-white/60 md:min-h-0">
+                Mumbai, Maharashtra
+              </li>
             </ul>
           </nav>
         </div>
 
-        <div className="mt-16 flex flex-wrap justify-between gap-6 border-t border-white/10 pt-6.5 font-mono text-[10px] tracking-[0.22em] text-white/40 uppercase">
+        <div className="mt-16 flex flex-wrap justify-between gap-6 border-t border-white/10 pt-6.5 font-mono text-[10px] tracking-[0.22em] text-white/60 uppercase">
           <span>© {new Date().getFullYear()} IndiQuant. All rights reserved.</span>
           <span>Thousands of minds. One strategy.</span>
         </div>
