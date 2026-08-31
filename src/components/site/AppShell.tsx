@@ -15,8 +15,10 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <motion.div
       id="top"
-      initial={{ opacity: 0, filter: "blur(6px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
+      // Opacity only: a residual filter: blur(0px) creates a containing block
+      // and re-anchors every fixed child to this element.
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="relative min-h-screen bg-background text-foreground"
     >
@@ -31,7 +33,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-background/70 backdrop-blur-xl">
         <div className="container-page flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-2.5 opacity-90 transition-opacity hover:opacity-100">
+            <Link
+              to="/"
+              className="flex items-center gap-2.5 opacity-90 transition-opacity hover:opacity-100"
+            >
               <Logo />
               <span className="text-sm font-medium tracking-tight text-white">IndiQuant</span>
             </Link>

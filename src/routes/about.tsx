@@ -61,8 +61,12 @@ function AboutPage() {
   return (
     <motion.div
       id="top"
-      initial={{ opacity: 0, filter: "blur(6px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
+      // Opacity only. Animating a filter leaves filter: blur(0px) on the
+      // element, which is not "none" and so creates a containing block -- every
+      // fixed child inside it, the menu sheet and the grain overlay included,
+      // was then positioned against this div instead of the viewport.
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className="relative min-h-screen bg-background text-foreground"
     >

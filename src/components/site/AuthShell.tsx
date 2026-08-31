@@ -22,8 +22,10 @@ export function AuthShell({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, filter: "blur(6px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
+      // Opacity only: a residual filter: blur(0px) creates a containing block
+      // and re-anchors every fixed child to this element.
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className="relative min-h-screen overflow-hidden bg-background text-foreground"
     >
@@ -44,7 +46,10 @@ export function AuthShell({
 
       <div className="relative flex min-h-screen flex-col">
         <header className="container-page flex h-16 items-center justify-between pt-6">
-          <Link to="/" className="flex items-center gap-2.5 opacity-90 transition-opacity hover:opacity-100">
+          <Link
+            to="/"
+            className="flex items-center gap-2.5 opacity-90 transition-opacity hover:opacity-100"
+          >
             <Logo />
             <span className="text-sm font-medium tracking-tight text-white">IndiQuant</span>
           </Link>
@@ -52,7 +57,11 @@ export function AuthShell({
             to="/"
             className="group inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.22em] text-white/50 transition-colors hover:text-white"
           >
-            <ArrowLeft size={13} strokeWidth={1.75} className="transition-transform group-hover:-translate-x-0.5" />
+            <ArrowLeft
+              size={13}
+              strokeWidth={1.75}
+              className="transition-transform group-hover:-translate-x-0.5"
+            />
             Home
           </Link>
         </header>
