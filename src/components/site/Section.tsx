@@ -10,7 +10,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn("relative z-2 py-24 sm:py-32 md:py-[150px]", className)}
+      className={cn("relative z-2 py-20 sm:py-28 md:py-[150px]", className)}
       {...rest}
     >
       {children}

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /sign-in
+Disallow: /sign-up
+Disallow: /forgot-password
+Disallow: /tournaments
+
+Sitemap: https://indiquantresearch.in/sitemap.xml

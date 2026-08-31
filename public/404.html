@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — IndiQuant</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Mono:wght@400&display=swap">
+<style>
+  :root { --ink:#08081a; --mint:#c8ffc7; --blue:#0003ff; }
+  * { box-sizing:border-box }
+  html,body { height:100% }
+  body {
+    margin:0; background:var(--ink); color:#fff;
+    font-family:"Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    display:grid; place-items:center; padding:1.5rem; text-align:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  .code { font-family:"Space Mono", ui-monospace, monospace; font-size:.7rem;
+          letter-spacing:.22em; text-transform:uppercase; color:var(--mint); }
+  h1 { font-size:clamp(2.2rem,7vw,3.5rem); font-weight:800; letter-spacing:-.03em;
+       line-height:1.05; margin:1.5rem 0 0; text-wrap:balance }
+  p { color:rgba(255,255,255,.65); max-width:44ch; margin:1rem auto 0; line-height:1.6 }
+  .actions { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-top:2rem }
+  a { display:inline-flex; align-items:center; min-height:44px; padding:0 1.5rem;
+      border-radius:10px; font-weight:700; text-decoration:none;
+      transition:background-color .18s, border-color .18s }
+  .primary { background:var(--blue); color:var(--mint) }
+  .primary:hover { background:#0002d6 }
+  .ghost { border:1.5px solid rgba(255,255,255,.25); color:rgba(255,255,255,.9) }
+  .ghost:hover { border-color:var(--mint); color:#fff }
+  a:focus-visible { outline:3px solid rgba(0,3,255,.5); outline-offset:2px }
+</style>
+</head>
+<body>
+  <main>
+    <p class="code">Error 404</p>
+    <h1>This page doesn't exist.</h1>
+    <p>The link may be out of date, or the address mistyped. Everything else is still where you left it.</p>
+    <div class="actions">
+      <a class="primary" href="/">Back to IndiQuant</a>
+      <a class="ghost" href="https://platform.indiquantresearch.in" rel="noopener noreferrer">Open the platform</a>
+    </div>
+  </main>
+</body>
+</html>
