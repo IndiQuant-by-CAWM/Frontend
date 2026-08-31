@@ -393,12 +393,17 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
             "radial-gradient(ellipse 70% 55% at 22% 38%, rgba(8,8,26,0.86), transparent 72%)",
         }}
       />
-      {/* On narrow viewports the copy column sits directly over the lit face of
-          the globe, so it gets an extra flat veil the desktop layout does not
-          need. */}
+      {/* On narrow viewports the globe fills the frame behind the copy. A flat
+          veil hid it almost entirely, so instead the ground is weighted toward
+          the top and bottom edges, where the text sits, and left open through
+          the middle where the earth reads. */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-1 bg-[rgba(8,8,26,0.6)] md:hidden"
+        className="pointer-events-none fixed inset-0 z-1 md:hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(8,8,26,0.82) 0%, rgba(8,8,26,0.30) 38%, rgba(8,8,26,0.30) 62%, rgba(8,8,26,0.82) 100%)",
+        }}
       />
     </>
   );
