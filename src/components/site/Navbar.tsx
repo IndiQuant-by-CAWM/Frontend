@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -15,6 +16,9 @@ const links = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
   const [progress, setProgress] = useState(0);
 
   // The full-screen sheet covers the page, so the page behind it must not
@@ -106,68 +110,72 @@ export function Navbar() {
         </div>
       </header>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18, ease: [0.2, 0, 0.1, 1] }}
-            className="fixed inset-0 z-70 flex flex-col bg-[var(--ink)] md:hidden"
-          >
-            <div className="container-page flex h-[68px] shrink-0 items-center justify-between">
-              <span className="text-[19px] font-extrabold tracking-[-0.03em] text-[var(--mint)]">
-                IndiQuant
-              </span>
-              <button
-                aria-label="Close menu"
-                className="grid h-11 w-11 place-items-center rounded-[10px] border border-white/15 text-[var(--mint)]"
-                onClick={() => setOpen(false)}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: [0.2, 0, 0.1, 1] }}
+                className="fixed inset-0 z-70 flex flex-col bg-[var(--ink)] md:hidden"
               >
-                <X size={18} />
-              </button>
-            </div>
+                <div className="container-page flex h-[68px] shrink-0 items-center justify-between">
+                  <span className="text-[19px] font-extrabold tracking-[-0.03em] text-[var(--mint)]">
+                    IndiQuant
+                  </span>
+                  <button
+                    aria-label="Close menu"
+                    className="grid h-11 w-11 place-items-center rounded-[10px] border border-white/15 text-[var(--mint)]"
+                    onClick={() => setOpen(false)}
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
 
-            <nav
-              aria-label="Primary"
-              className="container-page flex flex-1 flex-col justify-center gap-1 overflow-y-auto"
-            >
-              {links.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="flex min-h-[56px] items-center border-b border-white/[0.08] text-[26px] font-extrabold tracking-[-0.03em] text-white transition-colors duration-200 active:text-[var(--mint)]"
+                <nav
+                  aria-label="Primary"
+                  className="container-page flex flex-1 flex-col justify-center gap-1 overflow-y-auto"
                 >
-                  {l.label}
-                </a>
-              ))}
-            </nav>
+                  {links.map((l) => (
+                    <a
+                      key={l.href}
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className="flex min-h-[56px] items-center border-b border-white/[0.08] text-[26px] font-extrabold tracking-[-0.03em] text-white transition-colors duration-200 active:text-[var(--mint)]"
+                    >
+                      {l.label}
+                    </a>
+                  ))}
+                </nav>
 
-            <div className="container-page flex shrink-0 flex-col gap-3 pt-6 pb-10">
-              <Button
-                as="a"
-                href={PLATFORM_SIGNUP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                size="lg"
-                withArrow
-                className="w-full"
-              >
-                Become a Contributor
-              </Button>
-              <a
-                href={PLATFORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex min-h-[44px] items-center justify-center font-mono text-[12px] tracking-[0.14em] text-[var(--mint)]/80 uppercase"
-              >
-                platform.indiquantresearch.in
-              </a>
-            </div>
-          </motion.div>
+                <div className="container-page flex shrink-0 flex-col gap-3 pt-6 pb-10">
+                  <Button
+                    as="a"
+                    href={PLATFORM_SIGNUP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="lg"
+                    withArrow
+                    className="w-full"
+                  >
+                    Become a Contributor
+                  </Button>
+                  <a
+                    href={PLATFORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex min-h-[44px] items-center justify-center font-mono text-[12px] tracking-[0.14em] text-[var(--mint)]/80 uppercase"
+                  >
+                    platform.indiquantresearch.in
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </>
   );
 }
