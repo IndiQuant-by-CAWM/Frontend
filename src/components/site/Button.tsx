@@ -2,8 +2,11 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "ghost";
-type Size = "sm" | "md";
+// Brand buttons are the two-color identity in miniature: a blue field with mint
+// type, or a mint field with blue type. Radius is the 10px control default and
+// motion is quick with no bounce — press nudges 1px, it never scales.
+type Variant = "primary" | "accent" | "secondary" | "ghost";
+type Size = "sm" | "md" | "lg";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
@@ -12,11 +15,38 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   withArrow?: boolean;
   as?: "button" | "a";
   href?: string;
+  target?: string;
+  rel?: string;
 }
 
 const sizes: Record<Size, string> = {
   sm: "h-9 px-4 text-xs",
   md: "h-11 px-6 text-sm",
+  lg: "h-[52px] px-7 text-[17px]",
+};
+
+const variants: Record<Variant, string> = {
+  primary: cn(
+    "bg-[var(--blue)] text-[var(--mint)]",
+    "shadow-[0_8px_24px_rgba(0,3,255,0.24)]",
+    "hover:bg-[var(--blue-hover)]",
+    "active:bg-[var(--blue-pressed)] active:translate-y-px",
+  ),
+  accent: cn(
+    "bg-[var(--mint)] text-[var(--blue)]",
+    "hover:bg-[var(--mint-hover)]",
+    "active:bg-[var(--mint-pressed)] active:translate-y-px",
+  ),
+  secondary: cn(
+    "border-[1.5px] border-white/25 text-white/90",
+    "hover:border-[var(--mint)]/50 hover:bg-[var(--mint)]/10 hover:text-white",
+    "active:translate-y-px",
+  ),
+  ghost: cn(
+    "border border-current/20 text-white/85",
+    "hover:bg-white/[0.06] hover:text-[var(--mint)]",
+    "active:translate-y-px",
+  ),
 };
 
 export function Button({
@@ -27,29 +57,18 @@ export function Button({
   withArrow,
   as = "button",
   href,
+  target,
+  rel,
   ...rest
 }: Props) {
   const base = cn(
-    "group relative inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight",
-    "transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "group relative inline-flex items-center justify-center gap-2 rounded-[10px] font-bold tracking-[-0.01em]",
+    "transition-[background-color,border-color,color,transform] duration-[180ms] ease-[cubic-bezier(0.2,0,0.1,1)]",
+    "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[rgba(0,3,255,0.28)]",
     sizes[size],
   );
-  const variants: Record<Variant, string> = {
-    primary: cn(
-      "bg-white text-black",
-      "shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_10px_30px_-12px_rgba(0,0,0,0.6)]",
-      "hover:-translate-y-[2px] hover:shadow-[0_1px_0_rgba(255,255,255,0.8)_inset,0_22px_50px_-18px_rgba(108,99,255,0.35)]",
-      "active:translate-y-0 active:duration-150",
-    ),
-    ghost: cn(
-      "text-white/85 border border-white/12 bg-white/[0.015]",
-      "hover:text-white hover:border-white/25 hover:bg-white/[0.04] hover:-translate-y-[2px]",
-      "active:translate-y-0 active:duration-150",
-    ),
-  };
 
-  const iconSize = size === "sm" ? 13 : 15;
+  const iconSize = size === "sm" ? 13 : size === "lg" ? 17 : 15;
 
   const content = (
     <>
@@ -57,8 +76,8 @@ export function Button({
       {withArrow && (
         <ArrowUpRight
           size={iconSize}
-          strokeWidth={1.75}
-          className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          strokeWidth={2}
+          className="transition-transform duration-[180ms] ease-[cubic-bezier(0.2,0,0.1,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
       )}
     </>
@@ -66,7 +85,7 @@ export function Button({
 
   if (as === "a") {
     return (
-      <a href={href} className={cn(base, variants[variant], className)}>
+      <a href={href} target={target} rel={rel} className={cn(base, variants[variant], className)}>
         {content}
       </a>
     );

@@ -10,7 +10,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn("relative py-24 sm:py-32 md:py-40", className)}
+      className={cn("relative z-2 py-24 sm:py-32 md:py-[150px]", className)}
       {...rest}
     >
       {children}
@@ -18,11 +18,16 @@ export function Section({
   );
 }
 
-export function Eyebrow({ children }: { children: ReactNode }) {
+// ALL-CAPS mono eyebrow — the brand's standard section label.
+export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-      <span className="h-px w-6 bg-muted-foreground/40" />
+    <p
+      className={cn(
+        "font-mono text-[11px] tracking-[0.22em] text-[var(--mint)] uppercase",
+        className,
+      )}
+    >
       {children}
-    </div>
+    </p>
   );
 }

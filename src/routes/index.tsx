@@ -1,19 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import {
-  Brain,
-  LineChart,
-  Sparkles,
-  Sigma,
-  TrendingUp,
-  Cpu,
-  Compass,
-  Hammer,
-  Swords,
-  Repeat,
-  Share2,
-  Sprout,
-} from "lucide-react";
+import { BrainCircuit, Boxes, FunctionSquare, LineChart, TrendingUp, Sparkles } from "lucide-react";
+
+import { PLATFORM_SIGNUP_URL, PLATFORM_URL } from "@/lib/platform";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Container } from "@/components/site/Container";
@@ -21,8 +9,7 @@ import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Card } from "@/components/site/Card";
 import { Badge } from "@/components/site/Badge";
-import { Reveal } from "@/components/site/Reveal";
-import { HeroVisual } from "@/components/site/HeroVisual";
+import { GlobeScene } from "@/components/site/GlobeScene";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,7 +18,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "IndiQuant is a quantitative research hedge fund powered by a global community of AI researchers. Build models. Compete. Get rewarded on live performance.",
+          "IndiQuant is a quantitative research hedge fund powered by crowdsourced AI for the Indian equity markets. Thousands of independent minds. One strategy. Rewarded on live performance.",
       },
       {
         property: "og:title",
@@ -40,508 +27,524 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "A hedge fund shaped by the collective intelligence of thousands. Contribute models. Earn on live performance.",
+          "A quantitative research hedge fund shaped by the collective intelligence of independent minds — rewarded on live performance.",
       },
     ],
   }),
   component: Home,
 });
 
+const marqueeClaims = [
+  "Because intuition is not a strategy",
+  "Only skill gets paid",
+  "Built to be compliant",
+  "Alpha without headcount",
+];
+
+const heroStats = [
+  { label: "Contributors", value: "Global" },
+  { label: "Market", value: "Indian equities" },
+  { label: "Research", value: "Continuous" },
+  { label: "Rewards", value: "Performance" },
+];
+
+const approachFacts = [
+  { label: "Measured by", value: "Live accuracy" },
+  { label: "Ignored", value: "Backtests or titles" },
+  { label: "Re-scored", value: "Every round" },
+];
+
+const principles = [
+  {
+    k: "01",
+    title: "Diversity is the alpha.",
+    body: "Independent minds see patterns no single team can. That variance compounds into edge.",
+    tag: "Collective",
+  },
+  {
+    k: "02",
+    title: "Research that never sleeps.",
+    body: "New models, new signals, evaluated every round. The strategy keeps learning.",
+    tag: "Continuous",
+  },
+  {
+    k: "03",
+    title: "Merit is measurable.",
+    body: "Contributors are rewarded on live performance. Nothing else — no titles, no gatekeepers.",
+    tag: "Meritocratic",
+  },
+];
+
+const steps = [
+  { k: "01", t: "Discover", d: "Explore the platform and the research rounds." },
+  { k: "02", t: "Build", d: "Engineer features. Train models. Iterate." },
+  {
+    k: "03",
+    t: "Compete",
+    d: "Submit predictions each round for live evaluation.",
+  },
+  { k: "04", t: "Improve", d: "Learn from feedback. Refine your edge." },
+  {
+    k: "05",
+    t: "Contribute",
+    d: "Your best signals join the collective strategy.",
+  },
+  { k: "06", t: "Grow", d: "Earn on performance. Grow with the fund." },
+];
+
+const emptyRows = ["01", "02", "03", "04", "05"];
+
+const platformSteps = [
+  {
+    k: "01",
+    t: "Download the dataset",
+    d: "Obfuscated, cross-sectional market data. No tickers, no company names — only features and a target.",
+  },
+  {
+    k: "02",
+    t: "Build your model",
+    d: "Your machine, your tools, your method. Nothing about how you get there is prescribed.",
+  },
+  {
+    k: "03",
+    t: "Submit predictions",
+    d: "Upload a prediction per row before the round locks. Scoring runs against live market outcomes.",
+  },
+];
+
+const stacks = [
+  {
+    t: "Artificial Intelligence",
+    d: "Turns raw market data into predictive intuition.",
+    Icon: BrainCircuit,
+  },
+  {
+    t: "Machine Learning",
+    d: "Learns across regimes so no single view dominates.",
+    Icon: Boxes,
+  },
+  {
+    t: "Quantitative Research",
+    d: "Grounds every model in rigorous evidence.",
+    Icon: FunctionSquare,
+  },
+  {
+    t: "Statistics",
+    d: "Separates real edge from noise, round after round.",
+    Icon: LineChart,
+  },
+  {
+    t: "Indian Equity Markets",
+    d: "The arena — NSE and BSE, deeply understood.",
+    Icon: TrendingUp,
+  },
+  {
+    t: "Signal Aggregation",
+    d: "Weaves contributor alpha into one coherent strategy.",
+    Icon: Sparkles,
+  },
+];
+
+const investorFacts = [
+  { label: "Contributors", value: "Global network of researchers" },
+  { label: "Approach", value: "Research-driven, evidence-first" },
+  { label: "Focus", value: "Serious quantitative work" },
+];
+
 function Home() {
   return (
-    <motion.div
-      id="top"
-      initial={{ opacity: 0, filter: "blur(6px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="relative min-h-screen bg-background text-foreground"
-    >
-      {/* Global page grain — extremely subtle, adds tactile depth. */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.025] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
-        }}
-      />
+    <div id="top" className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+      <GlobeScene />
       <Navbar />
-      <Hero />
-      <About />
-      <Why />
-      <Journey />
-      <Technology />
-      <Vision />
-      <Proof />
-      <FinalCTA />
-      <Footer />
-    </motion.div>
-  );
-}
 
-/* ---------- HERO ---------- */
-function Hero() {
-  return (
-    <section className="relative isolate overflow-hidden pt-44 pb-40 sm:pt-56 sm:pb-48">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 grid-lines opacity-[0.35] [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_65%)]" />
-        <div className="absolute left-1/2 top-1/2 h-[1100px] w-[1100px] -translate-x-1/2 -translate-y-[52%]">
-          <HeroVisual />
+      {/* Hero */}
+      <section className="relative z-2 pt-[210px] pb-[150px]">
+        <Container>
+          <Badge>Round 001 · Contributor onboarding open</Badge>
+
+          <h1 className="display-tight mt-11 max-w-[14ch] text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em]">
+            Many models. <span className="text-[var(--mint)]">One truth.</span>
+          </h1>
+
+          <div className="mt-13 grid max-w-[1000px] items-end gap-16 md:grid-cols-2">
+            <p className="text-[19px] leading-[1.6] text-white/72">
+              IndiQuant is a quantitative research hedge fund powered by crowdsourced AI for the
+              Indian equity markets. Thousands of independent minds. One strategy. Rewarded on live
+              performance.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button
+                as="a"
+                href={PLATFORM_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="accent"
+                size="lg"
+                withArrow
+              >
+                Become a Contributor
+              </Button>
+              <Button as="a" href="#approach" variant="secondary" size="lg">
+                See how it works
+              </Button>
+            </div>
+          </div>
+
+          <dl className="mt-[110px] grid grid-cols-2 border-y border-white/14 sm:grid-cols-4">
+            {heroStats.map((s, i) => (
+              <div
+                key={s.label}
+                className={
+                  "px-6 py-6.5 " +
+                  (i === 0 ? "sm:pl-0 " : "") +
+                  (i === heroStats.length - 1 ? "sm:pr-0" : "sm:border-r sm:border-white/12")
+                }
+              >
+                <dt className="font-mono text-[10px] tracking-[0.22em] text-[var(--mint)]/60 uppercase">
+                  {s.label}
+                </dt>
+                <dd className="mt-2.5 text-[18px] font-bold tracking-[-0.02em]">{s.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Container>
+      </section>
+
+      {/* Claim marquee */}
+      <div className="relative z-2 overflow-hidden border-y border-[var(--mint)]/25 bg-[var(--blue)] py-5.5">
+        <div className="iq-marquee-track flex w-max [animation:iq-marquee_30s_linear_infinite]">
+          {[0, 1].map((dup) => (
+            <span
+              key={dup}
+              aria-hidden={dup === 1}
+              className="flex gap-14 pr-14 font-mono text-[15px] tracking-[0.2em] whitespace-nowrap text-[var(--mint)] uppercase"
+            >
+              {marqueeClaims.map((c) => (
+                <span key={c} className="flex gap-14">
+                  <span>{c}</span>
+                  <span aria-hidden>·</span>
+                </span>
+              ))}
+            </span>
+          ))}
         </div>
-        <div className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(108,99,255,0.10),transparent_60%)]" />
-        <div
-          className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.9'/></svg>\")",
-          }}
-        />
-        <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-background via-background/80 to-transparent" />
       </div>
 
-      <Container className="relative">
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-          }}
-          className="mx-auto max-w-[62rem] text-center"
-        >
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-          >
-            <Badge>Now onboarding contributors</Badge>
-          </motion.div>
-
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0, y: 18 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-            className="mt-10 font-display text-[2.75rem] leading-[1.04] tracking-[-0.02em] text-white text-balance sm:text-6xl md:text-[5.75rem] md:leading-[1.02]"
-          >
-            A Quantitative Research{" "}
-            <span className="italic text-white/65">Hedge Fund</span>, powered by{" "}
-            <span className="text-white">Crowdsourced AI</span>.
-          </motion.h1>
-
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 14 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-            className="mx-auto mt-10 max-w-lg text-[15px] leading-[1.7] text-white/60 sm:text-base"
-          >
-            Thousands of minds. One strategy. Rewarded on live performance.
-          </motion.p>
-
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-3"
-          >
-            <Button as="a" href="#contribute" withArrow>
-              Start Contributing
-            </Button>
-            <Button as="a" href="#about" variant="ghost">
-              See how it works
-            </Button>
-          </motion.div>
-        </motion.div>
-
-        <Reveal delay={0.6}>
-          <div className="mx-auto mt-32 grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.04] sm:grid-cols-4">
-            {[
-              { k: "Contributors", v: "Global" },
-              { k: "Markets", v: "Indian Equities" },
-              { k: "Research", v: "Continuous" },
-              { k: "Rewards", v: "Performance" },
-            ].map((m) => (
-              <div key={m.k} className="bg-background px-6 py-7 text-center">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-                  {m.k}
-                </p>
-                <p className="mt-2.5 text-sm font-medium tracking-tight text-white">
-                  {m.v}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <motion.a
-          href="#about"
-          aria-label="Scroll to explore"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 1.2 }}
-          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-white/40 transition-colors duration-500 hover:text-white/80 sm:flex"
-        >
-          <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
-            Scroll
-          </span>
-          <span className="relative block h-9 w-[1px] overflow-hidden bg-white/10">
-            <motion.span
-              className="absolute inset-x-0 top-0 block h-3 bg-gradient-to-b from-white/80 to-transparent"
-              animate={{ y: ["-100%", "300%"] }}
-              transition={{
-                duration: 2.6,
-                ease: "easeInOut",
-                repeat: Infinity,
-              }}
-            />
-          </span>
-        </motion.a>
-      </Container>
-    </section>
-  );
-}
-
-/* ---------- ABOUT ---------- */
-function About() {
-  return (
-    <Section id="about">
-      <Container>
-        <div className="grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-4">
-            <Reveal variant="blur">
-              <Eyebrow>About</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
-                One fund. Thousands of minds.
+      {/* Approach — mint field, blue type: the signature inversion. */}
+      <Section id="approach" className="bg-[var(--mint)] text-[var(--ink)]">
+        <Container>
+          <div className="grid items-start gap-20 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--blue)] uppercase">
+                Our approach
+              </p>
+              <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)] text-[var(--blue)]">
+                Only skill gets paid.
               </h2>
-            </Reveal>
-          </div>
-          <div className="md:col-span-7 md:col-start-6">
-            <Reveal delay={0.15} variant="blur">
-              <p className="text-xl leading-relaxed text-white/85 text-balance">
-                IndiQuant is a research platform where data scientists,
-                engineers, and quants around the world build AI models for the
-                Indian equity markets — together.
+            </div>
+            <div className="lg:col-span-7">
+              <p className="max-w-[52ch] text-[22px] leading-[1.55] font-medium text-[var(--ink)]">
+                Every round, contributors submit predictive signals on anonymised market data. A
+                meta-model engine weighs them, scores them against live outcomes, and folds the
+                survivors into a single strategy.
               </p>
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-                The strongest signals from every contributor combine into a
-                single meta-strategy. Not one team. One collective.
+              <p className="mt-6.5 max-w-[52ch] text-[17px] leading-[1.7] text-[var(--ink-700)]">
+                Math-based rankings reward real predictive power, not lucky backtests. Standing on
+                the board is a running record of the alpha a researcher has added to the collective
+                — measured in the only currency that clears.
               </p>
-            </Reveal>
+              <dl className="mt-11 grid gap-px border border-[var(--blue)]/18 bg-[var(--blue)]/18 sm:grid-cols-3">
+                {approachFacts.map((f) => (
+                  <div key={f.label} className="bg-[var(--mint)] px-5 py-5.5">
+                    <dt className="font-mono text-[10px] tracking-[0.2em] text-[var(--ink)]/55 uppercase">
+                      {f.label}
+                    </dt>
+                    <dd className="mt-2 text-[16px] font-bold tracking-[-0.01em] text-[var(--blue)]">
+                      {f.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
-        </div>
-      </Container>
-    </Section>
-  );
-}
+        </Container>
+      </Section>
 
-/* ---------- WHY ---------- */
-function Why() {
-  const items = [
-    {
-      k: "01",
-      title: "Diversity is the alpha.",
-      body: "Independent minds see patterns no single team can. That variance compounds into edge.",
-    },
-    {
-      k: "02",
-      title: "Research that never sleeps.",
-      body: "New models, new signals, evaluated every round. The strategy keeps learning.",
-    },
-    {
-      k: "03",
-      title: "Merit is measurable.",
-      body: "You are rewarded on live performance. Nothing else — no titles, no gatekeepers.",
-    },
-  ];
-
-  return (
-    <Section>
-      <Container>
-        <div className="mb-16 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
-          <Reveal>
-            <Eyebrow>Why IndiQuant</Eyebrow>
-            <h2 className="mt-6 max-w-2xl font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
-              A different kind of hedge fund.
-            </h2>
-          </Reveal>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {items.map((it, i) => (
-            <Reveal key={it.title} delay={i * 0.08}>
-              <Card className="h-full">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-                  {it.k} — Principle
+      {/* Principles */}
+      <Section id="principles">
+        <Container>
+          <Eyebrow>Why IndiQuant</Eyebrow>
+          <h2 className="display-tight mt-6.5 mb-[70px] max-w-[16ch] text-[clamp(38px,4.6vw,68px)]">
+            A different kind of hedge fund.
+          </h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {principles.map((p) => (
+              <Card key={p.k} className="p-9">
+                <p className="font-mono text-[42px] leading-none font-bold tracking-[-0.02em] text-[var(--mint)]/85">
+                  {p.k}
                 </p>
-                <h3 className="mt-8 text-lg font-medium tracking-tight text-white">
-                  {it.title}
+                <h3 className="mt-11 text-[24px] leading-[1.15] font-extrabold tracking-[-0.02em]">
+                  {p.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {it.body}
-                </p>
-                <div className="mt-10 hairline opacity-60" />
-                <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
-                  {["Collective", "Continuous", "Meritocratic"][i]}
+                <p className="mt-3.5 text-[16px] leading-[1.65] text-white/65">{p.body}</p>
+                <p className="mt-9 border-t border-white/12 pt-4.5 font-mono text-[10px] tracking-[0.22em] text-[var(--mint)]/70 uppercase">
+                  {p.tag}
                 </p>
               </Card>
-            </Reveal>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
-}
+            ))}
+          </div>
+        </Container>
+      </Section>
 
-/* ---------- JOURNEY ---------- */
-function Journey() {
-  const steps = [
-    { k: "01", icon: Compass, t: "Discover", d: "Explore the platform and the research rounds." },
-    { k: "02", icon: Hammer, t: "Build", d: "Engineer features. Train models. Iterate." },
-    { k: "03", icon: Swords, t: "Compete", d: "Submit predictions each round for live evaluation." },
-    { k: "04", icon: Repeat, t: "Improve", d: "Learn from feedback. Refine your edge." },
-    { k: "05", icon: Share2, t: "Contribute", d: "Your best signals join the collective strategy." },
-    { k: "06", icon: Sprout, t: "Grow", d: "Earn on performance. Grow with the fund." },
-  ];
-
-  return (
-    <Section id="journey" className="relative">
-      <Container>
-        <div className="mb-20 grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <Reveal>
-              <Eyebrow>Contributor Journey</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+      {/* Contributor journey */}
+      <Section id="journey" className="border-t border-white/10">
+        <Container>
+          <div className="mb-20 grid items-end gap-20 lg:grid-cols-11">
+            <div className="lg:col-span-6">
+              <Eyebrow>Contributor journey</Eyebrow>
+              <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
                 From first model to real-world alpha.
               </h2>
-            </Reveal>
+            </div>
+            <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
+              Six steps, no gatekeepers. Wherever your curiosity begins, the fund grows with you.
+            </p>
           </div>
-          <div className="md:col-span-6 md:col-start-7">
-            <Reveal delay={0.1}>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                A transparent path — six steps, no gatekeepers. Wherever your
-                curiosity begins, the fund grows with you.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-
-        {/* Desktop connected flow */}
-        <div className="relative hidden md:block">
-          <div className="pointer-events-none absolute inset-x-0 top-[34px] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-          <div className="grid grid-cols-6 gap-4">
-            {steps.map((s, i) => (
-              <Reveal key={s.k} delay={i * 0.09} variant="sequential">
-                <div className="group relative flex flex-col items-center text-center">
-                  <div className="relative z-10 grid h-[68px] w-[68px] place-items-center rounded-full border border-border bg-background transition-all duration-500 group-hover:border-white/40 group-hover:shadow-[0_0_0_6px_rgba(255,255,255,0.03)]">
-                    <s.icon size={20} strokeWidth={1.5} className="text-white/70 transition-colors group-hover:text-white" />
-                  </div>
-                  <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-                    {s.k}
-                  </p>
-                  <h3 className="mt-2 text-sm font-medium tracking-tight text-white">
-                    {s.t}
-                  </h3>
-                  <p className="mt-2 max-w-[16ch] text-xs leading-relaxed text-muted-foreground">
-                    {s.d}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile vertical flow */}
-        <ol className="relative border-l border-border pl-8 md:hidden">
-          {steps.map((s, i) => (
-            <Reveal key={s.k} delay={i * 0.09} variant="sequential">
-              <li className="group relative pb-10 last:pb-0">
-                <span className="absolute -left-[41px] top-1 grid h-6 w-6 place-items-center rounded-full border border-border bg-background font-mono text-[10px] text-muted-foreground transition-colors group-hover:border-accent group-hover:text-white">
+          <ol className="grid gap-px border border-white/14 bg-white/14 sm:grid-cols-2 lg:grid-cols-3">
+            {steps.map((s) => (
+              <li
+                key={s.k}
+                className="flex min-h-[220px] flex-col bg-[var(--ink)] px-8.5 pt-10 pb-11 transition-colors duration-200 hover:bg-[var(--blue)]"
+              >
+                <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--mint)]/75">
                   {s.k}
-                </span>
-                <h3 className="text-base font-medium tracking-tight text-white">
-                  {s.t}
-                </h3>
-                <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-                  {s.d}
                 </p>
+                <h3 className="mt-6.5 text-[30px] font-extrabold tracking-[-0.03em]">{s.t}</h3>
+                <p className="mt-3 max-w-[26ch] text-[15px] leading-[1.65] text-white/62">{s.d}</p>
               </li>
-            </Reveal>
-          ))}
-        </ol>
-      </Container>
-    </Section>
-  );
-}
+            ))}
+          </ol>
+        </Container>
+      </Section>
 
-/* ---------- TECHNOLOGY ---------- */
-function Technology() {
-  const stacks = [
-    { icon: Brain, t: "Artificial Intelligence", d: "Turns raw market data into predictive intuition." },
-    { icon: Cpu, t: "Machine Learning", d: "Learns across regimes so no single view dominates." },
-    { icon: Sigma, t: "Quantitative Research", d: "Grounds every model in rigorous evidence." },
-    { icon: LineChart, t: "Statistics", d: "Separates real edge from noise, round after round." },
-    { icon: TrendingUp, t: "Indian Equity Markets", d: "The arena — NSE and BSE, deeply understood." },
-    { icon: Sparkles, t: "Signal Aggregation", d: "Weaves contributor alpha into one coherent strategy." },
-  ];
+      {/* The participant platform — the marketing site explains the fund; the
+          platform is where contributors actually work. */}
+      <Section id="platform" className="border-t border-white/10">
+        <Container>
+          <div className="mb-16 grid items-end gap-20 lg:grid-cols-11">
+            <div className="lg:col-span-6">
+              <Eyebrow>The platform</Eyebrow>
+              <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
+                Where the work actually happens.
+              </h2>
+            </div>
+            <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
+              This site explains the fund. Everything you do as a contributor — data, models,
+              submissions — happens on the platform.
+            </p>
+          </div>
 
-  return (
-    <Section id="technology">
-      <Container>
-        <div className="mb-16 grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-6">
-            <Reveal>
+          <div className="overflow-hidden rounded-[18px] border border-[var(--mint)]/25 bg-[rgba(8,8,26,0.72)] backdrop-blur-[8px]">
+            <div className="flex flex-wrap items-center justify-between gap-6 border-b border-white/12 px-8 py-6">
+              <a
+                href={PLATFORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[15px] tracking-[0.06em] text-[var(--mint)] transition-opacity duration-200 hover:opacity-80"
+              >
+                platform.indiquantresearch.in
+              </a>
+              <Button
+                as="a"
+                href={PLATFORM_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="accent"
+                withArrow
+              >
+                Open the platform
+              </Button>
+            </div>
+
+            <ol className="grid gap-px bg-white/12 sm:grid-cols-3">
+              {platformSteps.map((step) => (
+                <li key={step.k} className="bg-[rgba(8,8,26,0.9)] px-8 py-9">
+                  <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--mint)]/75">
+                    {step.k}
+                  </p>
+                  <h3 className="mt-5 text-[22px] font-extrabold tracking-[-0.02em]">{step.t}</h3>
+                  <p className="mt-3 text-[15px] leading-[1.65] text-white/62">{step.d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Rankings — empty until the first round is scored. */}
+      <Section id="rankings">
+        <Container>
+          <div className="mb-11 flex flex-wrap items-end justify-between gap-10">
+            <div>
+              <Eyebrow>Contributor rankings</Eyebrow>
+              <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
+                The board opens with round 001.
+              </h2>
+            </div>
+            <p className="font-mono text-[11px] tracking-[0.18em] text-white/45 uppercase">
+              Scoring not yet live
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-[18px] border border-white/16 bg-[rgba(8,8,26,0.72)] backdrop-blur-[8px]">
+            <div className="overflow-x-auto">
+              <div className="min-w-[720px]">
+                <div className="grid grid-cols-[90px_minmax(0,1fr)_160px_160px_140px] border-b border-white/14 px-7 py-4 font-mono text-[10px] tracking-[0.22em] text-white/45 uppercase">
+                  <span>Rank</span>
+                  <span>Contributor</span>
+                  <span>Score</span>
+                  <span>Δ round</span>
+                  <span>Signals</span>
+                </div>
+                {emptyRows.map((rank) => (
+                  <div
+                    key={rank}
+                    className="grid grid-cols-[90px_minmax(0,1fr)_160px_160px_140px] border-b border-white/[0.07] px-7 py-5 font-mono text-[14px] text-white/22"
+                  >
+                    <span>{rank}</span>
+                    <span>—</span>
+                    <span>—</span>
+                    <span>—</span>
+                    <span>—</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="px-7 pt-14 pb-15 text-center">
+              <p className="text-[20px] font-bold tracking-[-0.02em] text-[var(--mint)]">
+                No rounds have been scored yet.
+              </p>
+              <p className="mx-auto mt-3 max-w-[46ch] text-[15px] leading-[1.7] text-white/55">
+                Rankings publish after the first scored round. Every position on this board will be
+                earned on live market performance — nothing else.
+              </p>
+              <div className="mt-7">
+                <Button
+                  as="a"
+                  href={PLATFORM_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="primary"
+                  withArrow
+                >
+                  Register for round 001
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Technology */}
+      <Section id="technology" className="border-t border-white/10">
+        <Container>
+          <div className="mb-[70px] grid items-end gap-20 lg:grid-cols-11">
+            <div className="lg:col-span-6">
               <Eyebrow>Technology</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+              <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
                 The machinery of collective intelligence.
               </h2>
-            </Reveal>
-          </div>
-          <div className="md:col-span-5 md:col-start-8 md:self-end">
-            <Reveal delay={0.1}>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Each layer plays a role in turning thousands of independent
-                ideas into one disciplined strategy.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border/60 sm:grid-cols-2 lg:grid-cols-3">
-          {stacks.map((s, i) => (
-            <motion.div
-              key={s.t}
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-              transition={{ duration: 0.55, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ backgroundColor: "rgba(255,255,255,0.02)" }}
-              className="group relative bg-background p-8"
-            >
-              <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
-                <s.icon size={16} strokeWidth={1.5} className="text-white/80" />
-              </div>
-              <h3 className="mt-6 text-base font-medium tracking-tight text-white">
-                {s.t}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {s.d}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
-}
-
-/* ---------- VISION ---------- */
-function Vision() {
-  return (
-    <Section id="vision" className="relative overflow-hidden py-28 sm:py-36">
-      <div className="absolute inset-0 -z-10 grid-lines opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
-      <Container>
-        <div className="mx-auto max-w-5xl text-center">
-          <Reveal variant="fade">
-            <Eyebrow>Vision</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.25} variant="fade">
-            <p className="mt-14 font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-6xl md:text-7xl">
-              To become the{" "}
-              <span className="italic text-white/60">world&apos;s largest</span>{" "}
-              crowdsourced AI hedge fund.
+            </div>
+            <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
+              Each layer plays a role in turning thousands of independent ideas into one disciplined
+              strategy.
             </p>
-          </Reveal>
-        </div>
-      </Container>
-    </Section>
-  );
-}
-
-/* ---------- PROOF ---------- */
-function Proof() {
-  const items = [
-    { k: "Contributors", v: "Global network of researchers" },
-    { k: "Approach", v: "Research-driven, evidence-first" },
-    { k: "Focus", v: "Serious quantitative work" },
-  ];
-  return (
-    <Section className="py-16 sm:py-20">
-      <Container>
-        <Reveal variant="fade">
-          <div className="mx-auto grid max-w-5xl gap-10 border-y border-border py-14 sm:grid-cols-3">
-            {items.map((it) => (
-              <div key={it.k} className="text-center">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-                  {it.k}
-                </p>
-                <p className="mt-3 text-sm font-medium tracking-tight text-white/90">
-                  {it.v}
-                </p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {stacks.map(({ t, d, Icon }) => (
+              <div
+                key={t}
+                className="flex flex-col gap-4 rounded-[14px] border border-white/14 bg-[rgba(8,8,26,0.55)] px-7 pt-7.5 pb-8 transition-[border-color,background-color] duration-200 hover:border-[var(--mint)]/50 hover:bg-[var(--mint)]/[0.07]"
+              >
+                <div className="grid h-9.5 w-9.5 place-items-center rounded-[10px] border border-[var(--mint)]/35 text-[var(--mint)]">
+                  <Icon size={19} strokeWidth={2} aria-hidden />
+                </div>
+                <h3 className="text-[19px] font-bold tracking-[-0.02em]">{t}</h3>
+                <p className="text-[15px] leading-[1.65] text-white/60">{d}</p>
               </div>
             ))}
           </div>
-        </Reveal>
-      </Container>
-    </Section>
-  );
-}
+        </Container>
+      </Section>
 
-/* ---------- FINAL CTA ---------- */
-function FinalCTA() {
-  return (
-    <Section id="contribute" className="pt-8 pb-28 sm:pt-12">
-      <Container>
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-surface p-10 sm:p-16 md:p-24">
-          <div className="absolute inset-0 -z-10 opacity-60">
-            <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
-            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-[color:var(--accent-2)]/10 blur-3xl" />
-          </div>
+      {/* Vision — blue field, mint type. */}
+      <section
+        id="investors"
+        className="relative z-2 bg-[var(--blue)] py-28 text-[var(--mint)] md:py-[170px]"
+      >
+        <Container className="text-center">
+          <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--mint)]/70 uppercase">
+            Vision
+          </p>
+          <p className="display-tight mx-auto mt-12 max-w-[18ch] text-[clamp(42px,6.4vw,100px)] leading-[0.98] tracking-[-0.035em]">
+            To become the world's largest crowdsourced AI hedge fund.
+          </p>
+          <dl className="mt-20 grid gap-px border border-[var(--mint)]/25 bg-[var(--mint)]/25 text-left sm:grid-cols-3">
+            {investorFacts.map((f) => (
+              <div key={f.label} className="bg-[var(--blue)] px-7 py-7.5">
+                <dt className="font-mono text-[10px] tracking-[0.2em] text-[var(--mint)]/60 uppercase">
+                  {f.label}
+                </dt>
+                <dd className="mt-2.5 text-[18px] font-bold tracking-[-0.02em]">{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Container>
+      </section>
 
-          <div className="relative grid gap-12 md:grid-cols-12 md:items-end">
-            <div className="md:col-span-8">
-              <Reveal variant="scale">
-                <Eyebrow>Join the fund</Eyebrow>
-                <h2 className="mt-6 font-display text-4xl leading-[1.05] tracking-tight text-white text-balance sm:text-6xl">
-                  Help shape the future of{" "}
-                  <span className="italic text-white/60">quantitative finance</span>.
-                </h2>
-                <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-                  If you have the skills, the fund has a seat for you. Your
-                  research. Live performance. Real rewards.
-                </p>
-              </Reveal>
+      {/* Join */}
+      <Section id="join" className="bg-[var(--mint)] text-[var(--blue)]">
+        <Container>
+          <div className="grid items-end gap-20 lg:grid-cols-11">
+            <div className="lg:col-span-7">
+              <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--ink)]/55 uppercase">
+                Join the fund
+              </p>
+              <h2 className="display-tight mt-7 max-w-[14ch] text-[clamp(40px,5.6vw,88px)] leading-[0.98] tracking-[-0.035em]">
+                Because intuition is not a strategy.
+              </h2>
+              <p className="mt-7 max-w-[48ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
+                If you have the skills, the fund has a seat for you. Your research. Live
+                performance. Real rewards.
+              </p>
             </div>
-            <div className="md:col-span-4 md:text-right">
-              <Reveal delay={0.15} variant="scale">
-                <div className="flex flex-wrap gap-3 md:justify-end">
-                  <Button as="a" href="#" withArrow>
-                    Start Contributing
-                  </Button>
-                </div>
-              </Reveal>
+            <div className="flex flex-col items-start gap-3 lg:col-span-4">
+              <Button
+                as="a"
+                href={PLATFORM_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                size="lg"
+                withArrow
+              >
+                Become a Contributor
+              </Button>
+              <Button
+                as="a"
+                href="mailto:indiquant@protonmail.com"
+                variant="ghost"
+                size="lg"
+                className="text-[var(--blue)] hover:bg-[var(--blue)]/10 hover:text-[var(--blue)]"
+              >
+                Talk to the desk
+              </Button>
             </div>
           </div>
-        </div>
-      </Container>
-    </Section>
+        </Container>
+      </Section>
+
+      <Footer />
+    </div>
   );
 }

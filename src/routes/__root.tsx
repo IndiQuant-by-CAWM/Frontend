@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "IndiQuant is a quantitative research hedge fund powered by crowdsourced AI for Indian equity markets.",
       },
-      { name: "theme-color", content: "#050505" },
+      { name: "theme-color", content: "#08081a" },
       { property: "og:title", content: "IndiQuant — Crowdsourced AI Quantitative Research" },
       {
         property: "og:description",
@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap",
       },
     ],
   }),
