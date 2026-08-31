@@ -14,6 +14,7 @@ import {
   type Tournament,
 } from "@/lib/api";
 import { boardView } from "@/lib/leaderboard-view";
+import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { formatServerTime } from "@/lib/time";
 import { useAuth } from "@/lib/useAuth";
 
@@ -69,17 +70,73 @@ function LeaderboardPage() {
           </p>
         </header>
 
-        <RoundSelector selected={tournament} />
-
         {tournament == null ? (
-          <p className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-10 text-center text-sm text-white/45">
-            Choose a round to see its published standings.
-          </p>
+          <NoRoundSelected />
         ) : (
-          <Board tournamentId={tournament} />
+          <>
+            <RoundSelector selected={tournament} />
+            <Board tournamentId={tournament} />
+          </>
         )}
       </section>
     </PageShell>
+  );
+}
+
+// Before the first round is scored there is nothing to choose, and the round
+// number form on its own was a dead end: a visitor arriving from the nav had
+// no number to type and no way forward. Signed-in contributors with published
+// rounds still get the picker (RoundSelector), so this is the pre-round-001
+// and anonymous case, and it says so rather than waiting for input.
+function NoRoundSelected() {
+  const { ready, authenticated } = useAuth();
+
+  const { data } = useQuery({
+    queryKey: ["tournaments"],
+    queryFn: () => tournamentsApi.list(),
+    enabled: ready && authenticated,
+  });
+
+  const published = (data ?? []).filter(
+    (t: Tournament) => t.status === "SCORED" || t.status === "COMPLETE",
+  );
+
+  // A contributor who does have published rounds should land on the picker,
+  // not on the empty state.
+  if (published.length > 0) return <RoundSelector selected={undefined} />;
+
+  return (
+    <div className="mt-10 rounded-2xl border border-white/[0.07] bg-white/[0.015] px-6 py-14 text-center">
+      <p className="text-lg font-semibold tracking-tight text-[var(--mint)]">
+        No rounds have been scored yet.
+      </p>
+      <p className="mx-auto mt-3 max-w-[46ch] text-sm leading-relaxed text-white/55">
+        Standings publish after the first scored round. Every position on this board will be earned
+        on live market performance — nothing else.
+      </p>
+      <div className="mt-7 flex flex-wrap justify-center gap-3">
+        <Button
+          as="a"
+          href={PLATFORM_SIGNUP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          withArrow
+        >
+          Register for round 001
+        </Button>
+      </div>
+
+      {/* Kept, because a round announcement can hand someone a number before
+          the picker has anything in it — just no longer the only thing here. */}
+      <details className="mt-8 text-left">
+        <summary className="cursor-pointer text-center font-mono text-[11px] tracking-[0.18em] text-white/40 uppercase transition-colors hover:text-white/70">
+          Have a round number?
+        </summary>
+        <div className="mx-auto mt-4 max-w-sm">
+          <RoundNumberForm />
+        </div>
+      </details>
+    </div>
   );
 }
 

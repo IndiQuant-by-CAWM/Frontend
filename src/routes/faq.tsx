@@ -64,7 +64,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "Is there a cost to contribute?",
-        a: "No. Contributing is free. You bring your ideas and compute; the platform provides the arena and the evaluation.",
+        a: "No. Contributing is free and there is nothing to stake. You bring your ideas and your own compute; the platform provides the data, the arena and the evaluation.",
       },
     ],
   },
@@ -77,11 +77,11 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How are contributors rewarded?",
-        a: "Rewards follow measurable contribution — signals that add value to the collective strategy, evaluated on live results.",
+        a: "Round 001 carries no cash reward. What accrues now is standing: your scores, your rank on the public board, and the track record that comes with them. Paid rounds follow once scoring and payouts are running — and when they do, reward will track measurable contribution to the collective strategy, judged on live results and nothing else.",
       },
       {
         q: "Do I retain ownership of my work?",
-        a: "Yes. You own your models. When your signals contribute to the collective strategy, you're compensated for that contribution.",
+        a: "Yes. You own your models — contributing a signal does not hand us the model behind it. Once paid rounds begin, contribution to the collective strategy is what compensation is based on.",
       },
     ],
   },
@@ -129,7 +129,13 @@ function FAQPage() {
                 <Button as="a" href="/contact" withArrow>
                   Contact us
                 </Button>
-                <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" variant="ghost">
+                <Button
+                  as="a"
+                  href={PLATFORM_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="ghost"
+                >
                   Create an account
                 </Button>
               </div>
