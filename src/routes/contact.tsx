@@ -8,6 +8,7 @@ import { Section } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
+import { CONTACT_EMAIL } from "@/lib/contact";
 import { Field, Input, Textarea } from "@/components/site/Field";
 
 export const Route = createFileRoute("/contact")({
@@ -53,7 +54,7 @@ function ContactPage() {
                 <ul className="mt-8 space-y-6">
                   <li>
                     <a
-                      href="mailto:hello@indiquant.com"
+                      href={`mailto:${CONTACT_EMAIL}`}
                       className="group flex items-start gap-4 text-white/80 transition-colors hover:text-white"
                     >
                       <span className="mt-1 grid h-9 w-9 place-items-center rounded-lg border border-border">
@@ -61,9 +62,7 @@ function ContactPage() {
                       </span>
                       <span>
                         <span className="block text-sm text-white">Email</span>
-                        <span className="block text-sm text-muted-foreground">
-                          hello@indiquant.com
-                        </span>
+                        <span className="block text-sm text-muted-foreground">{CONTACT_EMAIL}</span>
                       </span>
                     </a>
                   </li>
@@ -77,9 +76,7 @@ function ContactPage() {
                       </span>
                       <span>
                         <span className="block text-sm text-white">LinkedIn</span>
-                        <span className="block text-sm text-muted-foreground">
-                          Coming soon
-                        </span>
+                        <span className="block text-sm text-muted-foreground">Coming soon</span>
                       </span>
                     </a>
                   </li>
@@ -115,12 +112,25 @@ function ContactForm() {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const next: Record<string, string> = {};
-    if (!String(f.get("name") ?? "").trim()) next.name = "Please enter your name.";
+    const name = String(f.get("name") ?? "").trim();
     const email = String(f.get("email") ?? "").trim();
+    const subject = String(f.get("subject") ?? "").trim();
+    const message = String(f.get("message") ?? "").trim();
+    if (!name) next.name = "Please enter your name.";
     if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "Please enter a valid email.";
-    if (!String(f.get("message") ?? "").trim()) next.message = "A few words help us reply.";
+    if (!message) next.message = "A few words help us reply.";
     setErrors(next);
-    if (Object.keys(next).length === 0) setSent(true);
+    if (Object.keys(next).length > 0) return;
+
+    // This site is a static build with no backend of its own, so the message is
+    // handed to the visitor's own mail client. Anything else here would be a
+    // success state over a discarded message.
+    const body = `${message}\n\n—\n${name}\n${email}`;
+    window.location.href =
+      `mailto:${CONTACT_EMAIL}` +
+      `?subject=${encodeURIComponent(subject || `Website enquiry from ${name}`)}` +
+      `&body=${encodeURIComponent(body)}`;
+    setSent(true);
   }
 
   return (
@@ -139,18 +149,22 @@ function ContactForm() {
               <Check size={18} strokeWidth={1.75} className="text-white" />
             </div>
             <h3 className="mt-6 font-display text-3xl leading-tight tracking-tight text-white">
-              Thank you.
+              Check your mail app.
             </h3>
             <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Your message is in. We'll be in touch shortly.
+              We've opened a draft addressed to us with your message in it. Send it and we'll reply.
+              If nothing opened, write to{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="text-white underline-offset-4 hover:underline"
+              >
+                {CONTACT_EMAIL}
+              </a>
+              .
             </p>
             <div className="mt-8 flex justify-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSent(false)}
-              >
-                Send another
+              <Button variant="ghost" size="sm" onClick={() => setSent(false)}>
+                Back to the form
               </Button>
             </div>
           </motion.div>
@@ -170,7 +184,13 @@ function ContactForm() {
                 <Input id="name" name="name" placeholder="Your name" autoComplete="name" />
               </Field>
               <Field label="Email" htmlFor="email" error={errors.email}>
-                <Input id="email" name="email" type="email" placeholder="you@domain.com" autoComplete="email" />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@domain.com"
+                  autoComplete="email"
+                />
               </Field>
             </div>
             <Field label="Subject" hint="Optional" htmlFor="subject">
@@ -193,6 +213,3 @@ function ContactForm() {
     </div>
   );
 }
-
-
-
