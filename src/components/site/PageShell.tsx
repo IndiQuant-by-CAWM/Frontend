@@ -88,7 +88,8 @@ export function PageHero({
                 <span className="italic text-white/65">{italic}</span>
               </>
             )}
-            {tail && <> {tail}</>}
+            {/* Punctuation, so no leading space. */}
+            {tail}
           </motion.h1>
 
           <motion.p

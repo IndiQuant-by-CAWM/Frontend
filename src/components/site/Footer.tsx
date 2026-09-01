@@ -1,3 +1,4 @@
+import { CONTACT_EMAIL } from "@/lib/contact";
 import { PLATFORM_SIGNIN_URL, PLATFORM_URL } from "@/lib/platform";
 import { Container } from "./Container";
 
@@ -6,10 +7,11 @@ const explore = [
   { href: "/contributors", label: "Contributor journey" },
   { href: "/leaderboard", label: "Rankings" },
   { href: "/investors", label: "Investors" },
+  { href: "/careers", label: "Careers" },
 ];
 
 const desk = [
-  { href: "mailto:indiquant@protonmail.com", label: "indiquant@protonmail.com" },
+  { href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
