@@ -66,7 +66,7 @@ function LeaderboardPage() {
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-white/55">
             Published standings for a scored research round. A round appears here only once its
-            batch has been scored — there is no partial or provisional view.
+            batch has been scored; there is no partial or provisional view.
           </p>
         </header>
 
@@ -112,7 +112,7 @@ function NoRoundSelected() {
       </p>
       <p className="mx-auto mt-3 max-w-[46ch] text-sm leading-relaxed text-white/55">
         Standings publish after the first scored round. Every position on this board will be earned
-        on live market performance — nothing else.
+        on live market performance. Nothing else.
       </p>
       <div className="mt-7 flex flex-wrap justify-center gap-3">
         <Button
@@ -349,7 +349,7 @@ function Board({ tournamentId }: { tournamentId: number }) {
           {watermark && <>Published {formatServerTime(watermark) ?? watermark}</>}
           {view.stale && (
             <span className={watermark ? "ml-2 text-white/25" : "text-white/25"}>
-              {watermark ? "· " : ""}live updates paused — could not reach the server
+              {watermark ? "· " : ""}live updates paused, could not reach the server
             </span>
           )}
         </p>

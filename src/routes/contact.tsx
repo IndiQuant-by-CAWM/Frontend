@@ -18,7 +18,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Get in touch with the IndiQuant team — for contributors, partners, and long-term investors.",
+          "Get in touch with the IndiQuant team, for contributors, partners, and long-term investors.",
       },
       { property: "og:title", content: "Contact — IndiQuant" },
       {
@@ -86,8 +86,8 @@ function ContactPage() {
                   For contributor questions, the fastest path is the{" "}
                   <a href="/faq" className="text-white underline-offset-4 hover:underline">
                     FAQ
-                  </a>{" "}
-                  — most answers live there.
+                  </a>
+                  . Most answers live there.
                 </p>
               </Reveal>
             </div>
@@ -125,7 +125,7 @@ function ContactForm() {
     // This site is a static build with no backend of its own, so the message is
     // handed to the visitor's own mail client. Anything else here would be a
     // success state over a discarded message.
-    const body = `${message}\n\n—\n${name}\n${email}`;
+    const body = `${message}\n\n--\n${name}\n${email}`;
     window.location.href =
       `mailto:${CONTACT_EMAIL}` +
       `?subject=${encodeURIComponent(subject || `Website enquiry from ${name}`)}` +

@@ -58,9 +58,15 @@ function ContributorsPage() {
         title="Research that pays"
         italic="on merit"
         tail="alone."
-        description="Contribute models to a live quantitative strategy. No titles, no gatekeepers — only measurable edge."
+        description="Contribute models to a live quantitative strategy. No titles, no gatekeepers. Only measurable edge."
       >
-        <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" withArrow>
+        <Button
+          as="a"
+          href={PLATFORM_SIGNUP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          withArrow
+        >
           Create your account
         </Button>
         <Button as="a" href="/faq" variant="ghost">
@@ -80,9 +86,24 @@ function ContributorsPage() {
 
 function WhyJoin() {
   const items = [
-    { icon: Trophy, k: "01", t: "Rewarded on performance.", b: "Your compensation follows the live outcome of your models — not politics, not seniority." },
-    { icon: Sparkles, k: "02", t: "Work on real markets.", b: "Every submission is evaluated against live Indian equity data, round after round." },
-    { icon: Users, k: "03", t: "Join a research collective.", b: "Independent contributors, one shared strategy. Sharpen your edge against the best." },
+    {
+      icon: Trophy,
+      k: "01",
+      t: "Rewarded on performance.",
+      b: "Your compensation follows the live outcome of your models. Politics and seniority do not enter into it.",
+    },
+    {
+      icon: Sparkles,
+      k: "02",
+      t: "Work on real markets.",
+      b: "Every submission is evaluated against live Indian equity data, round after round.",
+    },
+    {
+      icon: Users,
+      k: "03",
+      t: "Join a research collective.",
+      b: "Independent contributors, one shared strategy. Sharpen your edge against the best.",
+    },
   ];
   return (
     <Section>
@@ -103,7 +124,9 @@ function WhyJoin() {
                   <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
                     <it.icon size={16} strokeWidth={1.5} className="text-white/80" />
                   </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">{it.k}</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+                    {it.k}
+                  </p>
                 </div>
                 <h3 className="mt-8 text-lg font-medium tracking-tight text-white">{it.t}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.b}</p>
@@ -140,8 +163,8 @@ function WhoCanJoin() {
           <div className="md:col-span-7 md:col-start-6">
             <Reveal delay={0.1} variant="blur">
               <p className="text-xl leading-relaxed text-white/85 text-balance">
-                We care about the work, not the pedigree. If you can model
-                markets — or want to learn — you belong here.
+                We look at the work itself. If you can model markets, or want to learn, you belong
+                here.
               </p>
               <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border/60 sm:grid-cols-2">
                 {rows.map((r) => (
@@ -182,8 +205,7 @@ function JourneyHighLevel() {
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                Six steps in a continuous loop. The details evolve — the shape
-                stays clear.
+                Six steps in a continuous loop. The details evolve; the shape stays clear.
               </p>
             </Reveal>
           </div>
@@ -196,11 +218,19 @@ function JourneyHighLevel() {
               <Reveal key={s.k} delay={i * 0.09} variant="sequential">
                 <div className="group relative flex flex-col items-center text-center">
                   <div className="relative z-10 grid h-[68px] w-[68px] place-items-center rounded-full border border-border bg-background transition-all duration-500 group-hover:border-white/40 group-hover:shadow-[0_0_0_6px_rgba(255,255,255,0.03)]">
-                    <s.icon size={20} strokeWidth={1.5} className="text-white/70 transition-colors group-hover:text-white" />
+                    <s.icon
+                      size={20}
+                      strokeWidth={1.5}
+                      className="text-white/70 transition-colors group-hover:text-white"
+                    />
                   </div>
-                  <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">{s.k}</p>
+                  <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                    {s.k}
+                  </p>
                   <h3 className="mt-2 text-sm font-medium tracking-tight text-white">{s.t}</h3>
-                  <p className="mt-2 max-w-[16ch] text-xs leading-relaxed text-muted-foreground">{s.d}</p>
+                  <p className="mt-2 max-w-[16ch] text-xs leading-relaxed text-muted-foreground">
+                    {s.d}
+                  </p>
                 </div>
               </Reveal>
             ))}
@@ -227,12 +257,24 @@ function JourneyHighLevel() {
 
 function Skills() {
   const items = [
-    { icon: Brain, t: "Machine Learning", d: "Supervised, unsupervised, deep — the toolbox is open." },
+    {
+      icon: Brain,
+      t: "Machine Learning",
+      d: "Supervised, unsupervised, deep; the toolbox is open.",
+    },
     { icon: Code2, t: "Python", d: "Our lingua franca. NumPy, pandas, PyTorch, scikit-learn." },
-    { icon: Database, t: "Feature Engineering", d: "The craft of turning raw signals into intuition." },
+    {
+      icon: Database,
+      t: "Feature Engineering",
+      d: "The craft of turning raw signals into intuition.",
+    },
     { icon: LineChart, t: "Statistics", d: "Reasoning under uncertainty is the job." },
     { icon: Sparkles, t: "Curiosity", d: "The one skill that keeps the others sharp." },
-    { icon: GraduationCap, t: "Discipline", d: "Consistency beats brilliance across enough rounds." },
+    {
+      icon: GraduationCap,
+      t: "Discipline",
+      d: "Consistency beats brilliance across enough rounds.",
+    },
   ];
   return (
     <Section>
@@ -249,8 +291,8 @@ function Skills() {
           <div className="md:col-span-5 md:col-start-8 md:self-end">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                None of these are strict requirements. Many of the best
-                contributors arrive missing several — and grow into them.
+                None of these are strict requirements. Many of the best contributors arrive missing
+                several, then grow into them.
               </p>
             </Reveal>
           </div>
@@ -281,10 +323,22 @@ function Skills() {
 
 function FAQ() {
   const qs = [
-    { q: "Do I need a finance background?", a: "No. Many contributors come from ML, physics, engineering, or research — not finance. The platform teaches the domain as you go." },
-    { q: "Is there a cost to join?", a: "Contributing to IndiQuant is free. You bring your ideas and your compute; we provide the arena." },
-    { q: "How is my work evaluated?", a: "Every model is scored on live, out-of-sample market performance. The rules are the same for everyone." },
-    { q: "Do I own my models?", a: "You retain ownership of your work. When your signals contribute to the collective strategy, you're rewarded for that contribution." },
+    {
+      q: "Do I need a finance background?",
+      a: "No. Many contributors come from ML, physics, engineering or research rather than finance. The platform teaches the domain as you go.",
+    },
+    {
+      q: "Is there a cost to join?",
+      a: "Contributing to IndiQuant is free. You bring your ideas and your compute; we provide the arena.",
+    },
+    {
+      q: "How is my work evaluated?",
+      a: "Every model is scored on live, out-of-sample market performance. The rules are the same for everyone.",
+    },
+    {
+      q: "Do I own my models?",
+      a: "You retain ownership of your work. When your signals contribute to the collective strategy, you're rewarded for that contribution.",
+    },
   ];
   return (
     <Section>
@@ -371,14 +425,19 @@ function FinalCTA() {
         <Reveal variant="scale">
           <div className="mx-auto max-w-4xl text-center">
             <h2 className="font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
-              Bring your models.{" "}
-              <span className="italic text-white/65">Meet the market.</span>
+              Bring your models. <span className="italic text-white/65">Meet the market.</span>
             </h2>
             <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
               Create your account and start with the next research round.
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-              <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" withArrow>
+              <Button
+                as="a"
+                href={PLATFORM_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                withArrow
+              >
                 Create your account
               </Button>
               <Button as="a" href="/contact" variant="ghost">

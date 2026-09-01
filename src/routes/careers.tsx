@@ -83,7 +83,7 @@ function NotHiring() {
             with a team, a location and a way to apply.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-white/60">
-            There is no waiting list and no general application to submit — we would only be
+            There is no waiting list and no general application to submit. We would only be
             collecting CVs we could not act on.
           </p>
         </div>
@@ -98,7 +98,7 @@ function NotHiring() {
           <p className="mt-5 text-sm leading-relaxed text-white/65">
             The platform is open to independent researchers now, and it is the honest route into
             IndiQuant: you build models, submit predictions, and your scores and rank become a
-            public track record. Round 001 carries no cash reward — what accrues is standing.
+            public track record. Round 001 carries no cash reward. What accrues is standing.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-white/65">
             It is also how we get to know people's work before we ever get to know their CV.
@@ -129,13 +129,13 @@ function NotHiring() {
             </h2>
             <p className="mt-2 max-w-[52ch] text-sm leading-relaxed text-white/60">
               If your work is genuinely unusual and you think we should know about it, write to the
-              desk. We read everything, and we answer honestly — including when the answer is that
-              we have nothing for you yet.
+              desk. We read everything, and we answer honestly, including when the answer is that we
+              have nothing for you yet.
             </p>
           </div>
           <Button
             as="a"
-            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Careers — introduction")}`}
+            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Careers introduction")}`}
             variant="ghost"
             className="shrink-0"
           >

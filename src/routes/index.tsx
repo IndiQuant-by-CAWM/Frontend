@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "A quantitative research hedge fund shaped by the collective intelligence of independent minds — rewarded on live performance.",
+          "A quantitative research hedge fund shaped by the collective intelligence of independent minds, rewarded on live performance.",
       },
     ],
   }),
@@ -71,7 +71,7 @@ const principles = [
   {
     k: "03",
     title: "Merit is measurable.",
-    body: "Contributors are rewarded on live performance. Nothing else — no titles, no gatekeepers.",
+    body: "Contributors are rewarded on live performance. Nothing else. No titles, no gatekeepers.",
     tag: "Meritocratic",
   },
 ];
@@ -101,7 +101,7 @@ const platformSteps = [
   {
     k: "01",
     t: "Download the dataset",
-    d: "Obfuscated, cross-sectional market data. No tickers, no company names — only features and a target.",
+    d: "Obfuscated, cross-sectional market data. No tickers, no company names. Only features and a target.",
   },
   {
     k: "02",
@@ -138,7 +138,7 @@ const stacks = [
   },
   {
     t: "Indian Equity Markets",
-    d: "The arena — NSE and BSE, deeply understood.",
+    d: "The arena: NSE and BSE, deeply understood.",
     Icon: TrendingUp,
   },
   {
@@ -255,7 +255,7 @@ function Home() {
                 <p className="mt-6.5 max-w-[52ch] text-[17px] leading-[1.7] text-[var(--ink-700)]">
                   Math-based rankings reward real predictive power, not lucky backtests. Standing on
                   the board is a running record of the alpha a researcher has added to the
-                  collective — measured in the only currency that clears.
+                  collective, measured in the only currency that clears.
                 </p>
                 <dl className="mt-11 grid gap-px border border-[var(--blue)]/18 bg-[var(--blue)]/18 sm:grid-cols-3">
                   {approachFacts.map((f) => (
@@ -345,8 +345,8 @@ function Home() {
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
-                This site explains the fund. Everything you do as a contributor — data, models,
-                submissions — happens on the platform.
+                This site explains the fund. Everything you do as a contributor happens on the
+                platform: data, models, submissions.
               </p>
             </div>
 
@@ -458,7 +458,7 @@ function Home() {
                 </p>
                 <p className="mx-auto mt-3 max-w-[46ch] text-[15px] leading-[1.7] text-white/55">
                   Rankings publish after the first scored round. Every position on this board will
-                  be earned on live market performance — nothing else.
+                  be earned on live market performance. Nothing else.
                 </p>
                 <div className="mt-7">
                   <Button

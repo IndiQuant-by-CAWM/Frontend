@@ -41,7 +41,7 @@ export const Route = createFileRoute("/about")({
       {
         property: "og:description",
         content:
-          "The philosophy, purpose, and ambition behind IndiQuant — collective intelligence meets AI-driven quantitative research.",
+          "The philosophy, purpose, and ambition behind IndiQuant: collective intelligence meets AI-driven quantitative research.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/about" },
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "twitter:description",
         content:
-          "Building the future of quantitative intelligence — through collective research and AI.",
+          "Building the future of quantitative intelligence, through collective research and AI.",
       },
     ],
     links: [{ rel: "canonical", href: "/about" }],
@@ -154,7 +154,7 @@ function Hero() {
             }}
             className="mx-auto mt-10 max-w-xl text-[15px] leading-[1.7] text-white/60 sm:text-base"
           >
-            IndiQuant is a collaborative, AI-powered quantitative research platform — a place where
+            IndiQuant is a collaborative, AI-powered quantitative research platform: a place where
             independent contributors help shape the future of investment research.
           </motion.p>
 
@@ -196,12 +196,12 @@ function WhyExist() {
           <div className="md:col-span-7 md:col-start-6">
             <Reveal delay={0.15} variant="blur">
               <p className="text-xl leading-relaxed text-white/85 text-balance">
-                For decades, quantitative research has been confined to small internal teams — a
+                For decades, quantitative research has been confined to small internal teams, a
                 handful of minds, working in isolation, behind institutional walls.
               </p>
               <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
                 IndiQuant exists to explore a different possibility: that collective intelligence,
-                guided by AI, can unlock a broader, deeper, more resilient kind of research — one no
+                guided by AI, can unlock a broader, deeper, more resilient kind of research, one no
                 single team could produce alone.
               </p>
             </Reveal>
@@ -225,19 +225,19 @@ function Philosophy() {
       icon: Microscope,
       k: "02",
       title: "Research First",
-      body: "Every decision begins with evidence. We optimize for insight, not narrative — for what is measurable, repeatable, and true.",
+      body: "Every decision begins with evidence. We optimize for insight over narrative, for what can be measured and repeated.",
     },
     {
       icon: Hourglass,
       k: "03",
       title: "Long-term Thinking",
-      body: "Enduring edge is compounded, not chased. We build for the decade ahead, not the quarter behind.",
+      body: "Enduring edge is compounded over time. We build for the decade ahead.",
     },
     {
       icon: Cpu,
       k: "04",
       title: "Technology with Purpose",
-      body: "AI is a means, not a mission. We use it where it deepens research and clarifies decisions — never as decoration.",
+      body: "AI is a means, not a mission. We use it where it deepens research and clarifies decisions, never as decoration.",
     },
   ];
 
@@ -309,7 +309,7 @@ function Approach() {
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                Our process is deliberately simple in shape and deep in practice — a continuous loop
+                Our process is deliberately simple in shape and deep in practice: a continuous loop
                 where research, evaluation, and collaboration reinforce one another.
               </p>
             </Reveal>
@@ -383,7 +383,7 @@ function Vision() {
           </Reveal>
           <Reveal delay={0.3} variant="fade">
             <p className="mx-auto mt-10 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Not a product. Not a platform. An ecosystem — where research compounds, contributors
+              Not a product. Not a platform. An ecosystem, where research compounds, contributors
               grow, and intelligence becomes truly collective.
             </p>
           </Reveal>
@@ -398,7 +398,7 @@ function Principles() {
   const items = [
     { icon: Eye, t: "Transparency", d: "Clear rules. Clear evaluation. No hidden gatekeepers." },
     { icon: Microscope, t: "Research", d: "Depth over volume. Evidence over opinion." },
-    { icon: Sparkles, t: "Innovation", d: "Curiosity is our raw material — everywhere, always." },
+    { icon: Sparkles, t: "Innovation", d: "Curiosity is our raw material: everywhere, always." },
     { icon: Handshake, t: "Collaboration", d: "The best minds sharpen against one another." },
     { icon: Crosshair, t: "Precision", d: "Every detail matters when compounding edge." },
     {
@@ -469,7 +469,7 @@ function FinalCTA() {
               .
             </h2>
             <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              If you think in models, patterns, and probabilities — there is a seat for you here.
+              If you think in models, patterns, and probabilities, there is a seat for you here.
               Contribute your research. Sharpen your edge. Grow with a fund built by many.
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
