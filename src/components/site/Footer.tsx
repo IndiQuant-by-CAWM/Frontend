@@ -34,7 +34,7 @@ export function Footer() {
             </p>
             <p className="mt-5.5 max-w-[38ch] text-[15px] leading-[1.7] text-white/60">
               A quantitative research hedge fund shaped by the collective intelligence of
-              independent minds — rewarded on live performance.
+              independent minds, rewarded on live performance.
             </p>
           </div>
 

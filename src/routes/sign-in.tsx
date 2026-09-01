@@ -50,8 +50,8 @@ function SignInRedirect() {
       footer={null}
     >
       <p className="text-sm text-muted-foreground">
-        Signing in happens on the IndiQuant platform. If you are not redirected
-        automatically, use the button below.
+        Signing in happens on the IndiQuant platform. If you are not redirected automatically, use
+        the button below.
       </p>
       <Button as="a" href={PLATFORM_SIGNIN_URL} withArrow className="mt-4">
         Sign in on the platform

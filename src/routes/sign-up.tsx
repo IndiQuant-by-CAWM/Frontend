@@ -30,7 +30,10 @@ export const Route = createFileRoute("/sign-up")({
   head: () => ({
     meta: [
       { title: "Create Account — IndiQuant" },
-      { name: "description", content: "Create your IndiQuant account on the participant platform." },
+      {
+        name: "description",
+        content: "Create your IndiQuant account on the participant platform.",
+      },
       { name: "robots", content: "noindex" },
     ],
   }),

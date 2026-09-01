@@ -33,7 +33,7 @@ export const Route = createFileRoute("/investors")({
       {
         property: "og:description",
         content:
-          "Our research philosophy, technology, and long-term vision — for partners who think in decades.",
+          "Our research philosophy, technology, and long-term vision, for partners who think in decades.",
       },
       { property: "og:url", content: "/investors" },
     ],
@@ -50,7 +50,7 @@ function InvestorsPage() {
         title="Research"
         italic="compounded"
         tail="across a collective."
-        description="A long-horizon approach to quantitative research — built on AI, discipline, and the intelligence of many independent minds."
+        description="A long-horizon approach to quantitative research, built on AI, discipline, and the intelligence of many independent minds."
       >
         <Button as="a" href="/contact" withArrow>
           Get in touch
@@ -68,9 +68,21 @@ function InvestorsPage() {
 
 function Philosophy() {
   const items = [
-    { icon: Microscope, t: "Evidence over narrative.", d: "Every conviction begins with a measurement, not a story." },
-    { icon: Hourglass, t: "Long-horizon discipline.", d: "We optimize for durable edge — not for the next quarter." },
-    { icon: Compass, t: "Repeatable process.", d: "Structure protects the research from the mood of the market." },
+    {
+      icon: Microscope,
+      t: "Evidence over narrative.",
+      d: "Every conviction begins with a measurement, not a story.",
+    },
+    {
+      icon: Hourglass,
+      t: "Long-horizon discipline.",
+      d: "We optimize for durable edge over quarterly performance.",
+    },
+    {
+      icon: Compass,
+      t: "Repeatable process.",
+      d: "Structure protects the research from the mood of the market.",
+    },
   ];
   return (
     <Section>
@@ -87,9 +99,9 @@ function Philosophy() {
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1} variant="blur">
               <p className="text-xl leading-relaxed text-white/85 text-balance">
-                We treat quantitative research the way great labs treat
-                science — with skepticism, patience, and rigor. Nothing enters
-                the strategy that has not been tested against reality.
+                We treat quantitative research the way great labs treat science, with skepticism,
+                patience, and rigor. Nothing enters the strategy that has not been tested against
+                reality.
               </p>
             </Reveal>
           </div>
@@ -119,7 +131,11 @@ function Technology() {
     { icon: Sigma, t: "Quantitative Research", d: "Grounds every model in measurable evidence." },
     { icon: LineChart, t: "Statistics", d: "Distinguishes real edge from randomness." },
     { icon: Network, t: "Signal Aggregation", d: "Combines contributor alpha into one strategy." },
-    { icon: Sparkles, t: "Continuous Evaluation", d: "Every round is a fresh test against reality." },
+    {
+      icon: Sparkles,
+      t: "Continuous Evaluation",
+      d: "Every round is a fresh test against reality.",
+    },
   ];
   return (
     <Section>
@@ -136,8 +152,8 @@ function Technology() {
           <div className="md:col-span-5 md:col-start-8 md:self-end">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                A stack built to turn thousands of independent ideas into one
-                disciplined, continuously-learning strategy.
+                A stack built to turn thousands of independent ideas into one disciplined,
+                continuously-learning strategy.
               </p>
             </Reveal>
           </div>
@@ -180,15 +196,14 @@ function LongTermVision() {
           <Reveal delay={0.15} variant="blur">
             <h2 className="mt-8 font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
               Building one of the world's leading{" "}
-              <span className="italic text-white/65">AI-powered</span>{" "}
-              quantitative research ecosystems.
+              <span className="italic text-white/65">AI-powered</span> quantitative research
+              ecosystems.
             </h2>
           </Reveal>
           <Reveal delay={0.3} variant="fade">
             <p className="mx-auto mt-10 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Not a product. Not a platform. An ecosystem — where research
-              compounds, contributors grow, and intelligence becomes truly
-              collective.
+              Not a product. Not a platform. An ecosystem, where research compounds, contributors
+              grow, and intelligence becomes truly collective.
             </p>
           </Reveal>
         </div>
@@ -199,9 +214,24 @@ function LongTermVision() {
 
 function WhyCollective() {
   const items = [
-    { icon: Users, k: "01", t: "Diversity of thought", d: "Independent minds cover more ground than any single team." },
-    { icon: Network, k: "02", t: "Resilience", d: "A portfolio of ideas is more robust than any single view." },
-    { icon: Sparkles, k: "03", t: "Compounding research", d: "Every round leaves the system a little sharper than the last." },
+    {
+      icon: Users,
+      k: "01",
+      t: "Diversity of thought",
+      d: "Independent minds cover more ground than any single team.",
+    },
+    {
+      icon: Network,
+      k: "02",
+      t: "Resilience",
+      d: "A portfolio of ideas is more robust than any single view.",
+    },
+    {
+      icon: Sparkles,
+      k: "03",
+      t: "Compounding research",
+      d: "Every round leaves the system a little sharper than the last.",
+    },
   ];
   return (
     <Section>
@@ -218,9 +248,9 @@ function WhyCollective() {
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                A single research team is a single point of view. A collective,
-                properly aggregated, is a broader lens on the market — more
-                perspectives, more tested ideas, more chances to see clearly.
+                A single research team is a single point of view. A collective, properly aggregated,
+                is a broader lens on the market: more perspectives, more tested ideas, more chances
+                to see clearly.
               </p>
             </Reveal>
           </div>
@@ -233,7 +263,9 @@ function WhyCollective() {
                   <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
                     <it.icon size={16} strokeWidth={1.5} className="text-white/80" />
                   </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">{it.k}</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+                    {it.k}
+                  </p>
                 </div>
                 <h3 className="mt-8 text-lg font-medium tracking-tight text-white">{it.t}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.d}</p>

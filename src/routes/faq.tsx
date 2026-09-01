@@ -39,7 +39,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "What is crowdsourced AI?",
-        a: "It is the practice of aggregating many independent AI models — built by different people, using different approaches — into one collective system. The variance across contributors becomes a source of edge.",
+        a: "It is the practice of aggregating many independent AI models, built by different people using different approaches, into one collective system. The variance across contributors becomes a source of edge.",
       },
       {
         q: "Why focus on Indian equity markets?",
@@ -52,7 +52,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
     items: [
       {
         q: "Who can become a contributor?",
-        a: "Anyone with the curiosity and discipline to model markets. Data scientists, engineers, statisticians, physicists, self-taught practitioners — background matters far less than the quality of the work.",
+        a: "Anyone with the curiosity and discipline to model markets. Data scientists, engineers, statisticians, physicists, self-taught practitioners. Background matters far less than the quality of the work.",
       },
       {
         q: "What skills are useful?",
@@ -60,7 +60,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How do I get started?",
-        a: "Create an account, explore the platform, and take part in the next research round. You can start small — even a first submission teaches you something the platform can measure.",
+        a: "Create an account, explore the platform, and take part in the next research round. You can start small; even a first submission teaches you something the platform can measure.",
       },
       {
         q: "Is there a cost to contribute?",
@@ -77,11 +77,11 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How are contributors rewarded?",
-        a: "Round 001 carries no cash reward. What accrues now is standing: your scores, your rank on the public board, and the track record that comes with them. Paid rounds follow once scoring and payouts are running — and when they do, reward will track measurable contribution to the collective strategy, judged on live results and nothing else.",
+        a: "Round 001 carries no cash reward. What accrues now is standing: your scores, your rank on the public board, and the track record that comes with them. Paid rounds follow once scoring and payouts are running, and when they do, reward will track measurable contribution to the collective strategy, judged on live results and nothing else.",
       },
       {
         q: "Do I retain ownership of my work?",
-        a: "Yes. You own your models — contributing a signal does not hand us the model behind it. Once paid rounds begin, contribution to the collective strategy is what compensation is based on.",
+        a: "Yes. You own your models; contributing a signal does not hand us the model behind it. Once paid rounds begin, contribution to the collective strategy is what compensation is based on.",
       },
     ],
   },
