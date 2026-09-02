@@ -49,6 +49,11 @@ route or a file under `public/`.
   reserved before decode, plus `loading="lazy"`, `decoding="async"` and real `alt` text.
   See `src/components/site/AwardBadge.tsx` for the reference implementation.
 - **External links** always use `target="_blank" rel="noopener noreferrer"`.
+- **The F6S award badge has two homes and stays there**: the footer (which covers every
+  page that renders the site `Footer`) and the Recognition strip on the landing page.
+  Do not add it to new pages -- the footer already reaches them, and repeating one award
+  across a page reads as insistence rather than credibility. It is also a dated claim
+  ("#2 · Aug '26"), so when it ages, update the artwork and the strip's caption together.
 - The site is **permanently dark**. There is no theme toggle and no `.dark` class is
   ever applied — the `@custom-variant dark` in `src/styles.css` is shadcn boilerplate.
   Anything placed on the ink ground needs to work there without a light variant.

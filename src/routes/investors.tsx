@@ -17,7 +17,6 @@ import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Card } from "@/components/site/Card";
-import { AwardBadge } from "@/components/site/AwardBadge";
 import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 
@@ -56,7 +55,6 @@ function InvestorsPage() {
         <Button as="a" href="/contact" withArrow>
           Get in touch
         </Button>
-        <AwardBadge size="lg" />
       </PageHero>
 
       <Philosophy />

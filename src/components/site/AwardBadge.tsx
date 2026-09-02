@@ -16,6 +16,16 @@ import { cn } from "@/lib/utils";
  * than describing the picture.
  */
 
+/**
+ * DATED CLAIM. "#2 · Aug '26" states a ranking at a point in time, not a standing
+ * fact. It has exactly two homes -- the footer (which reaches every page rendering
+ * the site Footer) and the Recognition strip on the landing page -- and it should not
+ * be added to further surfaces: repeating one award reads as insistence, not
+ * credibility. When it stops being current, update or remove BOTH the artwork and the
+ * caption in that strip (src/routes/index.tsx), which repeats the rank and the date in
+ * words and would otherwise go stale independently of the image.
+ */
+
 /** The F6S profile the badge links out to. */
 export const F6S_PROFILE_URL = "https://www.f6s.com/indiquant";
 

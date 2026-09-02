@@ -165,10 +165,7 @@ function Home() {
         {/* Hero */}
         <section className="relative z-2 pt-[210px] pb-[150px]">
           <Container>
-            <div className="flex flex-wrap items-center gap-3">
-              <Badge>Round 001 · Contributor onboarding open</Badge>
-              <AwardBadge size="sm" />
-            </div>
+            <Badge>Round 001 · Contributor onboarding open</Badge>
 
             <h1 className="display-tight mt-8 max-w-[14ch] sm:mt-11 text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em]">
               Many models. <span className="text-[var(--mint)]">One truth.</span>

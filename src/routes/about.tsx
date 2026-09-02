@@ -26,7 +26,6 @@ import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Card } from "@/components/site/Card";
 import { Badge } from "@/components/site/Badge";
-import { AwardBadge } from "@/components/site/AwardBadge";
 import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/about")({
@@ -173,7 +172,6 @@ function Hero() {
             <Button as="a" href="/#contribute" withArrow>
               Become a Contributor
             </Button>
-            <AwardBadge size="lg" />
           </motion.div>
         </motion.div>
       </Container>
