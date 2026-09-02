@@ -9,6 +9,7 @@ import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Card } from "@/components/site/Card";
 import { Badge } from "@/components/site/Badge";
+import { AwardBadge } from "@/components/site/AwardBadge";
 import { GlobeScene } from "@/components/site/GlobeScene";
 import { SkipLink } from "@/components/site/SkipLink";
 
@@ -164,7 +165,10 @@ function Home() {
         {/* Hero */}
         <section className="relative z-2 pt-[210px] pb-[150px]">
           <Container>
-            <Badge>Round 001 · Contributor onboarding open</Badge>
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge>Round 001 · Contributor onboarding open</Badge>
+              <AwardBadge size="sm" />
+            </div>
 
             <h1 className="display-tight mt-8 max-w-[14ch] sm:mt-11 text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em]">
               Many models. <span className="text-[var(--mint)]">One truth.</span>
@@ -211,6 +215,23 @@ function Home() {
                 </div>
               ))}
             </dl>
+          </Container>
+        </section>
+
+        {/* Recognition — a thin band rather than a full Section, so it reads as
+          a continuation of the hero stats strip above it, not a third stop
+          before the marquee. */}
+        <section aria-labelledby="recognition-heading" className="relative z-2 py-8">
+          <Container>
+            <div className="flex flex-col gap-5 border-y border-white/14 py-8 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
+              <div>
+                <Eyebrow id="recognition-heading">Recognition</Eyebrow>
+                <p className="mt-3 max-w-[46ch] text-[16px] leading-[1.65] text-white/65">
+                  Ranked #2 Top Company in Research by F6S, August 2026.
+                </p>
+              </div>
+              <AwardBadge size="lg" className="self-start sm:self-auto" />
+            </div>
           </Container>
         </section>
 

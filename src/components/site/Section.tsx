@@ -19,9 +19,18 @@ export function Section({
 }
 
 // ALL-CAPS mono eyebrow — the brand's standard section label.
-export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
+export function Eyebrow({
+  children,
+  className,
+  id,
+}: {
+  children: ReactNode;
+  className?: string;
+  id?: string;
+}) {
   return (
     <p
+      id={id}
       className={cn(
         "font-mono text-[11px] tracking-[0.22em] text-[var(--mint)] uppercase",
         className,

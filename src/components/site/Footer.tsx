@@ -1,5 +1,6 @@
 import { CONTACT_EMAIL } from "@/lib/contact";
 import { PLATFORM_SIGNIN_URL, PLATFORM_URL } from "@/lib/platform";
+import { AwardBadge } from "./AwardBadge";
 import { Container } from "./Container";
 
 const explore = [
@@ -36,6 +37,9 @@ export function Footer() {
               A quantitative research hedge fund shaped by the collective intelligence of
               independent minds, rewarded on live performance.
             </p>
+            <div className="mt-7">
+              <AwardBadge size="sm" />
+            </div>
           </div>
 
           <nav aria-label="Platform" className="md:col-span-3">
