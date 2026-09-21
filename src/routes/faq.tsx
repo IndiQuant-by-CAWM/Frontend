@@ -60,7 +60,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How do I get started?",
-        a: "Create an account on platform.indiquantresearch.in, verify your email, ask the desk for your model id, install the SDK, and submit to the next Core round: published 06:30 IST every NSE session, closing 09:00 IST.",
+        a: "Create an account on platform.indiquantresearch.in, verify your email, create a model under a public handle on your account page, install the SDK, and submit to the next Core round: published 06:30 IST every NSE session, closing 09:00 IST.",
       },
       {
         q: "Is there a cost to contribute?",
@@ -77,7 +77,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How are contributors rewarded?",
-        a: "No grant has been paid yet. What accrues now is standing: your scores, your rank, and the track record that comes with them. A company-funded research-grant programme for demonstrated skill is planned and is with counsel for review; when it runs, grants are discretionary, periodic, India-resident only in the first phase, and never require a fee, deposit or stake from you.",
+        a: "No grant has been paid yet. What accrues now is standing: your scores, your rank, and the track record that comes with them. A company-funded research-grant programme for demonstrated skill is planned and is with counsel for review; when it runs, grants are discretionary, periodic, India-resident only in the first phase, and never require a fee or deposit from you.",
       },
       {
         q: "Do I retain ownership of my work?",

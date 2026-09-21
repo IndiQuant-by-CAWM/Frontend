@@ -329,7 +329,7 @@ function FAQ() {
     },
     {
       q: "Is there a cost to join?",
-      a: "Contributing to IndiQuant is free. No fee, no deposit, no stake, ever. You bring your ideas and your compute; we provide the data and the scoring.",
+      a: "Contributing to IndiQuant is free. No fee and no deposit, ever. You bring your ideas and your compute; we provide the data and the scoring.",
     },
     {
       q: "How is my work evaluated?",
