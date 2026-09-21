@@ -35,7 +35,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
     items: [
       {
         q: "What is IndiQuant?",
-        a: "IndiQuant is a quantitative research initiative powered by crowdsourced AI. Independent contributors build predictive models; the strongest signals combine into a single, continuously-learning strategy focused on Indian equity markets.",
+        a: "IndiQuant is a crowdsourced quantitative research platform for Indian equities. Independent contributors build predictive models on obfuscated NSE data; each submission is scored on realised outcomes, and the signals that hold up are combined into one paper-traded strategy. No client capital is managed and nothing is traded live today.",
       },
       {
         q: "What is crowdsourced AI?",
@@ -60,11 +60,11 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How do I get started?",
-        a: "Create an account, explore the platform, and take part in the next research round. You can start small; even a first submission teaches you something the platform can measure.",
+        a: "Create an account on platform.indiquantresearch.in, verify your email, ask the desk for your model id, install the SDK, and submit to the next Core round: published 06:30 IST every NSE session, closing 09:00 IST.",
       },
       {
         q: "Is there a cost to contribute?",
-        a: "No. Contributing is free and there is nothing to stake. You bring your ideas and your own compute; the platform provides the data, the arena and the evaluation.",
+        a: "No. Contributing is free and you never put capital at risk. You bring your ideas and your own compute; the platform provides the data and the evaluation.",
       },
     ],
   },
@@ -73,15 +73,15 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
     items: [
       {
         q: "How is my work evaluated?",
-        a: "Models are scored on live, out-of-sample market performance. The rules are transparent and the same for everyone.",
+        a: "Each Core round is scored 20 trading sessions after it opens, on realised out-of-sample outcomes. The rules are published on the platform and are the same for everyone. Core rounds began on 21 September 2026, so the first scores land in late October 2026.",
       },
       {
         q: "How are contributors rewarded?",
-        a: "Round 001 carries no cash reward. What accrues now is standing: your scores, your rank on the public board, and the track record that comes with them. Paid rounds follow once scoring and payouts are running, and when they do, reward will track measurable contribution to the collective strategy, judged on live results and nothing else.",
+        a: "No grant has been paid yet. What accrues now is standing: your scores, your rank, and the track record that comes with them. A company-funded research-grant programme for demonstrated skill is planned and is with counsel for review; when it runs, grants are discretionary, periodic, India-resident only in the first phase, and never require a fee, deposit or stake from you.",
       },
       {
         q: "Do I retain ownership of my work?",
-        a: "Yes. You own your models; contributing a signal does not hand us the model behind it. Once paid rounds begin, contribution to the collective strategy is what compensation is based on.",
+        a: "Yes. You own your models. Under the contributor agreement with IndiQuant Inc. you license the submitted signal, not the model behind it.",
       },
     ],
   },

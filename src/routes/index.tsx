@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "IndiQuant is a quantitative research hedge fund powered by crowdsourced AI for the Indian equity markets. Thousands of independent minds. One strategy. Rewarded on live performance.",
+          "IndiQuant is a crowdsourced quantitative research platform for Indian equities. Independent contributors build models on obfuscated NSE data; every submission is scored on live market outcomes.",
       },
       {
         property: "og:title",
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "A quantitative research hedge fund shaped by the collective intelligence of independent minds, rewarded on live performance.",
+          "A crowdsourced quantitative research platform for Indian equities, where independent contributors are scored on live market outcomes.",
       },
     ],
   }),
@@ -38,20 +38,20 @@ export const Route = createFileRoute("/")({
 
 const marqueeClaims = [
   "Because intuition is not a strategy",
-  "Only skill gets paid",
+  "Only skill gets scored",
   "Built to be compliant",
-  "Alpha without headcount",
+  "Research in the open",
 ];
 
 const heroStats = [
-  { label: "Contributors", value: "Global" },
-  { label: "Market", value: "Indian equities" },
-  { label: "Research", value: "Continuous" },
-  { label: "Rewards", value: "Performance" },
+  { label: "Contributors", value: "Independent, anywhere" },
+  { label: "Market", value: "NSE equities" },
+  { label: "Cadence", value: "One round per session" },
+  { label: "Scored on", value: "Live outcomes" },
 ];
 
 const approachFacts = [
-  { label: "Measured by", value: "Live accuracy" },
+  { label: "Measured by", value: "Live outcomes" },
   { label: "Ignored", value: "Backtests or titles" },
   { label: "Re-scored", value: "Every round" },
 ];
@@ -72,7 +72,7 @@ const principles = [
   {
     k: "03",
     title: "Merit is measurable.",
-    body: "Contributors are rewarded on live performance. Nothing else. No titles, no gatekeepers.",
+    body: "Contributors are ranked on live scored performance. Nothing else. No titles, no gatekeepers.",
     tag: "Meritocratic",
   },
 ];
@@ -89,9 +89,9 @@ const steps = [
   {
     k: "05",
     t: "Contribute",
-    d: "Your best signals join the collective strategy.",
+    d: "Signals that score well are weighed into a paper-traded meta-model.",
   },
-  { k: "06", t: "Grow", d: "Earn on performance. Grow with the fund." },
+  { k: "06", t: "Grow", d: "Build a scored track record, round after round." },
 ];
 
 const emptyRows = ["01", "02", "03", "04", "05"];
@@ -112,7 +112,7 @@ const platformSteps = [
   {
     k: "03",
     t: "Submit predictions",
-    d: "Upload a prediction per row before the round locks. Scoring runs against live market outcomes.",
+    d: "Submit a score per name before the round locks at 09:00 IST. Scoring runs against realised market outcomes.",
   },
 ];
 
@@ -139,7 +139,7 @@ const stacks = [
   },
   {
     t: "Indian Equity Markets",
-    d: "The arena: NSE and BSE, deeply understood.",
+    d: "The arena: NSE-listed equities, point-in-time universe.",
     Icon: TrendingUp,
   },
   {
@@ -150,7 +150,7 @@ const stacks = [
 ];
 
 const investorFacts = [
-  { label: "Contributors", value: "Global network of researchers" },
+  { label: "Contributors", value: "Independent researchers, open registration" },
   { label: "Approach", value: "Research-driven, evidence-first" },
   { label: "Focus", value: "Serious quantitative work" },
 ];
@@ -165,7 +165,7 @@ function Home() {
         {/* Hero */}
         <section className="relative z-2 pt-[210px] pb-[150px]">
           <Container>
-            <Badge>Round 001 · Contributor onboarding open</Badge>
+            <Badge>Core rounds run every NSE session · Registration open</Badge>
 
             <h1 className="display-tight mt-8 max-w-[14ch] sm:mt-11 text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em]">
               Many models. <span className="text-[var(--mint)]">One truth.</span>
@@ -173,9 +173,10 @@ function Home() {
 
             <div className="mt-10 grid max-w-[1000px] items-end gap-8 md:mt-13 md:gap-16 lg:grid-cols-2">
               <p className="text-[17px] leading-[1.6] text-white/72 sm:text-[19px]">
-                IndiQuant is a quantitative research hedge fund powered by crowdsourced AI for the
-                Indian equity markets. Thousands of independent minds. One strategy. Rewarded on
-                live performance.
+                IndiQuant is a crowdsourced quantitative research platform for Indian equities.
+                Independent contributors build models on obfuscated NSE data. Every submission is
+                scored on live market outcomes, and the signals that hold up are combined into one
+                paper-traded strategy.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Button
@@ -261,19 +262,19 @@ function Home() {
                   Our approach
                 </p>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)] text-[var(--blue)]">
-                  Only skill gets paid.
+                  Only skill gets scored.
                 </h2>
               </div>
               <div className="lg:col-span-7">
                 <p className="max-w-[52ch] text-[22px] leading-[1.55] font-medium text-[var(--ink)]">
-                  Every round, contributors submit predictive signals on anonymised market data. A
-                  meta-model engine weighs them, scores them against live outcomes, and folds the
-                  survivors into a single strategy.
+                  Every round, contributors submit predictive signals on anonymised market data. The
+                  platform scores each one against what the market then did, and a meta-model weighs
+                  the signals that hold up into a single paper-traded strategy.
                 </p>
                 <p className="mt-6.5 max-w-[52ch] text-[17px] leading-[1.7] text-[var(--ink-700)]">
-                  Math-based rankings reward real predictive power, not lucky backtests. Standing on
-                  the board is a running record of the alpha a researcher has added to the
-                  collective, measured in the only currency that clears.
+                  Rankings measure out-of-sample predictive power, not backtests. Standing on the
+                  board is a running record of what a researcher's signals contributed, measured on
+                  realised outcomes. No capital is traded yet; the strategy runs on paper.
                 </p>
                 <dl className="mt-11 grid gap-px border border-[var(--blue)]/18 bg-[var(--blue)]/18 sm:grid-cols-3">
                   {approachFacts.map((f) => (
@@ -297,7 +298,7 @@ function Home() {
           <Container>
             <Eyebrow>Why IndiQuant</Eyebrow>
             <h2 className="display-tight mt-6.5 mb-[70px] max-w-[16ch] text-[clamp(38px,4.6vw,68px)]">
-              A different kind of hedge fund.
+              A different kind of research platform.
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {principles.map((p) => (
@@ -329,7 +330,7 @@ function Home() {
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
-                Six steps, no gatekeepers. Wherever your curiosity begins, the fund grows with you.
+                Six steps, no gatekeepers. Wherever your curiosity begins, the platform grows with you.
               </p>
             </div>
             <ol className="grid gap-px border border-white/14 bg-white/14 sm:grid-cols-2 lg:grid-cols-3">
@@ -351,7 +352,7 @@ function Home() {
           </Container>
         </Section>
 
-        {/* The participant platform — the marketing site explains the fund; the
+        {/* The participant platform — the marketing site explains the platform; the
           platform is where contributors actually work. */}
         <Section id="platform" className="border-t border-white/10">
           <Container>
@@ -363,7 +364,7 @@ function Home() {
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
-                This site explains the fund. Everything you do as a contributor happens on the
+                This site explains the platform. Everything you do as a contributor happens on the
                 platform: data, models, submissions.
               </p>
             </div>
@@ -412,11 +413,11 @@ function Home() {
               <div>
                 <Eyebrow>Contributor rankings</Eyebrow>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
-                  The board opens with round 001.
+                  The board fills as rounds resolve.
                 </h2>
               </div>
               <p className="font-mono text-[11px] tracking-[0.18em] text-white/60 uppercase">
-                Scoring not yet live
+                First scores expected late October 2026
               </p>
             </div>
 
@@ -472,11 +473,12 @@ function Home() {
               </div>
               <div className="px-7 pt-14 pb-15 text-center">
                 <p className="text-[20px] font-bold tracking-[-0.02em] text-[var(--mint)]">
-                  No rounds have been scored yet.
+                  No round has resolved yet.
                 </p>
                 <p className="mx-auto mt-3 max-w-[46ch] text-[15px] leading-[1.7] text-white/55">
-                  Rankings publish after the first scored round. Every position on this board will
-                  be earned on live market performance. Nothing else.
+                  Core rounds began on 21 September 2026 and each resolves 20 trading sessions after
+                  it opens, so the first scores land in late October. Every position on this board
+                  is earned on realised market outcomes. Nothing else.
                 </p>
                 <div className="mt-7">
                   <Button
@@ -487,7 +489,7 @@ function Home() {
                     variant="primary"
                     withArrow
                   >
-                    Register for round 001
+                    Register on the platform
                   </Button>
                 </div>
               </div>
@@ -506,8 +508,8 @@ function Home() {
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
-                Each layer plays a role in turning thousands of independent ideas into one
-                disciplined strategy.
+                Each layer plays a role in turning many independent ideas into one disciplined
+                strategy.
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -537,7 +539,7 @@ function Home() {
               Vision
             </p>
             <p className="display-tight mx-auto mt-8 max-w-[18ch] md:mt-12 text-[clamp(42px,6.4vw,100px)] leading-[0.98] tracking-[-0.035em]">
-              To become the world's largest crowdsourced AI hedge fund.
+              To become the largest crowdsourced quantitative research platform for Indian markets.
             </p>
             <dl className="mt-12 grid gap-px border border-[var(--mint)]/25 bg-[var(--mint)]/25 text-left sm:grid-cols-3 md:mt-20">
               {investorFacts.map((f) => (
@@ -558,14 +560,15 @@ function Home() {
             <div className="grid items-end gap-10 md:gap-20 lg:grid-cols-11">
               <div className="lg:col-span-7">
                 <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--ink)]/70 uppercase">
-                  Join the fund
+                  Join the platform
                 </p>
                 <h2 className="display-tight mt-7 max-w-[14ch] text-[clamp(40px,5.6vw,88px)] leading-[0.98] tracking-[-0.035em]">
                   Because intuition is not a strategy.
                 </h2>
                 <p className="mt-7 max-w-[48ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
-                  If you have the skills, the fund has a seat for you. Your research. Live
-                  performance. Real rewards.
+                  If you have the skills, there is a seat for you. Your research, scored on live
+                  outcomes. Research grants are planned once the grant programme clears legal
+                  review; none has been paid yet.
                 </p>
               </div>
               <div className="flex w-full flex-col items-stretch gap-3 sm:items-start lg:col-span-4">

@@ -35,7 +35,7 @@ state; it does not define it.
    status summaries
 
 The frontend relies **entirely** on backend authorization responses to determine what
-to display — it never makes its own authorization decisions (root `CLAUDE.md` §3:
+to display — it never makes its own authorization decisions (root `CLAUDE.md` §2 guardrail #3:
 `FORECASTER`/`ADMIN` are distinct permission sets).
 
 ## 4. Authentication Integration
@@ -122,7 +122,7 @@ independent scaling of presentation vs. computation.
 
 ## 18. Engineering Notes for Claude Code
 
-- TypeScript/React per root `CLAUDE.md` §5 — keep this the only frontend surface;
+- TypeScript/React per root `CLAUDE.md` §13 — keep this the only frontend surface;
   don't introduce a second UI stack without a documented reason in `Docs/`.
 - Treat every value on screen as derived from a `Backend` response — if a feature
   needs the frontend to compute, infer, or cache anything beyond display formatting,

@@ -470,7 +470,7 @@ function FinalCTA() {
             </h2>
             <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
               If you think in models, patterns, and probabilities, there is a seat for you here.
-              Contribute your research. Sharpen your edge. Grow with a fund built by many.
+              Contribute your research. Sharpen your edge. Grow with a platform built by many.
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
               <Button as="a" href="/#contribute" withArrow>

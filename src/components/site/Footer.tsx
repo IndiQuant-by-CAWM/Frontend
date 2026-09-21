@@ -1,4 +1,5 @@
 import { CONTACT_EMAIL } from "@/lib/contact";
+import { ENTITIES } from "@/lib/entities";
 import { PLATFORM_SIGNIN_URL, PLATFORM_URL } from "@/lib/platform";
 import { AwardBadge } from "./AwardBadge";
 import { Container } from "./Container";
@@ -34,8 +35,8 @@ export function Footer() {
               IndiQuant
             </p>
             <p className="mt-5.5 max-w-[38ch] text-[15px] leading-[1.7] text-white/60">
-              A quantitative research hedge fund shaped by the collective intelligence of
-              independent minds, rewarded on live performance.
+              A crowdsourced quantitative research platform for Indian equities. Independent
+              contributors, scored on live market outcomes.
             </p>
             <div className="mt-7">
               <AwardBadge size="sm" />
@@ -93,16 +94,26 @@ export function Footer() {
                   </a>
                 </li>
               ))}
-              <li className="flex min-h-[44px] items-center text-white/60 md:min-h-0">
-                Mumbai, Maharashtra
-              </li>
             </ul>
           </nav>
         </div>
+        <div className="mt-14 grid gap-8 border-t border-white/10 pt-8 md:grid-cols-2">
+          {ENTITIES.map((e) => (
+            <address key={e.name} className="text-[13px] leading-[1.7] text-white/60 not-italic">
+              <p className="font-mono text-[10px] tracking-[0.22em] text-white/45 uppercase">
+                {e.audience}
+              </p>
+              <p className="mt-2 font-semibold text-white/85">{e.name}</p>
+              {e.lines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </address>
+          ))}
+        </div>
 
         <div className="mt-16 flex flex-wrap justify-between gap-6 border-t border-white/10 pt-6.5 font-mono text-[10px] tracking-[0.22em] text-white/60 uppercase">
-          <span>© {new Date().getFullYear()} IndiQuant. All rights reserved.</span>
-          <span>Thousands of minds. One strategy.</span>
+          <span>© {new Date().getFullYear()} IndiQuant Inc. and Indiquant Private Limited. All rights reserved.</span>
+          <span>Many models. One truth.</span>
         </div>
       </Container>
     </footer>

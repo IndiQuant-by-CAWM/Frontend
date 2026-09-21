@@ -98,7 +98,7 @@ function NotHiring() {
           <p className="mt-5 text-sm leading-relaxed text-white/65">
             The platform is open to independent researchers now, and it is the honest route into
             IndiQuant: you build models, submit predictions, and your scores and rank become a
-            public track record. Round 001 carries no cash reward. What accrues is standing.
+            public track record. No grant has been paid yet. What accrues is standing.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-white/65">
             It is also how we get to know people's work before we ever get to know their CV.

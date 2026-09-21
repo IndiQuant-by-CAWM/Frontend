@@ -1,359 +1,92 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useState, type FormEvent } from "react";
-import { Loader2, Medal, Trophy } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { PageShell } from "@/components/site/PageShell";
 import { Button } from "@/components/site/Button";
-import { Input } from "@/components/site/Field";
-import {
-  ApiError,
-  leaderboardApi,
-  tournamentsApi,
-  type PublicLeaderboardEntry,
-  type Tournament,
-} from "@/lib/api";
-import { boardView } from "@/lib/leaderboard-view";
-import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
-import { formatServerTime } from "@/lib/time";
-import { useAuth } from "@/lib/useAuth";
+import { Container } from "@/components/site/Container";
+import { PageHero, PageShell } from "@/components/site/PageShell";
+import { Reveal } from "@/components/site/Reveal";
+import { Section } from "@/components/site/Section";
+import { PLATFORM_SIGNIN_URL, PLATFORM_SIGNUP_URL } from "@/lib/platform";
 
-interface LeaderboardSearch {
-  tournament?: number;
-}
-
+/**
+ * A status page, not a board.
+ *
+ * This route used to render a live leaderboard from this site's own API
+ * client, which in production pointed at localhost: the pilot's API ran on a
+ * laptop and the Pages workflow set no base URL, so the page spun and showed
+ * nothing. The v3 platform keeps its leaderboard behind sign-in (Spec §7.2),
+ * and nothing has been scored yet, so the honest thing a public page can do is
+ * say when scores exist and where to see them.
+ *
+ * DATED. The "late October 2026" sentence follows from Core rounds having
+ * begun on 21 September 2026 with a 20-session target. Update it when the
+ * first round resolves, or replace this page with a public board if one is
+ * ever specified.
+ */
 export const Route = createFileRoute("/leaderboard")({
-  validateSearch: (search: Record<string, unknown>): LeaderboardSearch => {
-    const raw = search.tournament;
-    const n = typeof raw === "number" ? raw : typeof raw === "string" ? Number(raw) : NaN;
-    return Number.isInteger(n) && n > 0 ? { tournament: n } : {};
-  },
   head: () => ({
     meta: [
-      { title: "Leaderboard — IndiQuant" },
+      { title: "Rankings — IndiQuant" },
       {
         name: "description",
         content:
-          "Published results for IndiQuant research rounds: contributor handles, composite scores and ranks.",
+          "IndiQuant's rankings are earned on realised market outcomes. Core rounds began 21 September 2026; the first scores land in late October 2026.",
       },
-      { property: "og:title", content: "Leaderboard — IndiQuant" },
+      { property: "og:title", content: "Rankings — IndiQuant" },
       { property: "og:url", content: "/leaderboard" },
     ],
     links: [{ rel: "canonical", href: "/leaderboard" }],
   }),
-  component: LeaderboardPage,
+  component: RankingsPage,
 });
 
-// This is the one page on the platform served without a token — it is
-// deliberately NOT wrapped in RequireAuth. Everything it renders comes from
-// Backend's public leaderboard model, which carries a handle, a composite
-// score, a rank and a scoring timestamp and nothing else. Component scores,
-// selection thresholds and account identity stay server-side (root
-// CLAUDE.md §2 guardrail #5).
-function LeaderboardPage() {
-  const { tournament } = Route.useSearch();
+const facts = [
+  { label: "First Core round", value: "21 September 2026" },
+  { label: "Cadence", value: "One round per NSE session" },
+  { label: "Target", value: "20-session forward return" },
+  { label: "First scores", value: "Late October 2026" },
+];
 
+function RankingsPage() {
   return (
     <PageShell>
-      <section className="container-page pt-36 pb-28 sm:pt-44 sm:pb-36">
-        <header className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-white/45">
-            <Trophy size={13} strokeWidth={1.75} />
-            Public results
-          </div>
-          <h1 className="mt-4 font-display text-4xl leading-[1.05] tracking-tight text-white sm:text-5xl">
-            Leaderboard
-          </h1>
-          <p className="mt-4 text-sm leading-relaxed text-white/55">
-            Published standings for a scored research round. A round appears here only once its
-            batch has been scored; there is no partial or provisional view.
-          </p>
-        </header>
-
-        {tournament == null ? (
-          <NoRoundSelected />
-        ) : (
-          <>
-            <RoundSelector selected={tournament} />
-            <Board tournamentId={tournament} />
-          </>
-        )}
-      </section>
+      <PageHero
+        eyebrow="Rankings"
+        title="Earned on"
+        italic="outcomes"
+        tail=", not backtests."
+        description="No round has resolved yet. Each Core round is scored twenty trading sessions after it opens, on what the market actually did."
+      />
+      <Section className="pt-0">
+        <Container>
+          <Reveal variant="blur">
+            <dl className="grid gap-px border border-white/14 bg-white/14 sm:grid-cols-2 lg:grid-cols-4">
+              {facts.map((f) => (
+                <div key={f.label} className="bg-[var(--ink)] px-6 py-6">
+                  <dt className="font-mono text-[10px] tracking-[0.22em] text-white/50 uppercase">
+                    {f.label}
+                  </dt>
+                  <dd className="mt-2 text-[17px] font-bold tracking-[-0.01em] text-white">
+                    {f.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-10 max-w-[60ch] text-[16px] leading-[1.7] text-white/65">
+              Rankings are shown to signed-in contributors on the platform once rounds resolve.
+              Display names are public; email addresses and legal names never are. Sprint slots
+              are frozen until their scoring exists, so only Core rounds count.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" variant="primary" withArrow>
+                Register on the platform
+              </Button>
+              <Button as="a" href={PLATFORM_SIGNIN_URL} target="_blank" rel="noopener noreferrer" variant="ghost">
+                Sign in
+              </Button>
+            </div>
+          </Reveal>
+        </Container>
+      </Section>
     </PageShell>
-  );
-}
-
-// Before the first round is scored there is nothing to choose, and the round
-// number form on its own was a dead end: a visitor arriving from the nav had
-// no number to type and no way forward. Signed-in contributors with published
-// rounds still get the picker (RoundSelector), so this is the pre-round-001
-// and anonymous case, and it says so rather than waiting for input.
-function NoRoundSelected() {
-  const { ready, authenticated } = useAuth();
-
-  const { data } = useQuery({
-    queryKey: ["tournaments"],
-    queryFn: () => tournamentsApi.list(),
-    enabled: ready && authenticated,
-  });
-
-  const published = (data ?? []).filter(
-    (t: Tournament) => t.status === "SCORED" || t.status === "COMPLETE",
-  );
-
-  // A contributor who does have published rounds should land on the picker,
-  // not on the empty state.
-  if (published.length > 0) return <RoundSelector selected={undefined} />;
-
-  return (
-    <div className="mt-10 rounded-2xl border border-white/[0.07] bg-white/[0.015] px-6 py-14 text-center">
-      <p className="text-lg font-semibold tracking-tight text-[var(--mint)]">
-        No rounds have been scored yet.
-      </p>
-      <p className="mx-auto mt-3 max-w-[46ch] text-sm leading-relaxed text-white/55">
-        Standings publish after the first scored round. Every position on this board will be earned
-        on live market performance. Nothing else.
-      </p>
-      <div className="mt-7 flex flex-wrap justify-center gap-3">
-        <Button
-          as="a"
-          href={PLATFORM_SIGNUP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          withArrow
-        >
-          Register for round 001
-        </Button>
-      </div>
-
-      {/* Kept, because a round announcement can hand someone a number before
-          the picker has anything in it — just no longer the only thing here. */}
-      <details className="mt-8 text-left">
-        <summary className="cursor-pointer text-center font-mono text-[11px] tracking-[0.18em] text-white/40 uppercase transition-colors hover:text-white/70">
-          Have a round number?
-        </summary>
-        <div className="mx-auto mt-4 max-w-sm">
-          <RoundNumberForm />
-        </div>
-      </details>
-    </div>
-  );
-}
-
-// Backend has no unauthenticated route that enumerates tournaments, so an
-// anonymous visitor reaches a board by round number (from the round's own
-// page or its announcement). Signed-in contributors get the real picker.
-function RoundSelector({ selected }: { selected?: number }) {
-  const navigate = useNavigate();
-  const { ready, authenticated } = useAuth();
-
-  const { data } = useQuery({
-    queryKey: ["tournaments"],
-    queryFn: () => tournamentsApi.list(),
-    enabled: ready && authenticated,
-  });
-
-  const published = (data ?? []).filter(
-    (t: Tournament) => t.status === "SCORED" || t.status === "COMPLETE",
-  );
-
-  if (published.length > 0) {
-    return (
-      <div className="mt-10 flex flex-wrap gap-2">
-        {published.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => navigate({ to: "/leaderboard", search: { tournament: t.id } })}
-            className={`rounded-full border px-4 py-1.5 font-mono text-[11px] transition-colors ${
-              t.id === selected
-                ? "border-white/30 bg-white/[0.06] text-white"
-                : "border-white/10 bg-white/[0.02] text-white/55 hover:border-white/25 hover:text-white"
-            }`}
-          >
-            {t.tournament_name}
-          </button>
-        ))}
-      </div>
-    );
-  }
-
-  return <RoundNumberForm selected={selected} />;
-}
-
-function RoundNumberForm({ selected }: { selected?: number }) {
-  const navigate = useNavigate();
-  const [value, setValue] = useState(selected ? String(selected) : "");
-
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const n = Number(value);
-    if (!Number.isInteger(n) || n <= 0) return;
-    navigate({ to: "/leaderboard", search: { tournament: n } });
-  }
-
-  return (
-    <form onSubmit={onSubmit} className="mt-10 flex max-w-sm items-end gap-3">
-      <div className="flex-1">
-        <label
-          htmlFor="round"
-          className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-white/45"
-        >
-          Round
-        </label>
-        <Input
-          id="round"
-          name="round"
-          inputMode="numeric"
-          placeholder="e.g. 12"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      </div>
-      <Button type="submit" size="md" variant="ghost">
-        View
-      </Button>
-    </form>
-  );
-}
-
-// The published watermark: the most recent scoring timestamp on the board.
-// It is the React Query cache key for the rendered snapshot, which is then
-// pinned with `staleTime: Infinity`. That is the point — a poll returning the
-// same watermark cannot re-render or re-sort the table, so contributors never
-// watch a ranking shuffle under them between batches. Only a genuinely new
-// (or re-run) scoring batch advances the watermark and swaps the snapshot.
-function publishedWatermark(rows: PublicLeaderboardEntry[] | undefined): string | null {
-  if (!rows || rows.length === 0) return null;
-  return rows.reduce(
-    (latest, r) => (r.last_scored_at > latest ? r.last_scored_at : latest),
-    rows[0].last_scored_at,
-  );
-}
-
-function Board({ tournamentId }: { tournamentId: number }) {
-  // The watch query. Backend 404s this route until the round reaches SCORED,
-  // so there is nothing to render mid-computation; once scored, this exists
-  // only to notice that the watermark moved.
-  const watch = useQuery({
-    queryKey: ["leaderboard", "public", tournamentId, "watch"],
-    queryFn: () => leaderboardApi.getPublic(tournamentId),
-    refetchInterval: 60_000, // the platform scores hourly; a minute is plenty
-    retry: (failureCount, error) =>
-      !(error instanceof ApiError && error.status === 404) && failureCount < 2,
-  });
-
-  const watermark = publishedWatermark(watch.data);
-
-  // The rendered snapshot, keyed on the watermark. `initialData` hands it the
-  // rows the watch query already fetched, so a new batch costs no extra
-  // request; `staleTime: Infinity` then freezes that snapshot for its key.
-  const board = useQuery({
-    queryKey: ["leaderboard", "public", tournamentId, watermark],
-    queryFn: () => leaderboardApi.getPublic(tournamentId),
-    enabled: watermark !== null,
-    initialData: watermark !== null ? watch.data : undefined,
-    staleTime: Infinity,
-    placeholderData: keepPreviousData,
-  });
-
-  // A poll failure must never take a published board off the screen: React
-  // Query still holds `board.data`, and a reader losing the whole table to a
-  // transient 5xx is a worse disruption than the re-sort this page pins its
-  // snapshot to avoid. boardView encodes that precedence; the failure is
-  // reported as a staleness note under the table instead.
-  const view = boardView({
-    isLoading: watch.isLoading,
-    isNotFound: watch.error instanceof ApiError && watch.error.status === 404,
-    hasError: watch.error != null,
-    rows: board.data,
-  });
-
-  if (view.kind === "loading") {
-    return (
-      <div className="mt-10 flex items-center gap-2 py-16 text-sm text-white/40">
-        <Loader2 className="h-4 w-4 animate-spin" /> Loading standings…
-      </div>
-    );
-  }
-
-  if (view.kind === "unpublished") {
-    return (
-      <p className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-10 text-center text-sm text-white/45">
-        No published results for round {tournamentId} yet.
-      </p>
-    );
-  }
-
-  if (view.kind === "error") {
-    return (
-      <p className="mt-10 rounded-xl border border-[#ff8a8a]/25 bg-[#ff8a8a]/[0.06] px-5 py-4 text-sm text-[#ffb4b4]">
-        {watch.error instanceof ApiError ? watch.error.message : "Failed to load the leaderboard."}
-      </p>
-    );
-  }
-
-  if (view.kind === "empty") {
-    return (
-      <p className="mt-10 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-10 text-center text-sm text-white/45">
-        This round scored with no ranked submissions.
-      </p>
-    );
-  }
-
-  const rows = view.rows;
-
-  return (
-    <>
-      <div className="mt-10 overflow-x-auto rounded-2xl border border-white/[0.07] bg-white/[0.015]">
-        <table className="w-full min-w-[420px] text-left">
-          <thead>
-            <tr className="border-b border-white/[0.07] font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
-              <th className="px-6 py-4 font-normal">Rank</th>
-              <th className="px-6 py-4 font-normal">Contributor</th>
-              <th className="px-6 py-4 text-right font-normal">Composite score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Rendered in the order Backend returned. The frontend never
-                re-ranks or re-scores a published board (Frontend/CLAUDE.md §9). */}
-            {rows.map((row, i) => (
-              <tr
-                key={`${row.rank ?? "unranked"}-${row.display_name ?? "anonymous"}-${i}`}
-                className="border-b border-white/[0.04] last:border-b-0"
-              >
-                <td className="px-6 py-4 font-mono text-sm tabular-nums text-white/70">
-                  <span className="inline-flex items-center gap-2">
-                    {row.rank != null && row.rank <= 3 && (
-                      <Medal size={13} strokeWidth={1.75} className="text-white/50" />
-                    )}
-                    {row.rank ?? "—"}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-sm text-white">
-                  {row.display_name ?? <span className="text-white/40">anonymous</span>}
-                </td>
-                <td className="px-6 py-4 text-right font-mono text-sm tabular-nums text-white/75">
-                  {row.composite_score != null ? row.composite_score.toFixed(4) : "—"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* formatServerTime converts Backend's offset-less naive-UTC stamp
-          before rendering it in the reader's own timezone; `new Date(...)`
-          here silently showed a time shifted by the viewer's UTC offset. */}
-      {(watermark || view.stale) && (
-        <p className="mt-4 font-mono text-[11px] text-white/30">
-          {watermark && <>Published {formatServerTime(watermark) ?? watermark}</>}
-          {view.stale && (
-            <span className={watermark ? "ml-2 text-white/25" : "text-white/25"}>
-              {watermark ? "· " : ""}live updates paused, could not reach the server
-            </span>
-          )}
-        </p>
-      )}
-    </>
   );
 }

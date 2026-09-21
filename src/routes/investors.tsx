@@ -27,7 +27,7 @@ export const Route = createFileRoute("/investors")({
       {
         name: "description",
         content:
-          "The long-term research vision behind IndiQuant: collective intelligence, AI-driven quantitative research, built for Indian equity markets.",
+          "The long-term research vision behind IndiQuant: collective intelligence, AI-driven quantitative research, built for Indian equity markets. Indiquant Private Limited, Navi Mumbai.",
       },
       { property: "og:title", content: "Investors — IndiQuant" },
       {
@@ -152,8 +152,8 @@ function Technology() {
           <div className="md:col-span-5 md:col-start-8 md:self-end">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                A stack built to turn thousands of independent ideas into one disciplined,
-                continuously-learning strategy.
+                A stack built to turn many independent ideas into one disciplined, continuously
+                evaluated strategy. Today it runs on paper; no client capital is managed.
               </p>
             </Reveal>
           </div>
@@ -292,7 +292,9 @@ function ContactCTA() {
               <span className="italic text-white/65">the best place to begin</span>.
             </h2>
             <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              For partners interested in the long horizon, we're happy to talk.
+              For partners interested in the long horizon, we're happy to talk. The Indian
+              entity is Indiquant Private Limited, Sundar CHS, Sector 9, Koparkhairane, Navi
+              Mumbai, Maharashtra 400709.
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
               <Button as="a" href="/contact" withArrow>

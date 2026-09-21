@@ -78,14 +78,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "IndiQuant is a quantitative research hedge fund powered by crowdsourced AI for Indian equity markets.",
+          "IndiQuant is a crowdsourced quantitative research platform for Indian equities: independent contributors build models on obfuscated NSE data and are scored on live market outcomes.",
       },
       { name: "theme-color", content: "#08081a" },
       { property: "og:title", content: "IndiQuant — Crowdsourced AI Quantitative Research" },
       {
         property: "og:description",
         content:
-          "A quantitative research hedge fund powered by crowdsourced AI for Indian equity markets.",
+          "A crowdsourced quantitative research platform for Indian equities.",
       },
       { property: "og:type", content: "website" },
       // Absolute URLs: link previews are fetched by other people's servers,
@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:image:alt",
         content:
-          "IndiQuant — Many models. One truth. A quantitative research hedge fund for the Indian equity markets.",
+          "IndiQuant — Many models. One truth. A crowdsourced quantitative research platform for Indian equities.",
       },
       { name: "twitter:image", content: "https://indiquantresearch.in/og-image.jpg" },
       { property: "og:site_name", content: "IndiQuant" },
@@ -106,7 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "twitter:description",
         content:
-          "A quantitative research hedge fund powered by crowdsourced AI for Indian equity markets.",
+          "A crowdsourced quantitative research platform for Indian equities.",
       },
     ],
     links: [

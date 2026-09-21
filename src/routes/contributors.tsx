@@ -35,13 +35,13 @@ export const Route = createFileRoute("/contributors")({
       {
         name: "description",
         content:
-          "Build models. Compete. Get rewarded on live performance. Join IndiQuant as an independent researcher or AI practitioner.",
+          "Build models on obfuscated NSE data and get scored on live market outcomes. Join IndiQuant as an independent researcher or AI practitioner.",
       },
       { property: "og:title", content: "Contributors — IndiQuant" },
       {
         property: "og:description",
         content:
-          "For researchers, data scientists, and AI practitioners who want to shape a collectively-built hedge fund.",
+          "For researchers, data scientists, and AI practitioners who want to shape a collectively-built quantitative research platform.",
       },
       { property: "og:url", content: "/contributors" },
     ],
@@ -55,10 +55,10 @@ function ContributorsPage() {
     <PageShell>
       <PageHero
         eyebrow="Contributors"
-        title="Research that pays"
+        title="Research that is scored"
         italic="on merit"
         tail="alone."
-        description="Contribute models to a live quantitative strategy. No titles, no gatekeepers. Only measurable edge."
+        description="Contribute models to a live, paper-traded quantitative strategy. No titles, no gatekeepers. Only measured edge."
       >
         <Button
           as="a"
@@ -89,14 +89,14 @@ function WhyJoin() {
     {
       icon: Trophy,
       k: "01",
-      t: "Rewarded on performance.",
-      b: "Your compensation follows the live outcome of your models. Politics and seniority do not enter into it.",
+      t: "Ranked on performance.",
+      b: "Your standing follows the live outcome of your models. Politics and seniority do not enter into it. Research grants are planned, not yet paid.",
     },
     {
       icon: Sparkles,
       k: "02",
       t: "Work on real markets.",
-      b: "Every submission is evaluated against live Indian equity data, round after round.",
+      b: "Every submission is evaluated against realised NSE outcomes, round after round.",
     },
     {
       icon: Users,
@@ -112,7 +112,7 @@ function WhyJoin() {
           <Reveal>
             <Eyebrow>Why Become a Contributor</Eyebrow>
             <h2 className="mt-6 max-w-2xl font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
-              A place where research becomes capital.
+              A place where research becomes a track record.
             </h2>
           </Reveal>
         </div>
@@ -329,15 +329,15 @@ function FAQ() {
     },
     {
       q: "Is there a cost to join?",
-      a: "Contributing to IndiQuant is free. You bring your ideas and your compute; we provide the arena.",
+      a: "Contributing to IndiQuant is free. No fee, no deposit, no stake, ever. You bring your ideas and your compute; we provide the data and the scoring.",
     },
     {
       q: "How is my work evaluated?",
-      a: "Every model is scored on live, out-of-sample market performance. The rules are the same for everyone.",
+      a: "Every submission is scored on realised, out-of-sample market outcomes 20 sessions after the round opens. The rules are the same for everyone and are published on the platform.",
     },
     {
       q: "Do I own my models?",
-      a: "You retain ownership of your work. When your signals contribute to the collective strategy, you're rewarded for that contribution.",
+      a: "You retain ownership of your models. You license the submitted signal to IndiQuant Inc. under the contributor agreement; a research-grant programme for demonstrated skill is planned once it clears legal review, and nothing has been paid yet.",
     },
   ];
   return (
@@ -428,7 +428,7 @@ function FinalCTA() {
               Bring your models. <span className="italic text-white/65">Meet the market.</span>
             </h2>
             <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Create your account and start with the next research round.
+              Create your account and submit to the next Core round, published 06:30 IST every NSE session.
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
               <Button

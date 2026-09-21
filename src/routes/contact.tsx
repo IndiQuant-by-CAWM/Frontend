@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, type FormEvent } from "react";
-import { Mail, Send, Check } from "lucide-react";
+import { Mail, Check } from "lucide-react";
 
 import { Container } from "@/components/site/Container";
 import { Section } from "@/components/site/Section";
@@ -9,6 +9,7 @@ import { Button } from "@/components/site/Button";
 import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 import { CONTACT_EMAIL } from "@/lib/contact";
+import { ENTITIES } from "@/lib/entities";
 import { Field, Input, Textarea } from "@/components/site/Field";
 
 export const Route = createFileRoute("/contact")({
@@ -66,20 +67,27 @@ function ContactPage() {
                       </span>
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="group flex items-start gap-4 text-white/80 transition-colors hover:text-white"
-                    >
-                      <span className="mt-1 grid h-9 w-9 place-items-center rounded-lg border border-border">
-                        <Send size={15} strokeWidth={1.5} />
-                      </span>
-                      <span>
-                        <span className="block text-sm text-white">LinkedIn</span>
-                        <span className="block text-sm text-muted-foreground">Coming soon</span>
-                      </span>
-                    </a>
-                  </li>
+                </ul>
+
+                <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
+                  Who you are dealing with
+                </p>
+                <ul className="mt-6 space-y-6">
+                  {ENTITIES.map((e) => (
+                    <li key={e.name}>
+                      <address className="text-sm leading-relaxed text-muted-foreground not-italic">
+                        <span className="block text-xs uppercase tracking-[0.18em] text-white/45">
+                          {e.audience}
+                        </span>
+                        <span className="block text-white">{e.name}</span>
+                        {e.lines.map((line) => (
+                          <span key={line} className="block">
+                            {line}
+                          </span>
+                        ))}
+                      </address>
+                    </li>
+                  ))}
                 </ul>
 
                 <p className="mt-16 max-w-sm text-sm leading-relaxed text-muted-foreground">
