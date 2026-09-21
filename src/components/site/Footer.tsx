@@ -1,5 +1,5 @@
 import { CONTACT_EMAIL } from "@/lib/contact";
-import { ENTITIES } from "@/lib/entities";
+import { HQ, INDIA_OFFICE } from "@/lib/entities";
 import { PLATFORM_SIGNIN_URL, PLATFORM_URL } from "@/lib/platform";
 import { AwardBadge } from "./AwardBadge";
 import { Container } from "./Container";
@@ -32,7 +32,7 @@ export function Footer() {
         <div className="grid gap-14 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-3">
             <p className="text-[40px] leading-none font-extrabold tracking-[-0.035em] text-[var(--mint)]">
-              IndiQuant
+              INDIQUANT INC.
             </p>
             <p className="mt-5.5 max-w-[38ch] text-[15px] leading-[1.7] text-white/60">
               A crowdsourced quantitative research platform for Indian equities. Independent
@@ -97,22 +97,14 @@ export function Footer() {
             </ul>
           </nav>
         </div>
-        <div className="mt-14 grid gap-8 border-t border-white/10 pt-8 md:grid-cols-2">
-          {ENTITIES.map((e) => (
-            <address key={e.name} className="text-[13px] leading-[1.7] text-white/60 not-italic">
-              <p className="font-mono text-[10px] tracking-[0.22em] text-white/45 uppercase">
-                {e.audience}
-              </p>
-              <p className="mt-2 font-semibold text-white/85">{e.name}</p>
-              {e.lines.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </address>
-          ))}
-        </div>
+        <p className="mt-14 border-t border-white/10 pt-8 text-[13px] leading-[1.8] text-white/60">
+          <span className="text-white/85">{HQ.role}:</span> {HQ.city} ({HQ.name})
+          <span className="mx-3 text-white/30">·</span>
+          <span className="text-white/85">{INDIA_OFFICE.role}:</span> {INDIA_OFFICE.city} ({INDIA_OFFICE.name})
+        </p>
 
         <div className="mt-16 flex flex-wrap justify-between gap-6 border-t border-white/10 pt-6.5 font-mono text-[10px] tracking-[0.22em] text-white/60 uppercase">
-          <span>© {new Date().getFullYear()} IndiQuant Inc. and Indiquant Private Limited. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} INDIQUANT INC. All rights reserved.</span>
           <span>Many models. One truth.</span>
         </div>
       </Container>

@@ -9,7 +9,7 @@ import { Button } from "@/components/site/Button";
 import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 import { CONTACT_EMAIL } from "@/lib/contact";
-import { ENTITIES } from "@/lib/entities";
+import { OFFICES } from "@/lib/entities";
 import { Field, Input, Textarea } from "@/components/site/Field";
 
 export const Route = createFileRoute("/contact")({
@@ -70,14 +70,14 @@ function ContactPage() {
                 </ul>
 
                 <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
-                  Who you are dealing with
+                  Offices
                 </p>
                 <ul className="mt-6 space-y-6">
-                  {ENTITIES.map((e) => (
+                  {OFFICES.map((e) => (
                     <li key={e.name}>
                       <address className="text-sm leading-relaxed text-muted-foreground not-italic">
                         <span className="block text-xs uppercase tracking-[0.18em] text-white/45">
-                          {e.audience}
+                          {e.role} · {e.dealsWith}
                         </span>
                         <span className="block text-white">{e.name}</span>
                         {e.lines.map((line) => (
