@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   Users,
@@ -15,167 +15,53 @@ import {
   Handshake,
   Crosshair,
   GraduationCap,
-  ArrowLeft,
 } from "lucide-react";
 
-import { Navbar } from "@/components/site/Navbar";
-import { Footer } from "@/components/site/Footer";
-import { SkipLink } from "@/components/site/SkipLink";
+import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import { pageHead } from "@/lib/seo";
+import { PageShell, PageHero } from "@/components/site/PageShell";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Card } from "@/components/site/Card";
-import { Badge } from "@/components/site/Badge";
 import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — IndiQuant" },
-      {
-        name: "description",
-        content:
-          "Why IndiQuant exists: a collaborative, AI-powered quantitative research platform building the future of investment research through collective intelligence.",
-      },
-      { property: "og:title", content: "About — IndiQuant" },
-      {
-        property: "og:description",
-        content:
-          "The philosophy, purpose, and ambition behind IndiQuant: collective intelligence meets AI-driven quantitative research.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/about" },
-      { name: "twitter:title", content: "About — IndiQuant" },
-      {
-        name: "twitter:description",
-        content:
-          "Building the future of quantitative intelligence, through collective research and AI.",
-      },
-    ],
-    links: [{ rel: "canonical", href: "/about" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/about",
+      title: "About: IndiQuant",
+      description:
+        "Why IndiQuant exists: a machine-learning research platform for Indian equities where independent contributors are scored on the same rules, on realised outcomes.",
+    }),
   component: AboutPage,
 });
 
 function AboutPage() {
   return (
-    <motion.div
-      id="top"
-      // Opacity only. Animating a filter leaves filter: blur(0px) on the
-      // element, which is not "none" and so creates a containing block -- every
-      // fixed child inside it, the menu sheet and the grain overlay included,
-      // was then positioned against this div instead of the viewport.
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="relative min-h-screen bg-background text-foreground"
-    >
-      {/* Global grain — matches homepage */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.025] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
-        }}
-      />
-      <SkipLink />
-      <Navbar />
-      <main id="content">
-        <Hero />
-        <WhyExist />
-        <Philosophy />
-        <Approach />
-        <Vision />
-        <Principles />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </motion.div>
-  );
-}
-
-/* ---------- HERO ---------- */
-function Hero() {
-  return (
-    <section className="relative isolate overflow-hidden pt-44 pb-32 sm:pt-56 sm:pb-40">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 grid-lines opacity-[0.28] [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_65%)]" />
-        <div className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(108,99,255,0.09),transparent_60%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background via-background/80 to-transparent" />
-      </div>
-
-      <Container className="relative">
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-          }}
-          className="mx-auto max-w-[64rem] text-center"
+    <PageShell>
+      <PageHero
+        eyebrow="About IndiQuant"
+        title="A research platform built on measurement."
+        description="IndiQuant is a machine-learning research platform for Indian equities. Independent contributors build models on anonymised NSE data, and every submission is scored the same way, on what the market then did."
+      >
+        <Button
+          as="a"
+          href={PLATFORM_SIGNUP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          withArrow
         >
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-          >
-            <Badge>About IndiQuant</Badge>
-          </motion.div>
-
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0, y: 18 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-            className="mt-10 font-display text-[2.5rem] leading-[1.05] tracking-[-0.02em] text-white text-balance sm:text-6xl md:text-[5.25rem] md:leading-[1.02]"
-          >
-            Building the Future of <span className="italic text-white/65">Quantitative</span>{" "}
-            Intelligence.
-          </motion.h1>
-
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 14 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-            className="mx-auto mt-10 max-w-xl text-[15px] leading-[1.7] text-white/60 sm:text-base"
-          >
-            IndiQuant is a collaborative, AI-powered quantitative research platform: a place where
-            independent contributors help shape the future of investment research.
-          </motion.p>
-
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-3"
-          >
-            <Button as="a" href="/#contribute" withArrow>
-              Become a Contributor
-            </Button>
-          </motion.div>
-        </motion.div>
-      </Container>
-    </section>
+          Become a Contributor
+        </Button>
+      </PageHero>
+      <WhyExist />
+      <Philosophy />
+      <Approach />
+      <Vision />
+      <Principles />
+      <FinalCTA />
+    </PageShell>
   );
 }
 
@@ -188,7 +74,7 @@ function WhyExist() {
           <div className="md:col-span-4">
             <Reveal variant="blur">
               <Eyebrow>Why We Exist</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
                 Research shouldn't live behind closed doors.
               </h2>
             </Reveal>
@@ -200,9 +86,9 @@ function WhyExist() {
                 handful of minds, working in isolation, behind institutional walls.
               </p>
               <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-                IndiQuant exists to explore a different possibility: that collective intelligence,
-                guided by AI, can unlock a broader, deeper, more resilient kind of research, one no
-                single team could produce alone.
+                IndiQuant exists to test a different possibility: that many independent researchers,
+                scored on the same rules, may find structure a single team would miss. The platform
+                exists to measure whether they do.
               </p>
             </Reveal>
           </div>
@@ -217,27 +103,23 @@ function Philosophy() {
   const items = [
     {
       icon: Users,
-      k: "01",
       title: "Collective Intelligence",
       body: "The best signal rarely comes from the loudest voice. It comes from many independent minds, tested and combined with discipline.",
     },
     {
       icon: Microscope,
-      k: "02",
       title: "Research First",
-      body: "Every decision begins with evidence. We optimize for insight over narrative, for what can be measured and repeated.",
+      body: "Every decision begins with evidence. We optimise for insight over narrative, for what can be measured and repeated.",
     },
     {
       icon: Hourglass,
-      k: "03",
       title: "Long-term Thinking",
-      body: "Enduring edge is compounded over time. We build for the decade ahead.",
+      body: "We care about research that holds up over many rounds, not a lucky week.",
     },
     {
       icon: Cpu,
-      k: "04",
       title: "Technology with Purpose",
-      body: "AI is a means, not a mission. We use it where it deepens research and clarifies decisions, never as decoration.",
+      body: "Machine learning is a means, not a mission. We use it where it deepens research and clarifies decisions, never as decoration.",
     },
   ];
 
@@ -247,7 +129,7 @@ function Philosophy() {
         <div className="mb-16 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
           <Reveal>
             <Eyebrow>Our Philosophy</Eyebrow>
-            <h2 className="mt-6 max-w-2xl font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+            <h2 className="mt-6 max-w-2xl display-tight text-[clamp(34px,4.2vw,56px)] text-white">
               Four convictions that shape everything we build.
             </h2>
           </Reveal>
@@ -257,13 +139,8 @@ function Philosophy() {
           {items.map((it, i) => (
             <Reveal key={it.title} delay={i * 0.08}>
               <Card className="h-full">
-                <div className="flex items-start justify-between">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
-                    <it.icon size={16} strokeWidth={1.5} className="text-white/80" />
-                  </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
-                    {it.k}
-                  </p>
+                <div className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--mint)]/35 text-[var(--mint)]">
+                  <it.icon size={16} strokeWidth={1.75} aria-hidden />
                 </div>
                 <h3 className="mt-8 text-lg font-medium tracking-tight text-white">{it.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.body}</p>
@@ -281,12 +158,12 @@ function Approach() {
   const flow = [
     {
       icon: Brain,
-      t: "Artificial Intelligence",
-      d: "The engine that reads structure inside noise.",
+      t: "Machine Learning",
+      d: "Models look for structure inside noisy data.",
     },
     { icon: FlaskConical, t: "Research", d: "Ideas become models. Models become hypotheses." },
-    { icon: Gauge, t: "Evaluation", d: "Every round is measured against live reality." },
-    { icon: Repeat, t: "Continuous Improvement", d: "Feedback compounds. The strategy learns." },
+    { icon: Gauge, t: "Evaluation", d: "Every round is scored against realised outcomes." },
+    { icon: Repeat, t: "Continuous Improvement", d: "Each round's scores inform the next model." },
     {
       icon: Network,
       t: "Collective Intelligence",
@@ -301,7 +178,7 @@ function Approach() {
           <div className="md:col-span-5">
             <Reveal>
               <Eyebrow>Our Approach</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
                 A discipline, not a formula.
               </h2>
             </Reveal>
@@ -330,7 +207,7 @@ function Approach() {
                       className="text-white/70 transition-colors group-hover:text-white"
                     />
                   </div>
-                  <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                  <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.22em] text-white/60">
                     {String(i + 1).padStart(2, "0")}
                   </p>
                   <h3 className="mt-2 text-sm font-medium tracking-tight text-white">{s.t}</h3>
@@ -348,7 +225,7 @@ function Approach() {
           {flow.map((s, i) => (
             <Reveal key={s.t} delay={i * 0.09} variant="sequential">
               <li className="group relative pb-10 last:pb-0">
-                <span className="absolute -left-[41px] top-1 grid h-6 w-6 place-items-center rounded-full border border-border bg-background font-mono text-[10px] text-muted-foreground group-hover:border-accent group-hover:text-white">
+                <span className="absolute -left-[41px] top-1 grid h-6 w-6 place-items-center rounded-full border border-border bg-background font-mono text-[12px] text-muted-foreground group-hover:border-accent group-hover:text-white">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-base font-medium tracking-tight text-white">{s.t}</h3>
@@ -365,28 +242,14 @@ function Approach() {
 /* ---------- VISION ---------- */
 function Vision() {
   return (
-    <Section id="vision" className="relative overflow-hidden">
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 h-[700px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.06),transparent_65%)]" />
-      </div>
+    <Section id="vision" className="relative overflow-hidden border-y border-white/10">
       <Container>
-        <div className="mx-auto max-w-4xl text-center">
-          <Reveal variant="fade">
-            <Eyebrow>Vision</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.15} variant="blur">
-            <h2 className="mt-8 font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
-              Our ambition is to build one of the world's leading{" "}
-              <span className="italic text-white/65">AI-powered</span> quantitative research
-              ecosystems.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.3} variant="fade">
-            <p className="mx-auto mt-10 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Not a product. Not a platform. An ecosystem, where research compounds, contributors
-              grow, and intelligence becomes truly collective.
-            </p>
-          </Reveal>
+        <div className="max-w-4xl">
+          <Eyebrow>Vision</Eyebrow>
+          <h2 className="display-tight mt-8 text-[clamp(36px,5vw,72px)] text-white">
+            A machine-learning research platform for Indian equities, where every model is scored on
+            the same rules.
+          </h2>
         </div>
       </Container>
     </Section>
@@ -400,7 +263,7 @@ function Principles() {
     { icon: Microscope, t: "Research", d: "Depth over volume. Evidence over opinion." },
     { icon: Sparkles, t: "Innovation", d: "Curiosity is our raw material: everywhere, always." },
     { icon: Handshake, t: "Collaboration", d: "The best minds sharpen against one another." },
-    { icon: Crosshair, t: "Precision", d: "Every detail matters when compounding edge." },
+    { icon: Crosshair, t: "Precision", d: "Every detail matters when results are measured." },
     {
       icon: GraduationCap,
       t: "Continuous Learning",
@@ -415,7 +278,7 @@ function Principles() {
           <div className="md:col-span-6">
             <Reveal>
               <Eyebrow>Core Principles</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
                 What we hold true.
               </h2>
             </Reveal>
@@ -458,38 +321,30 @@ function Principles() {
 function FinalCTA() {
   return (
     <Section id="contribute" className="relative overflow-hidden">
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 h-[700px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(108,99,255,0.10),transparent_65%)]" />
-      </div>
       <Container>
-        <Reveal variant="scale">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
-              Join the Future of <span className="italic text-white/65">Quantitative Research</span>
-              .
-            </h2>
-            <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              If you think in models, patterns, and probabilities, there is a seat for you here.
-              Contribute your research. Sharpen your edge. Grow with a platform built by many.
-            </p>
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-              <Button as="a" href="/#contribute" withArrow>
-                Become a Contributor
-              </Button>
-              <Link
-                to="/"
-                className="group inline-flex h-11 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.015] px-6 text-sm font-medium tracking-tight text-white/85 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[2px] hover:border-white/25 hover:bg-white/[0.04] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <ArrowLeft
-                  size={15}
-                  strokeWidth={1.75}
-                  className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-0.5"
-                />
-                <span>Back to Home</span>
-              </Link>
-            </div>
+        <div className="max-w-4xl">
+          <h2 className="display-tight text-[clamp(36px,5vw,72px)] text-white">
+            Bring a model. See how it scores.
+          </h2>
+          <p className="mt-8 max-w-xl text-base leading-relaxed text-white/70">
+            If you think in models, patterns and probabilities, there is a seat for you here.
+            Contribute your research and build a scored track record.
+          </p>
+          <div className="mt-12 flex flex-wrap items-center gap-3">
+            <Button
+              as="a"
+              href={PLATFORM_SIGNUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              withArrow
+            >
+              Become a Contributor
+            </Button>
+            <Button as="a" href="/contributors/" variant="secondary">
+              Read the contributor journey
+            </Button>
           </div>
-        </Reveal>
+        </div>
       </Container>
     </Section>
   );

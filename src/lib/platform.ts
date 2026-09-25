@@ -15,8 +15,17 @@
  */
 export const PLATFORM_URL = "https://platform.indiquantresearch.in";
 
-/** Where a visitor goes to create an account and start competing. */
+/** Where a visitor goes to create an account and start submitting. */
 export const PLATFORM_SIGNUP_URL = `${PLATFORM_URL}/register`;
 
 /** Where an existing contributor signs in. */
 export const PLATFORM_SIGNIN_URL = `${PLATFORM_URL}/login`;
+
+/**
+ * The platform's legal pages. They are drafts that exist on the platform's
+ * redesign branch and go live with its next deploy; this site links to them
+ * rather than keeping a second copy that could disagree.
+ */
+export const PLATFORM_TERMS_URL = `${PLATFORM_URL}/legal/terms`;
+export const PLATFORM_PRIVACY_URL = `${PLATFORM_URL}/legal/privacy`;
+export const PLATFORM_GRIEVANCE_URL = `${PLATFORM_URL}/legal/grievance`;

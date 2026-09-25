@@ -1,6 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import { pageHead } from "@/lib/seo";
+import {
+  CONTRIBUTOR_AGREEMENT,
+  FIRST_RANKED,
+  FIRST_ROUND_DATE,
+  FIRST_SCORES,
+  GRANTS_PLANNED,
+  GRANTS_STATUS,
+  LEADERBOARD_MIN_ROUNDS,
+  MAX_MODELS,
+  RANKINGS_VISIBILITY,
+  ROUND_CLOSES_IST,
+  ROUND_OPENS_IST,
+  SCORED_AFTER,
+} from "@/lib/schedule";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
@@ -9,23 +24,13 @@ import { PageShell, PageHero } from "@/components/site/PageShell";
 import { Accordion } from "./contributors";
 
 export const Route = createFileRoute("/faq")({
-  head: () => ({
-    meta: [
-      { title: "FAQ — IndiQuant" },
-      {
-        name: "description",
-        content:
-          "Answers to the most common questions about IndiQuant, crowdsourced AI research, and how contributors get started.",
-      },
-      { property: "og:title", content: "FAQ — IndiQuant" },
-      {
-        property: "og:description",
-        content: "A quick guide to what IndiQuant is and how to take part.",
-      },
-      { property: "og:url", content: "/faq" },
-    ],
-    links: [{ rel: "canonical", href: "/faq" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/faq",
+      title: "FAQ: IndiQuant",
+      description:
+        "What IndiQuant is, how rounds work, how submissions are scored, who can see rankings, and where the research-grant programme stands.",
+    }),
   component: FAQPage,
 });
 
@@ -35,15 +40,15 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
     items: [
       {
         q: "What is IndiQuant?",
-        a: "IndiQuant is a crowdsourced quantitative research platform for Indian equities. Independent contributors build predictive models on obfuscated NSE data; each submission is scored on realised outcomes, and the signals that hold up are combined into one paper-traded strategy. No client capital is managed and nothing is traded live today.",
+        a: "IndiQuant is a research tournament for Indian equities. Independent contributors build predictive models on anonymised NSE data; each submission is scored on realised outcomes, and the signals that hold up are combined into one paper-traded strategy. No client capital is managed and nothing is traded live.",
       },
       {
-        q: "What is crowdsourced AI?",
-        a: "It is the practice of aggregating many independent AI models, built by different people using different approaches, into one collective system. The variance across contributors becomes a source of edge.",
+        q: "What does crowdsourced research mean here?",
+        a: "Many independent models, built by different people using different approaches, are scored on the same rules and combined into one system. The hypothesis is that independent approaches may find structure a single team misses; the platform measures whether they do.",
       },
       {
         q: "Why focus on Indian equity markets?",
-        a: "Indian markets are deep, dynamic, and rich in structure. They reward original research and remain underexplored by global quantitative work.",
+        a: "The platform is built around one market: NSE-listed equities on a point-in-time universe, so every model is scored against the same data.",
       },
     ],
   },
@@ -60,28 +65,32 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How do I get started?",
-        a: "Create an account on platform.indiquantresearch.in, verify your email, create a model under a public handle on your account page, install the SDK, and submit to the next Core round: published 06:30 IST every NSE session, closing 09:00 IST.",
+        a: `Create an account on platform.indiquantresearch.in, verify your email, create a model under a public handle on your account page (each contributor may own up to ${MAX_MODELS}), install the SDK, and submit to the next Core round: rounds open ${ROUND_OPENS_IST} and close ${ROUND_CLOSES_IST} every NSE session.`,
       },
       {
         q: "Is there a cost to contribute?",
-        a: "No. Contributing is free and you never put capital at risk. You bring your ideas and your own compute; the platform provides the data and the evaluation.",
+        a: "No. Contributing is free: no fee, no deposit, and you never put capital at risk. You bring your ideas and your own compute; the platform provides the data and the evaluation.",
       },
     ],
   },
   {
-    title: "Evaluation & Rewards",
+    title: "Evaluation and grants",
     items: [
       {
         q: "How is my work evaluated?",
-        a: "Each Core round is scored 20 trading sessions after it opens, on realised out-of-sample outcomes. The rules are published on the platform and are the same for everyone. Core rounds began on 21 September 2026, so the first scores land in late October 2026.",
+        a: `Each Core round is scored ${SCORED_AFTER}, on realised out-of-sample outcomes. The rules are published on the platform and are the same for everyone. Core rounds began on ${FIRST_ROUND_DATE}, so the first scores land in ${FIRST_SCORES}.`,
       },
       {
-        q: "How are contributors rewarded?",
-        a: "No grant has been paid yet. What accrues now is standing: your scores, your rank, and the track record that comes with them. A company-funded research-grant programme for demonstrated skill is planned and is with counsel for review; when it runs, grants are discretionary, periodic, India-resident only in the first phase, and never require a fee or deposit from you.",
+        q: "Who can see the rankings?",
+        a: `${RANKINGS_VISIBILITY} A model joins the leaderboard after ${LEADERBOARD_MIN_ROUNDS} resolved rounds, so the first ranked rows are expected around ${FIRST_RANKED}.`,
+      },
+      {
+        q: "Are there research grants?",
+        a: `${GRANTS_STATUS} What accrues now is standing: your scores, your rank, and the track record that comes with them. ${GRANTS_PLANNED} No grant will ever require a fee or deposit from you.`,
       },
       {
         q: "Do I retain ownership of my work?",
-        a: "Yes. You own your models. Under the contributor agreement with IndiQuant Inc. you license the submitted signal, not the model behind it.",
+        a: `Yes. You own your models. ${CONTRIBUTOR_AGREEMENT}`,
       },
     ],
   },
@@ -92,15 +101,13 @@ function FAQPage() {
     <PageShell>
       <PageHero
         eyebrow="Frequently Asked"
-        title="Questions,"
-        italic="clearly"
-        tail="answered."
+        title="Questions, clearly answered."
         description="Everything worth knowing about IndiQuant, in one place."
       />
 
-      <Section className="pt-0">
+      <Section className="pt-14 md:pt-20">
         <Container>
-          <div className="mx-auto max-w-3xl space-y-24">
+          <div className="max-w-3xl space-y-24">
             {groups.map((g, i) => (
               <Reveal key={g.title} delay={i * 0.08}>
                 <div>
@@ -118,25 +125,25 @@ function FAQPage() {
       <Section>
         <Container>
           <Reveal variant="scale">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="font-display text-3xl leading-tight tracking-tight text-white sm:text-4xl">
+            <div className="max-w-3xl">
+              <h2 className="display-tight text-[clamp(30px,3.6vw,44px)] text-white">
                 Still curious?
               </h2>
-              <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-                We're happy to talk. Write to us and we'll get back to you.
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
+                Write to us and we'll get back to you by email.
               </p>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-                <Button as="a" href="/contact" withArrow>
-                  Contact us
-                </Button>
+              <div className="mt-10 flex flex-wrap items-center gap-3">
                 <Button
                   as="a"
                   href={PLATFORM_SIGNUP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="ghost"
+                  withArrow
                 >
-                  Create an account
+                  Become a Contributor
+                </Button>
+                <Button as="a" href="/contact/" variant="secondary">
+                  Contact
                 </Button>
               </div>
             </div>

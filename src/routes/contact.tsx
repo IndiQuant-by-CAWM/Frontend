@@ -1,35 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, type FormEvent } from "react";
-import { Mail, Check } from "lucide-react";
+import { Mail } from "lucide-react";
 
 import { Container } from "@/components/site/Container";
-import { Section } from "@/components/site/Section";
+import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
-import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 import { CONTACT_EMAIL } from "@/lib/contact";
 import { OFFICES } from "@/lib/entities";
-import { Field, Input, Textarea } from "@/components/site/Field";
+import { pageHead } from "@/lib/seo";
 
+/**
+ * The address, shown plainly.
+ *
+ * This page used to carry a contact form. The site is a static build with no
+ * backend, so the form could only hand the message to the visitor's mail app
+ * and then show a success state regardless of whether anything was sent. A
+ * visible address and a mailto link are honest about what happens.
+ */
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — IndiQuant" },
-      {
-        name: "description",
-        content:
-          "Get in touch with the IndiQuant team, for contributors, partners, and long-term investors.",
-      },
-      { property: "og:title", content: "Contact — IndiQuant" },
-      {
-        property: "og:description",
-        content: "A quiet conversation is often the best place to begin.",
-      },
-      { property: "og:url", content: "/contact" },
-    ],
-    links: [{ rel: "canonical", href: "/contact" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/contact",
+      title: "Contact: IndiQuant",
+      description: `Write to IndiQuant at ${CONTACT_EMAIL}. Registered office in Newark, Delaware; India office in Navi Mumbai.`,
+    }),
   component: ContactPage,
 });
 
@@ -38,186 +32,69 @@ function ContactPage() {
     <PageShell>
       <PageHero
         eyebrow="Contact"
-        title="Say"
-        italic="hello"
-        tail="."
-        description="We read every message. Tell us what you're working on, or what you'd like to know."
+        title="Write to us."
+        description="One address for contributors, partners and anyone else. We read every message and reply by email."
       />
 
-      <Section className="pt-0">
+      <Section className="pt-14 md:pt-20">
         <Container>
-          <div className="mx-auto grid max-w-5xl gap-16 md:grid-cols-12">
-            <div className="md:col-span-5">
-              <Reveal variant="blur">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
-                  Direct channels
-                </p>
-                <ul className="mt-8 space-y-6">
-                  <li>
-                    <a
-                      href={`mailto:${CONTACT_EMAIL}`}
-                      className="group flex items-start gap-4 text-white/80 transition-colors hover:text-white"
-                    >
-                      <span className="mt-1 grid h-9 w-9 place-items-center rounded-lg border border-border">
-                        <Mail size={15} strokeWidth={1.5} />
-                      </span>
-                      <span>
-                        <span className="block text-sm text-white">Email</span>
-                        <span className="block text-sm text-muted-foreground">{CONTACT_EMAIL}</span>
-                      </span>
-                    </a>
-                  </li>
-                </ul>
-
-                <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">
-                  Offices
-                </p>
-                <ul className="mt-6 space-y-6">
-                  {OFFICES.map((e) => (
-                    <li key={e.name}>
-                      <address className="text-sm leading-relaxed text-muted-foreground not-italic">
-                        <span className="block text-xs uppercase tracking-[0.18em] text-white/45">
-                          {e.role} · {e.dealsWith}
-                        </span>
-                        <span className="block text-white">{e.name}</span>
-                        {e.lines.map((line) => (
-                          <span key={line} className="block">
-                            {line}
-                          </span>
-                        ))}
-                      </address>
-                    </li>
-                  ))}
-                </ul>
-
-                <p className="mt-16 max-w-sm text-sm leading-relaxed text-muted-foreground">
-                  For contributor questions, the fastest path is the{" "}
-                  <a href="/faq" className="text-white underline-offset-4 hover:underline">
-                    FAQ
-                  </a>
-                  . Most answers live there.
-                </p>
-              </Reveal>
+          <div className="grid gap-16 md:grid-cols-12">
+            <div className="md:col-span-6">
+              <Eyebrow>Email</Eyebrow>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="mt-6 flex items-center gap-4 text-[clamp(22px,3vw,34px)] font-extrabold tracking-[-0.02em] break-all text-white underline decoration-[var(--mint)]/60 underline-offset-8 transition-colors hover:text-[var(--mint)]"
+              >
+                <Mail
+                  size={26}
+                  strokeWidth={1.75}
+                  aria-hidden
+                  className="shrink-0 text-[var(--mint)]"
+                />
+                {CONTACT_EMAIL}
+              </a>
+              <p className="mt-6 max-w-[48ch] text-[16px] leading-[1.7] text-white/70">
+                Copy the address into any mail client, or use the button to open a new message in
+                yours. There is no form on this site, so nothing is sent until you send it.
+              </p>
+              <div className="mt-8">
+                <Button as="a" href={`mailto:${CONTACT_EMAIL}`} withArrow>
+                  Email IndiQuant
+                </Button>
+              </div>
+              <p className="mt-12 max-w-sm text-[15px] leading-relaxed text-white/70">
+                For contributor questions, the fastest path is the{" "}
+                <a href="/faq/" className="text-white underline underline-offset-4">
+                  FAQ
+                </a>
+                .
+              </p>
             </div>
 
-            <div className="md:col-span-7">
-              <Reveal delay={0.15}>
-                <ContactForm />
-              </Reveal>
+            <div className="md:col-span-5 md:col-start-8">
+              <Eyebrow>Offices</Eyebrow>
+              <ul className="mt-6 space-y-8">
+                {OFFICES.map((e) => (
+                  <li key={e.name}>
+                    <address className="text-[15px] leading-relaxed text-white/70 not-italic">
+                      <span className="block font-mono text-[12px] tracking-[0.14em] text-white/65 uppercase">
+                        {e.role}
+                      </span>
+                      <span className="mt-2 block text-[17px] font-bold text-white">{e.name}</span>
+                      {e.lines.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
+                      <span className="mt-2 block text-white/60">{e.dealsWith}</span>
+                    </address>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Container>
       </Section>
     </PageShell>
-  );
-}
-
-function ContactForm() {
-  const [sent, setSent] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const next: Record<string, string> = {};
-    const name = String(f.get("name") ?? "").trim();
-    const email = String(f.get("email") ?? "").trim();
-    const subject = String(f.get("subject") ?? "").trim();
-    const message = String(f.get("message") ?? "").trim();
-    if (!name) next.name = "Please enter your name.";
-    if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "Please enter a valid email.";
-    if (!message) next.message = "A few words help us reply.";
-    setErrors(next);
-    if (Object.keys(next).length > 0) return;
-
-    // This site is a static build with no backend of its own, so the message is
-    // handed to the visitor's own mail client. Anything else here would be a
-    // success state over a discarded message.
-    const body = `${message}\n\n--\n${name}\n${email}`;
-    window.location.href =
-      `mailto:${CONTACT_EMAIL}` +
-      `?subject=${encodeURIComponent(subject || `Website enquiry from ${name}`)}` +
-      `&body=${encodeURIComponent(body)}`;
-    setSent(true);
-  }
-
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.015] p-8 sm:p-10">
-      <AnimatePresence mode="wait">
-        {sent ? (
-          <motion.div
-            key="thanks"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="py-8 text-center"
-          >
-            <div className="mx-auto grid h-12 w-12 place-items-center rounded-full border border-white/15 bg-white/[0.03]">
-              <Check size={18} strokeWidth={1.75} className="text-white" />
-            </div>
-            <h3 className="mt-6 font-display text-3xl leading-tight tracking-tight text-white">
-              Check your mail app.
-            </h3>
-            <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              We've opened a draft addressed to us with your message in it. Send it and we'll reply.
-              If nothing opened, write to{" "}
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="text-white underline-offset-4 hover:underline"
-              >
-                {CONTACT_EMAIL}
-              </a>
-              .
-            </p>
-            <div className="mt-8 flex justify-center">
-              <Button variant="ghost" size="sm" onClick={() => setSent(false)}>
-                Back to the form
-              </Button>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.form
-            key="form"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            onSubmit={onSubmit}
-            noValidate
-            className="space-y-6"
-          >
-            <div className="grid gap-6 sm:grid-cols-2">
-              <Field label="Name" htmlFor="name" error={errors.name}>
-                <Input id="name" name="name" placeholder="Your name" autoComplete="name" />
-              </Field>
-              <Field label="Email" htmlFor="email" error={errors.email}>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@domain.com"
-                  autoComplete="email"
-                />
-              </Field>
-            </div>
-            <Field label="Subject" hint="Optional" htmlFor="subject">
-              <Input id="subject" name="subject" placeholder="What's this about?" />
-            </Field>
-            <Field label="Message" htmlFor="message" error={errors.message}>
-              <Textarea id="message" name="message" placeholder="Tell us a little more…" />
-            </Field>
-            <div className="flex items-center justify-between pt-2">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
-                We reply within a few days
-              </p>
-              <Button type="submit" withArrow>
-                Send message
-              </Button>
-            </div>
-          </motion.form>
-        )}
-      </AnimatePresence>
-    </div>
   );
 }

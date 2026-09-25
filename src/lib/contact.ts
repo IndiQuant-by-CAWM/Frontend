@@ -1,5 +1,5 @@
 /**
- * The desk's public email address.
+ * IndiQuant's public contact address.
  *
  * One constant, because the address previously differed between the contact
  * page (hello@indiquant.com, on a domain this project does not use) and the

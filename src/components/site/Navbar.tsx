@@ -3,15 +3,15 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-import { PLATFORM_SIGNUP_URL, PLATFORM_URL } from "@/lib/platform";
+import { PLATFORM_SIGNIN_URL, PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { Button } from "./Button";
 
 const links = [
-  { href: "/about", label: "About" },
-  { href: "/contributors", label: "Contributors" },
-  { href: "/leaderboard", label: "Leaderboard" },
-  { href: "/investors", label: "Investors" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/about/", label: "About" },
+  { href: "/contributors/", label: "Contributors" },
+  { href: "/leaderboard/", label: "Leaderboard" },
+  { href: "/investors/", label: "Investors" },
+  { href: "/faq/", label: "FAQ" },
 ];
 
 export function Navbar() {
@@ -65,20 +65,28 @@ export function Navbar() {
 
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-7 font-mono text-[11px] uppercase tracking-[0.14em] md:flex"
+            className="hidden items-center gap-7 font-mono text-[12px] uppercase tracking-[0.12em] lg:flex"
           >
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                className="text-white/60 transition-colors duration-200 hover:text-[var(--mint)] focus-visible:text-[var(--mint)] focus-visible:outline-none"
+                className="text-white/70 transition-colors duration-200 hover:text-[var(--mint)]"
               >
                 {l.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden items-center gap-5 lg:flex">
+            <a
+              href={PLATFORM_SIGNIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[12px] tracking-[0.12em] text-white/70 uppercase transition-colors duration-200 hover:text-[var(--mint)]"
+            >
+              Sign in
+            </a>
             <Button
               as="a"
               href={PLATFORM_SIGNUP_URL}
@@ -95,7 +103,7 @@ export function Navbar() {
           <button
             aria-label="Toggle menu"
             aria-expanded={open}
-            className="grid h-11 w-11 place-items-center rounded-[10px] border border-white/15 text-[var(--mint)] md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-[10px] border border-white/15 text-[var(--mint)] lg:hidden"
             onClick={() => setOpen((v) => !v)}
           >
             <Menu size={18} />
@@ -119,7 +127,7 @@ export function Navbar() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.18, ease: [0.2, 0, 0.1, 1] }}
-                className="fixed inset-0 z-70 flex flex-col bg-[var(--ink)] md:hidden"
+                className="fixed inset-0 z-70 flex flex-col bg-[var(--ink)] lg:hidden"
               >
                 <div className="container-page flex h-[68px] shrink-0 items-center justify-between">
                   <span className="text-[19px] font-extrabold tracking-[-0.03em] text-[var(--mint)]">
@@ -162,14 +170,17 @@ export function Navbar() {
                   >
                     Become a Contributor
                   </Button>
-                  <a
-                    href={PLATFORM_URL}
+                  <Button
+                    as="a"
+                    href={PLATFORM_SIGNIN_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex min-h-[44px] items-center justify-center font-mono text-[12px] tracking-[0.14em] text-[var(--mint)]/80 uppercase"
+                    variant="secondary"
+                    size="lg"
+                    className="w-full"
                   >
-                    platform.indiquantresearch.in
-                  </a>
+                    Sign in
+                  </Button>
                 </div>
               </motion.div>
             )}

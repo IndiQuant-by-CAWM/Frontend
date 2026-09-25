@@ -4,14 +4,14 @@ import { useState } from "react";
 import {
   Brain,
   Sparkles,
-  Trophy,
+  BarChart3,
   Users,
   Code2,
   Database,
   LineChart,
   Compass,
   Hammer,
-  Swords,
+  Send,
   Repeat,
   Share2,
   Sprout,
@@ -21,6 +21,16 @@ import {
 } from "lucide-react";
 
 import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import { pageHead } from "@/lib/seo";
+import {
+  CONTRIBUTOR_AGREEMENT,
+  FREE_TO_JOIN,
+  GRANTS_PLANNED,
+  GRANTS_STATUS,
+  MAX_MODELS,
+  ROUND_WINDOW,
+  SCORED_AFTER,
+} from "@/lib/schedule";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
@@ -29,24 +39,13 @@ import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 
 export const Route = createFileRoute("/contributors")({
-  head: () => ({
-    meta: [
-      { title: "Contributors — IndiQuant" },
-      {
-        name: "description",
-        content:
-          "Build models on obfuscated NSE data and get scored on live market outcomes. Join IndiQuant as an independent researcher or AI practitioner.",
-      },
-      { property: "og:title", content: "Contributors — IndiQuant" },
-      {
-        property: "og:description",
-        content:
-          "For researchers, data scientists, and AI practitioners who want to shape a collectively-built quantitative research platform.",
-      },
-      { property: "og:url", content: "/contributors" },
-    ],
-    links: [{ rel: "canonical", href: "/contributors" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/contributors",
+      title: "Contributors: IndiQuant",
+      description:
+        "Build models on anonymised NSE data and get scored on realised market outcomes. Free to join, no deposit, paper-traded. For data scientists, ML engineers and quantitative researchers.",
+    }),
   component: ContributorsPage,
 });
 
@@ -55,10 +54,8 @@ function ContributorsPage() {
     <PageShell>
       <PageHero
         eyebrow="Contributors"
-        title="Research that is scored"
-        italic="on merit"
-        tail="alone."
-        description="Contribute models to a live, paper-traded quantitative strategy. No titles, no gatekeepers. Only measured edge."
+        title="Research that is scored on merit alone."
+        description={`Submit predictions on anonymised NSE data and build a scored track record. No titles, no gatekeepers. ${FREE_TO_JOIN}`}
       >
         <Button
           as="a"
@@ -67,9 +64,9 @@ function ContributorsPage() {
           rel="noopener noreferrer"
           withArrow
         >
-          Create your account
+          Become a Contributor
         </Button>
-        <Button as="a" href="/faq" variant="ghost">
+        <Button as="a" href="/faq/" variant="secondary">
           Read the FAQ
         </Button>
       </PageHero>
@@ -87,22 +84,19 @@ function ContributorsPage() {
 function WhyJoin() {
   const items = [
     {
-      icon: Trophy,
-      k: "01",
+      icon: BarChart3,
       t: "Ranked on performance.",
-      b: "Your standing follows the live outcome of your models. Politics and seniority do not enter into it. Research grants are planned, not yet paid.",
+      b: "Your standing follows the scored outcome of your models. Politics and seniority do not enter into it.",
     },
     {
       icon: Sparkles,
-      k: "02",
       t: "Work on real markets.",
       b: "Every submission is evaluated against realised NSE outcomes, round after round.",
     },
     {
       icon: Users,
-      k: "03",
       t: "Join a research collective.",
-      b: "Independent contributors, one shared strategy. Sharpen your edge against the best.",
+      b: "Independent contributors, one shared strategy. Compare your work with others on the same rules.",
     },
   ];
   return (
@@ -111,7 +105,7 @@ function WhyJoin() {
         <div className="mb-16 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
           <Reveal>
             <Eyebrow>Why Become a Contributor</Eyebrow>
-            <h2 className="mt-6 max-w-2xl font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+            <h2 className="mt-6 max-w-2xl display-tight text-[clamp(34px,4.2vw,56px)] text-white">
               A place where research becomes a track record.
             </h2>
           </Reveal>
@@ -120,13 +114,8 @@ function WhyJoin() {
           {items.map((it, i) => (
             <Reveal key={it.t} delay={i * 0.08}>
               <Card className="h-full">
-                <div className="flex items-start justify-between">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
-                    <it.icon size={16} strokeWidth={1.5} className="text-white/80" />
-                  </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
-                    {it.k}
-                  </p>
+                <div className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--mint)]/35 text-[var(--mint)]">
+                  <it.icon size={16} strokeWidth={1.75} aria-hidden />
                 </div>
                 <h3 className="mt-8 text-lg font-medium tracking-tight text-white">{it.t}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.b}</p>
@@ -155,7 +144,7 @@ function WhoCanJoin() {
           <div className="md:col-span-4">
             <Reveal variant="blur">
               <Eyebrow>Who Can Join</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
                 Talent has no résumé.
               </h2>
             </Reveal>
@@ -185,10 +174,10 @@ function JourneyHighLevel() {
   const steps = [
     { k: "01", icon: Compass, t: "Discover", d: "Explore the platform and its research rounds." },
     { k: "02", icon: Hammer, t: "Build", d: "Engineer features. Train models. Iterate." },
-    { k: "03", icon: Swords, t: "Compete", d: "Submit each round for live evaluation." },
-    { k: "04", icon: Repeat, t: "Improve", d: "Learn from feedback. Refine your edge." },
+    { k: "03", icon: Send, t: "Submit", d: "Submit each round for scoring on realised outcomes." },
+    { k: "04", icon: Repeat, t: "Improve", d: "Learn from your scores. Refine your model." },
     { k: "05", icon: Share2, t: "Contribute", d: "Your best signals join the collective." },
-    { k: "06", icon: Sprout, t: "Grow", d: "Earn on performance. Grow with the fund." },
+    { k: "06", icon: Sprout, t: "Grow", d: "Build a scored track record, round after round." },
   ];
   return (
     <Section>
@@ -197,7 +186,7 @@ function JourneyHighLevel() {
           <div className="md:col-span-5">
             <Reveal>
               <Eyebrow>Contribution Journey</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
                 A transparent path, end to end.
               </h2>
             </Reveal>
@@ -224,7 +213,7 @@ function JourneyHighLevel() {
                       className="text-white/70 transition-colors group-hover:text-white"
                     />
                   </div>
-                  <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                  <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.22em] text-white/60">
                     {s.k}
                   </p>
                   <h3 className="mt-2 text-sm font-medium tracking-tight text-white">{s.t}</h3>
@@ -241,7 +230,7 @@ function JourneyHighLevel() {
           {steps.map((s, i) => (
             <Reveal key={s.k} delay={i * 0.09} variant="sequential">
               <li className="group relative pb-10 last:pb-0">
-                <span className="absolute -left-[41px] top-1 grid h-6 w-6 place-items-center rounded-full border border-border bg-background font-mono text-[10px] text-muted-foreground">
+                <span className="absolute -left-[41px] top-1 grid h-6 w-6 place-items-center rounded-full border border-border bg-background font-mono text-[12px] text-muted-foreground">
                   {s.k}
                 </span>
                 <h3 className="text-base font-medium tracking-tight text-white">{s.t}</h3>
@@ -283,7 +272,7 @@ function Skills() {
           <div className="md:col-span-6">
             <Reveal>
               <Eyebrow>Skills That Help</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
                 What tends to compound.
               </h2>
             </Reveal>
@@ -325,19 +314,19 @@ function FAQ() {
   const qs = [
     {
       q: "Do I need a finance background?",
-      a: "No. Many contributors come from ML, physics, engineering or research rather than finance. The platform teaches the domain as you go.",
+      a: "No. Many contributors come from ML, physics, engineering or research rather than finance. Domain knowledge can be learned as you go.",
     },
     {
       q: "Is there a cost to join?",
-      a: "Contributing to IndiQuant is free. No fee and no deposit, ever. You bring your ideas and your compute; we provide the data and the scoring.",
+      a: `Contributing to IndiQuant is free. No fee and no deposit, ever. You bring your ideas and your compute; we provide the data and the scoring. Each contributor may own up to ${MAX_MODELS} models.`,
     },
     {
       q: "How is my work evaluated?",
-      a: "Every submission is scored on realised, out-of-sample market outcomes 20 sessions after the round opens. The rules are the same for everyone and are published on the platform.",
+      a: `Every submission is scored on realised, out-of-sample market outcomes, ${SCORED_AFTER}. The rules are the same for everyone and are published on the platform.`,
     },
     {
       q: "Do I own my models?",
-      a: "You retain ownership of your models. You license the submitted signal to IndiQuant Inc. under the contributor agreement; a research-grant programme for demonstrated skill is planned once it clears legal review, and nothing has been paid yet.",
+      a: `You retain ownership of your models. ${CONTRIBUTOR_AGREEMENT} ${GRANTS_PLANNED} ${GRANTS_STATUS}`,
     },
   ];
   return (
@@ -346,7 +335,7 @@ function FAQ() {
         <div className="mb-14">
           <Reveal>
             <Eyebrow>Frequently Asked</Eyebrow>
-            <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
+            <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
               A few things worth knowing.
             </h2>
           </Reveal>
@@ -357,7 +346,7 @@ function FAQ() {
             <BookOpen size={14} strokeWidth={1.5} />
             <span>
               More questions?{" "}
-              <a href="/faq" className="text-white underline-offset-4 hover:underline">
+              <a href="/faq/" className="text-white underline underline-offset-4">
                 Read the full FAQ
               </a>
               .
@@ -379,7 +368,7 @@ export function Accordion({ items }: { items: { q: string; a: string }[] }) {
           <div key={it.q}>
             <button
               onClick={() => setOpen(isOpen ? null : i)}
-              className="group flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none"
+              className="group flex w-full items-center justify-between gap-6 py-6 text-left"
               aria-expanded={isOpen}
             >
               <span className="text-base font-medium tracking-tight text-white sm:text-lg">
@@ -419,16 +408,16 @@ function FinalCTA() {
   return (
     <Section className="relative overflow-hidden">
       <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 h-[700px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(108,99,255,0.10),transparent_65%)]" />
+        <div className="absolute left-1/2 top-1/2 h-[700px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,3,255,0.28),transparent_65%)]" />
       </div>
       <Container>
         <Reveal variant="scale">
           <div className="mx-auto max-w-4xl text-center">
-            <h2 className="font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
-              Bring your models. <span className="italic text-white/65">Meet the market.</span>
+            <h2 className="display-tight text-[clamp(36px,5vw,72px)] text-white">
+              Bring your models. Meet the market.
             </h2>
             <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Create your account and submit to the next Core round, published 06:30 IST every NSE session.
+              Create your account and submit to the next Core round. {ROUND_WINDOW}
             </p>
             <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
               <Button
@@ -438,10 +427,10 @@ function FinalCTA() {
                 rel="noopener noreferrer"
                 withArrow
               >
-                Create your account
+                Become a Contributor
               </Button>
-              <Button as="a" href="/contact" variant="ghost">
-                Talk to us
+              <Button as="a" href="/contact/" variant="secondary">
+                Contact
               </Button>
             </div>
           </div>

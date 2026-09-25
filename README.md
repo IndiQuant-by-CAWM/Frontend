@@ -4,7 +4,7 @@ The public marketing site at **[indiquantresearch.in](https://indiquantresearch.
 
 This is **not** the participant portal. Contributors download datasets, build models and
 submit predictions on `platform-frontend/`, which deploys separately to
-`platform.indiquantresearch.in`. This repository explains the fund and sends people
+`platform.indiquantresearch.in`. This repository explains the platform and sends people
 there; the two swapped roles early on and the names never caught up.
 
 ## Stack
@@ -36,14 +36,15 @@ Pushing to `main` triggers `.github/workflows/deploy-pages.yml`, which runs
 comes from `public/CNAME`.
 
 `build:pages` sets `GITHUB_PAGES=true`, which disables nitro and turns on prerendering
-with `crawlLinks` and **`failOnError`** — a broken link or a missing asset fails the
+with `crawlLinks` and **`failOnError`**, then runs `scripts/write-sitemap.mjs`, which
+lists every prerendered page that is not `noindex` — a broken link or a missing asset fails the
 build rather than shipping quietly. Run it locally before pushing anything that adds a
 route or a file under `public/`.
 
 ## Conventions
 
 - **Static assets** live in `public/` and are referenced by absolute path
-  (`/badges/…`, `/earth/…`, `/models/…`), not by bundler import. The one exception is
+  (`/badges/…`, `/earth/…`, `/fonts/…`), not by bundler import. The one exception is
   the favicon, imported with Vite's `?url` suffix in `src/routes/__root.tsx`.
 - **Images** carry their intrinsic `width` and `height` as attributes so the box is
   reserved before decode, plus `loading="lazy"`, `decoding="async"` and real `alt` text.
@@ -59,6 +60,18 @@ route or a file under `public/`.
   Anything placed on the ink ground needs to work there without a light variant.
 - Motion respects `prefers-reduced-motion`, in CSS (`iq-marquee`) and in JS
   (`Reveal` bails out via `useReducedMotion`).
+- **Facts live in constants.** Round times, scoring delay, model and attempt limits,
+  grant and contributor-agreement wording are in `src/lib/schedule.ts`; entity names
+  and addresses in `src/lib/entities.ts`; the contact address in `src/lib/contact.ts`.
+  Pages read them; they never retype them.
+- **Head tags come from `pageHead()`** in `src/lib/seo.ts`: absolute, trailing-slash
+  canonical and `og:url`, and each route's own title and description.
+- **The globe** (`GlobeScene`) loads three.js only after the browser is idle, and only
+  at ≥768px without reduced motion or Save-Data. Its textures are 1–2K WebP.
+- **Fonts are self-hosted** in `public/fonts/` (Plus Jakarta Sans variable, Space Mono
+  400). No italics are set anywhere, so none is shipped or synthesised.
+- **Focus** is one global `:focus-visible` ring in `src/styles.css`; components must not
+  add `outline-none`.
 
 See `CLAUDE.md` for the architectural guardrails — chiefly that this layer renders
 backend-supplied state and never becomes a second source of truth.

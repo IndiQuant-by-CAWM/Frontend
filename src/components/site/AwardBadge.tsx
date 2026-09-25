@@ -55,7 +55,6 @@ export function AwardBadge({ size = "sm", className }: { size?: Size; className?
       className={cn(
         "inline-flex items-center rounded-xl bg-white shadow-[0_8px_24px_rgba(0,0,0,0.28)]",
         "transition-transform duration-200 ease-[cubic-bezier(0.2,0,0.1,1)] hover:-translate-y-0.5",
-        "focus-visible:ring-[3px] focus-visible:ring-[var(--mint)]/70 focus-visible:outline-none",
         chipSizes[size],
         className,
       )}

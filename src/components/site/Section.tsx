@@ -32,7 +32,7 @@ export function Eyebrow({
     <p
       id={id}
       className={cn(
-        "font-mono text-[11px] tracking-[0.22em] text-[var(--mint)] uppercase",
+        "font-mono text-[12px] tracking-[0.22em] text-[var(--mint)] uppercase",
         className,
       )}
     >

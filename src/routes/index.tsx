@@ -1,7 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BrainCircuit, Boxes, FunctionSquare, LineChart, TrendingUp, Sparkles } from "lucide-react";
+import { EyeOff, Boxes, FunctionSquare, LineChart, TrendingUp, Layers } from "lucide-react";
 
 import { PLATFORM_SIGNUP_URL, PLATFORM_URL } from "@/lib/platform";
+import { CONTACT_EMAIL } from "@/lib/contact";
+import { pageHead } from "@/lib/seo";
+import {
+  ATTEMPTS_PER_ROUND,
+  FIRST_RANKED,
+  FIRST_ROUND_DATE,
+  FIRST_SCORES,
+  FREE_TO_JOIN,
+  GRANTS_PLANNED,
+  GRANTS_STATUS,
+  LEADERBOARD_MIN_ROUNDS,
+  MAX_MODELS,
+  ROUND_CLOSES_IST,
+  SCORED_AFTER,
+  TARGET_SESSIONS,
+} from "@/lib/schedule";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Container } from "@/components/site/Container";
@@ -14,40 +30,30 @@ import { GlobeScene } from "@/components/site/GlobeScene";
 import { SkipLink } from "@/components/site/SkipLink";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "IndiQuant — Crowdsourced AI Quantitative Research" },
-      {
-        name: "description",
-        content:
-          "IndiQuant is a crowdsourced quantitative research platform for Indian equities. Independent contributors build models on obfuscated NSE data; every submission is scored on live market outcomes.",
-      },
-      {
-        property: "og:title",
-        content: "IndiQuant — Crowdsourced AI Quantitative Research",
-      },
-      {
-        property: "og:description",
-        content:
-          "A crowdsourced quantitative research platform for Indian equities, where independent contributors are scored on live market outcomes.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/",
+      title: "IndiQuant: research tournament for Indian equities",
+      description:
+        "Build models on anonymised NSE data and get scored on what the market does next. Free to join, no deposit, paper-traded. Rounds close 09:00 IST every NSE session.",
+    }),
   component: Home,
 });
 
 const marqueeClaims = [
   "Because intuition is not a strategy",
-  "Only skill gets scored",
-  "Built to be compliant",
-  "Research in the open",
+  "Scored on realised outcomes",
+  "Paper-traded, no client funds",
+  "Free to join, no deposit",
 ];
 
+// The five numbers a contributor needs before deciding to sign up.
 const heroStats = [
-  { label: "Contributors", value: "Independent, anywhere" },
-  { label: "Market", value: "NSE equities" },
-  { label: "Cadence", value: "One round per session" },
-  { label: "Scored on", value: "Live outcomes" },
+  { value: "1 round", label: "every NSE session" },
+  { value: ROUND_CLOSES_IST, label: "submissions close" },
+  { value: `${TARGET_SESSIONS}-session`, label: "prediction target" },
+  { value: `${ATTEMPTS_PER_ROUND} attempts`, label: "per round" },
+  { value: `${MAX_MODELS} models`, label: "per contributor" },
 ];
 
 const approachFacts = [
@@ -58,21 +64,18 @@ const approachFacts = [
 
 const principles = [
   {
-    k: "01",
-    title: "Diversity is the alpha.",
-    body: "Independent minds see patterns no single team can. That variance compounds into edge.",
+    title: "Diversity is the hypothesis.",
+    body: "Independent approaches may find structure a single team misses; the platform measures whether they do.",
     tag: "Collective",
   },
   {
-    k: "02",
-    title: "Research that never sleeps.",
-    body: "New models, new signals, evaluated every round. The strategy keeps learning.",
+    title: "Every round is a fresh test.",
+    body: "New models and new predictions are scored every NSE session, on the same rules for everyone.",
     tag: "Continuous",
   },
   {
-    k: "03",
     title: "Merit is measurable.",
-    body: "Contributors are ranked on live scored performance. Nothing else. No titles, no gatekeepers.",
+    body: "Models are ranked on scored, out-of-sample results. No titles, no gatekeepers.",
     tag: "Meritocratic",
   },
 ];
@@ -82,10 +85,10 @@ const steps = [
   { k: "02", t: "Build", d: "Engineer features. Train models. Iterate." },
   {
     k: "03",
-    t: "Compete",
-    d: "Submit predictions each round for live evaluation.",
+    t: "Submit",
+    d: "Submit predictions each round for scoring on realised outcomes.",
   },
-  { k: "04", t: "Improve", d: "Learn from feedback. Refine your edge." },
+  { k: "04", t: "Improve", d: "Learn from your scores. Refine your model." },
   {
     k: "05",
     t: "Contribute",
@@ -94,15 +97,15 @@ const steps = [
   { k: "06", t: "Grow", d: "Build a scored track record, round after round." },
 ];
 
-const emptyRows = ["01", "02", "03", "04", "05"];
-
-const rankingFields = ["Contributor", "Score", "Δ round", "Signals"];
+// The columns the platform's leaderboard shows, so a visitor knows what a
+// ranking will look like before one exists.
+const rankingColumns = ["Rank", "Model", "t-stat", "Mean CORR ± SE", "Rounds"];
 
 const platformSteps = [
   {
     k: "01",
     t: "Download the dataset",
-    d: "Obfuscated, cross-sectional market data. No tickers, no company names. Only features and a target.",
+    d: "Anonymised, cross-sectional market data. No tickers, no company names. Only features and a target.",
   },
   {
     k: "02",
@@ -112,40 +115,40 @@ const platformSteps = [
   {
     k: "03",
     t: "Submit predictions",
-    d: "Submit a score per name before the round locks at 09:00 IST. Scoring runs against realised market outcomes.",
+    d: `Submit a score per name before the round locks at ${ROUND_CLOSES_IST}. Scoring runs against realised market outcomes.`,
   },
 ];
 
 const stacks = [
   {
-    t: "Artificial Intelligence",
-    d: "Turns raw market data into predictive intuition.",
-    Icon: BrainCircuit,
+    t: "Anonymised data",
+    d: "No tickers and no company names: features and a target, nothing else.",
+    Icon: EyeOff,
   },
   {
     t: "Machine Learning",
-    d: "Learns across regimes so no single view dominates.",
+    d: "Contributors bring their own methods; the platform scores the output.",
     Icon: Boxes,
   },
   {
     t: "Quantitative Research",
-    d: "Grounds every model in rigorous evidence.",
+    d: "Every model is judged on evidence, not on its description.",
     Icon: FunctionSquare,
   },
   {
     t: "Statistics",
-    d: "Separates real edge from noise, round after round.",
+    d: "Scores carry a standard error, so noise is not mistaken for skill.",
     Icon: LineChart,
   },
   {
     t: "Indian Equity Markets",
-    d: "The arena: NSE-listed equities, point-in-time universe.",
+    d: "NSE-listed equities, on a point-in-time universe.",
     Icon: TrendingUp,
   },
   {
     t: "Signal Aggregation",
-    d: "Weaves contributor alpha into one coherent strategy.",
-    Icon: Sparkles,
+    d: "Scored signals are combined into one paper-traded meta-model.",
+    Icon: Layers,
   },
 ];
 
@@ -162,69 +165,68 @@ function Home() {
       <GlobeScene />
       <Navbar />
       <main id="content">
-        {/* Hero */}
-        <section className="relative z-2 pt-[210px] pb-[150px]">
+        {/* Hero: in the first five seconds, what it is, who it is for, what it
+          costs (nothing) and the numbers that define a round. */}
+        <section className="relative z-2 pt-[140px] pb-24 sm:pt-[164px] md:pb-[110px]">
           <Container>
-            <Badge>Core rounds run every NSE session · Registration open</Badge>
+            <Badge>Research tournament for Indian equities</Badge>
 
-            <h1 className="display-tight mt-8 max-w-[14ch] sm:mt-11 text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em]">
-              Many models. <span className="text-[var(--mint)]">One truth.</span>
+            <h1 className="display-tight mt-8 max-w-[15ch] text-[clamp(40px,5.4vw,80px)] leading-[0.98] tracking-[-0.035em] sm:mt-10">
+              Build models on anonymised NSE data. Get scored on what the market does next.
             </h1>
 
-            <div className="mt-10 grid max-w-[1000px] items-end gap-8 md:mt-13 md:gap-16 lg:grid-cols-2">
-              <p className="text-[17px] leading-[1.6] text-white/72 sm:text-[19px]">
-                IndiQuant is a crowdsourced quantitative research platform for Indian equities.
-                Independent contributors build models on obfuscated NSE data. Every submission is
-                scored on live market outcomes, and the signals that hold up are combined into one
-                paper-traded strategy.
-              </p>
+            <div className="mt-9 grid max-w-[1000px] items-end gap-8 md:mt-12 md:gap-14 lg:grid-cols-[1.1fr_1fr]">
+              <div>
+                <p className="max-w-[52ch] text-[17px] leading-[1.6] text-white/75 sm:text-[19px]">
+                  For data scientists, ML engineers and quantitative researchers. Download the
+                  round's dataset, submit a prediction per name before {ROUND_CLOSES_IST}, and build
+                  a scored track record on realised returns.
+                </p>
+                <p className="mt-5 text-[16px] font-semibold text-[var(--mint)]">{FREE_TO_JOIN}</p>
+              </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Button
                   as="a"
                   href={PLATFORM_SIGNUP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="accent"
                   size="lg"
                   withArrow
                 >
                   Become a Contributor
                 </Button>
-                <Button as="a" href="#approach" variant="secondary" size="lg">
+                <Button as="a" href="#platform" variant="secondary" size="lg">
                   See how it works
                 </Button>
               </div>
             </div>
 
-            <dl className="mt-16 grid grid-cols-2 border-y border-white/14 sm:grid-cols-4 md:mt-[110px]">
-              {heroStats.map((s, i) => (
+            <dl className="mt-14 grid grid-cols-2 border-y border-white/14 sm:grid-cols-3 md:mt-20 lg:grid-cols-5">
+              {heroStats.map((s) => (
                 <div
                   key={s.label}
-                  className={
-                    "px-6 py-6.5 " +
-                    (i === 0 ? "sm:pl-0 " : "") +
-                    (i === heroStats.length - 1 ? "sm:pr-0" : "sm:border-r sm:border-white/12")
-                  }
+                  className="flex flex-col-reverse border-b border-white/10 px-5 py-5.5 last:border-b-0 sm:border-r sm:border-b-0 lg:first:pl-0 lg:last:border-r-0"
                 >
-                  <dt className="font-mono text-[10px] tracking-[0.22em] text-[var(--mint)]/85 uppercase">
+                  <dt className="mt-1.5 font-mono text-[12px] tracking-[0.12em] text-white/65 uppercase">
                     {s.label}
                   </dt>
-                  <dd className="mt-2.5 text-[18px] font-bold tracking-[-0.02em]">{s.value}</dd>
+                  <dd className="text-[22px] font-extrabold tracking-[-0.02em] text-white">
+                    {s.value}
+                  </dd>
                 </div>
               ))}
             </dl>
           </Container>
         </section>
 
-        {/* Recognition — a thin band rather than a full Section, so it reads as
-          a continuation of the hero stats strip above it, not a third stop
-          before the marquee. */}
+        {/* Recognition: a thin band rather than a full Section, so it reads as
+          a continuation of the hero stats strip above it. */}
         <section aria-labelledby="recognition-heading" className="relative z-2 py-8">
           <Container>
             <div className="flex flex-col gap-5 border-y border-white/14 py-8 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
               <div>
                 <Eyebrow id="recognition-heading">Recognition</Eyebrow>
-                <p className="mt-3 max-w-[46ch] text-[16px] leading-[1.65] text-white/65">
+                <p className="mt-3 max-w-[46ch] text-[16px] leading-[1.65] text-white/70">
                   Ranked #2 Top Company in Research by F6S, August 2026.
                 </p>
               </div>
@@ -245,7 +247,7 @@ function Home() {
                 {marqueeClaims.map((c) => (
                   <span key={c} className="flex gap-14">
                     <span>{c}</span>
-                    <span aria-hidden>·</span>
+                    <span aria-hidden>/</span>
                   </span>
                 ))}
               </span>
@@ -253,12 +255,12 @@ function Home() {
           </div>
         </div>
 
-        {/* Approach — mint field, blue type: the signature inversion. */}
-        <Section id="approach" className="bg-[var(--mint)] text-[var(--ink)]">
+        {/* Approach: mint field, blue type, the signature inversion. */}
+        <Section id="approach" data-ground="mint" className="bg-[var(--mint)] text-[var(--ink)]">
           <Container>
             <div className="grid items-start gap-10 md:gap-20 lg:grid-cols-12">
               <div className="lg:col-span-5">
-                <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--blue)] uppercase">
+                <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--blue)] uppercase">
                   Our approach
                 </p>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)] text-[var(--blue)]">
@@ -274,12 +276,12 @@ function Home() {
                 <p className="mt-6.5 max-w-[52ch] text-[17px] leading-[1.7] text-[var(--ink-700)]">
                   Rankings measure out-of-sample predictive power, not backtests. Standing on the
                   board is a running record of what a researcher's signals contributed, measured on
-                  realised outcomes. No capital is traded yet; the strategy runs on paper.
+                  realised outcomes. No capital is traded; the strategy runs on paper.
                 </p>
                 <dl className="mt-11 grid gap-px border border-[var(--blue)]/18 bg-[var(--blue)]/18 sm:grid-cols-3">
                   {approachFacts.map((f) => (
                     <div key={f.label} className="bg-[var(--mint)] px-5 py-5.5">
-                      <dt className="font-mono text-[10px] tracking-[0.2em] text-[var(--ink)]/70 uppercase">
+                      <dt className="font-mono text-[12px] tracking-[0.16em] text-[var(--ink)]/75 uppercase">
                         {f.label}
                       </dt>
                       <dd className="mt-2 text-[16px] font-bold tracking-[-0.01em] text-[var(--blue)]">
@@ -302,17 +304,14 @@ function Home() {
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {principles.map((p) => (
-                <Card key={p.k} className="p-7 sm:p-9">
-                  <p className="font-mono text-[42px] leading-none font-bold tracking-[-0.02em] text-[var(--mint)]/85">
-                    {p.k}
-                  </p>
-                  <h3 className="mt-11 text-[24px] leading-[1.15] font-extrabold tracking-[-0.02em]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3.5 text-[16px] leading-[1.65] text-white/65">{p.body}</p>
-                  <p className="mt-9 border-t border-white/12 pt-4.5 font-mono text-[10px] tracking-[0.22em] text-[var(--mint)]/85 uppercase">
+                <Card key={p.title} className="p-7 sm:p-9">
+                  <p className="font-mono text-[12px] tracking-[0.2em] text-[var(--mint)] uppercase">
                     {p.tag}
                   </p>
+                  <h3 className="mt-8 text-[24px] leading-[1.15] font-extrabold tracking-[-0.02em]">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3.5 text-[16px] leading-[1.65] text-white/70">{p.body}</p>
                 </Card>
               ))}
             </div>
@@ -326,24 +325,25 @@ function Home() {
               <div className="lg:col-span-6">
                 <Eyebrow>Contributor journey</Eyebrow>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
-                  From first model to real-world alpha.
+                  From first model to a scored track record.
                 </h2>
               </div>
-              <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
-                Six steps, no gatekeepers. Wherever your curiosity begins, the platform grows with you.
+              <p className="text-[17px] leading-[1.7] text-white/70 lg:col-span-5">
+                Six steps, no gatekeepers. Wherever your curiosity begins, the platform grows with
+                you.
               </p>
             </div>
             <ol className="grid gap-px border border-white/14 bg-white/14 sm:grid-cols-2 lg:grid-cols-3">
               {steps.map((s) => (
                 <li
                   key={s.k}
-                  className="flex flex-col bg-[var(--ink)] px-6 pt-8 pb-9 transition-colors duration-200 sm:min-h-[220px] sm:px-8.5 sm:pt-10 sm:pb-11 hover:bg-[var(--blue)]"
+                  className="flex flex-col bg-[var(--ink)] px-6 pt-8 pb-9 transition-colors duration-200 hover:bg-[var(--blue)] sm:min-h-[220px] sm:px-8.5 sm:pt-10 sm:pb-11"
                 >
-                  <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--mint)]/75">
+                  <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--mint)]/85">
                     {s.k}
                   </p>
                   <h3 className="mt-6.5 text-[30px] font-extrabold tracking-[-0.03em]">{s.t}</h3>
-                  <p className="mt-3 max-w-[26ch] text-[15px] leading-[1.65] text-white/62">
+                  <p className="mt-3 max-w-[26ch] text-[15px] leading-[1.65] text-white/70">
                     {s.d}
                   </p>
                 </li>
@@ -352,8 +352,8 @@ function Home() {
           </Container>
         </Section>
 
-        {/* The participant platform — the marketing site explains the platform; the
-          platform is where contributors actually work. */}
+        {/* The participant platform: this site explains it; the platform is
+          where contributors actually work. */}
         <Section id="platform" className="border-t border-white/10">
           <Container>
             <div className="mb-10 grid items-end gap-8 md:mb-16 md:gap-20 lg:grid-cols-11">
@@ -363,7 +363,7 @@ function Home() {
                   Where the work actually happens.
                 </h2>
               </div>
-              <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
+              <p className="text-[17px] leading-[1.7] text-white/70 lg:col-span-5">
                 This site explains the platform. Everything you do as a contributor happens on the
                 platform: data, models, submissions.
               </p>
@@ -384,21 +384,20 @@ function Home() {
                   href={PLATFORM_SIGNUP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="accent"
                   withArrow
                 >
-                  Open the platform
+                  Become a Contributor
                 </Button>
               </div>
 
               <ol className="grid gap-px bg-white/12 sm:grid-cols-3">
                 {platformSteps.map((step) => (
                   <li key={step.k} className="bg-[rgba(8,8,26,0.9)] px-6 py-7 sm:px-8 sm:py-9">
-                    <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--mint)]/75">
+                    <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--mint)]/85">
                       {step.k}
                     </p>
                     <h3 className="mt-5 text-[22px] font-extrabold tracking-[-0.02em]">{step.t}</h3>
-                    <p className="mt-3 text-[15px] leading-[1.65] text-white/62">{step.d}</p>
+                    <p className="mt-3 text-[15px] leading-[1.65] text-white/70">{step.d}</p>
                   </li>
                 ))}
               </ol>
@@ -406,7 +405,8 @@ function Home() {
           </Container>
         </Section>
 
-        {/* Rankings — empty until the first round is scored. */}
+        {/* Rankings: nothing to show yet, so the section says so in one line
+          and shows the columns a ranking will carry. */}
         <Section id="rankings">
           <Container>
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-11 md:gap-10">
@@ -416,82 +416,36 @@ function Home() {
                   The board fills as rounds resolve.
                 </h2>
               </div>
-              <p className="font-mono text-[11px] tracking-[0.18em] text-white/60 uppercase">
-                First scores expected late October 2026
+              <p className="font-mono text-[12px] tracking-[0.14em] text-white/70 uppercase">
+                First scores expected {FIRST_SCORES}
               </p>
             </div>
 
             <div className="overflow-hidden rounded-[18px] border border-white/16 bg-[rgba(8,8,26,0.72)] backdrop-blur-[8px]">
-              {/* A five-column table cannot survive a phone, so below md each
-                rank becomes its own labelled card instead of scrolling
-                sideways with two columns cut off. */}
-              <div className="md:hidden">
-                {emptyRows.map((rank) => (
-                  <div key={rank} className="border-b border-white/[0.07] px-6 py-5">
-                    <div className="flex items-baseline justify-between">
-                      <span className="font-mono text-[11px] tracking-[0.22em] text-white/60 uppercase">
-                        Rank
-                      </span>
-                      <span className="font-mono text-[16px] text-white/55">{rank}</span>
-                    </div>
-                    <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
-                      {rankingFields.map((field) => (
-                        <div key={field} className="flex items-baseline justify-between">
-                          <dt className="font-mono text-[10px] tracking-[0.18em] text-white/55 uppercase">
-                            {field}
-                          </dt>
-                          <dd className="font-mono text-[14px] text-white/55">—</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
+              <div
+                aria-hidden
+                className="hidden grid-cols-[90px_minmax(0,1fr)_120px_200px_110px] border-b border-white/14 px-7 py-4 font-mono text-[12px] tracking-[0.14em] text-white/65 uppercase md:grid"
+              >
+                {rankingColumns.map((c) => (
+                  <span key={c}>{c}</span>
                 ))}
               </div>
-
-              <div className="hidden overflow-x-auto md:block">
-                <div className="min-w-[720px]">
-                  <div className="grid grid-cols-[90px_minmax(0,1fr)_160px_160px_140px] border-b border-white/14 px-7 py-4 font-mono text-[10px] tracking-[0.22em] text-white/60 uppercase">
-                    <span>Rank</span>
-                    <span>Contributor</span>
-                    <span>Score</span>
-                    <span>Δ round</span>
-                    <span>Signals</span>
-                  </div>
-                  {emptyRows.map((rank) => (
-                    <div
-                      key={rank}
-                      className="grid grid-cols-[90px_minmax(0,1fr)_160px_160px_140px] border-b border-white/[0.07] px-7 py-5 font-mono text-[14px] text-white/55"
-                    >
-                      <span>{rank}</span>
-                      <span>—</span>
-                      <span>—</span>
-                      <span>—</span>
-                      <span>—</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="px-7 pt-14 pb-15 text-center">
-                <p className="text-[20px] font-bold tracking-[-0.02em] text-[var(--mint)]">
-                  No round has resolved yet.
+              <div className="flex flex-col gap-6 px-6 py-8 sm:px-7 md:flex-row md:items-center md:justify-between">
+                <p className="max-w-[60ch] text-[16px] leading-[1.7] text-white/75">
+                  No model is ranked yet. Rounds began on {FIRST_ROUND_DATE} and each is scored{" "}
+                  {SCORED_AFTER}; a model joins the board after {LEADERBOARD_MIN_ROUNDS} resolved
+                  rounds, so the first ranked rows arrive around {FIRST_RANKED}.
                 </p>
-                <p className="mx-auto mt-3 max-w-[46ch] text-[15px] leading-[1.7] text-white/55">
-                  Core rounds began on 21 September 2026 and each resolves 20 trading sessions after
-                  it opens, so the first scores land in late October. Every position on this board
-                  is earned on realised market outcomes. Nothing else.
-                </p>
-                <div className="mt-7">
-                  <Button
-                    as="a"
-                    href={PLATFORM_SIGNUP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="primary"
-                    withArrow
-                  >
-                    Register on the platform
-                  </Button>
-                </div>
+                <Button
+                  as="a"
+                  href={PLATFORM_SIGNUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  withArrow
+                  className="shrink-0 self-start md:self-auto"
+                >
+                  Become a Contributor
+                </Button>
               </div>
             </div>
           </Container>
@@ -504,12 +458,12 @@ function Home() {
               <div className="lg:col-span-6">
                 <Eyebrow>Technology</Eyebrow>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
-                  The machinery of collective intelligence.
+                  The machinery of collective research.
                 </h2>
               </div>
-              <p className="text-[17px] leading-[1.7] text-white/65 lg:col-span-5">
-                Each layer plays a role in turning many independent ideas into one disciplined
-                strategy.
+              <p className="text-[17px] leading-[1.7] text-white/70 lg:col-span-5">
+                Each layer plays a role in turning many independent ideas into one measured,
+                paper-traded strategy.
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -522,29 +476,29 @@ function Home() {
                     <Icon size={19} strokeWidth={2} aria-hidden />
                   </div>
                   <h3 className="text-[19px] font-bold tracking-[-0.02em]">{t}</h3>
-                  <p className="text-[15px] leading-[1.65] text-white/60">{d}</p>
+                  <p className="text-[15px] leading-[1.65] text-white/70">{d}</p>
                 </div>
               ))}
             </div>
           </Container>
         </Section>
 
-        {/* Vision — blue field, mint type. */}
+        {/* Vision: blue field, mint type. */}
         <section
-          id="investors"
+          id="vision"
           className="relative z-2 bg-[var(--blue)] py-28 text-[var(--mint)] md:py-[170px]"
         >
           <Container className="text-center">
-            <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--mint)]/85 uppercase">
+            <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--mint)]/90 uppercase">
               Vision
             </p>
-            <p className="display-tight mx-auto mt-8 max-w-[18ch] md:mt-12 text-[clamp(42px,6.4vw,100px)] leading-[0.98] tracking-[-0.035em]">
-              To become the largest crowdsourced quantitative research platform for Indian markets.
+            <p className="display-tight mx-auto mt-8 max-w-[20ch] text-[clamp(40px,5.6vw,88px)] leading-[0.98] tracking-[-0.035em] md:mt-12">
+              A research platform for Indian markets where every model is scored on the same rules.
             </p>
             <dl className="mt-12 grid gap-px border border-[var(--mint)]/25 bg-[var(--mint)]/25 text-left sm:grid-cols-3 md:mt-20">
               {investorFacts.map((f) => (
                 <div key={f.label} className="bg-[var(--blue)] px-7 py-7.5">
-                  <dt className="font-mono text-[10px] tracking-[0.2em] text-[var(--mint)]/85 uppercase">
+                  <dt className="font-mono text-[12px] tracking-[0.16em] text-[var(--mint)]/90 uppercase">
                     {f.label}
                   </dt>
                   <dd className="mt-2.5 text-[18px] font-bold tracking-[-0.02em]">{f.value}</dd>
@@ -555,20 +509,19 @@ function Home() {
         </section>
 
         {/* Join */}
-        <Section id="join" className="bg-[var(--mint)] text-[var(--blue)]">
+        <Section id="join" data-ground="mint" className="bg-[var(--mint)] text-[var(--blue)]">
           <Container>
             <div className="grid items-end gap-10 md:gap-20 lg:grid-cols-11">
               <div className="lg:col-span-7">
-                <p className="font-mono text-[11px] tracking-[0.22em] text-[var(--ink)]/70 uppercase">
+                <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--ink)]/75 uppercase">
                   Join the platform
                 </p>
                 <h2 className="display-tight mt-7 max-w-[14ch] text-[clamp(40px,5.6vw,88px)] leading-[0.98] tracking-[-0.035em]">
                   Because intuition is not a strategy.
                 </h2>
-                <p className="mt-7 max-w-[48ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
-                  If you have the skills, there is a seat for you. Your research, scored on live
-                  outcomes. Research grants are planned once the grant programme clears legal
-                  review; none has been paid yet.
+                <p className="mt-7 max-w-[52ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
+                  If you have the skills, there is a seat for you. Your research, scored on realised
+                  outcomes. {GRANTS_PLANNED} {GRANTS_STATUS}
                 </p>
               </div>
               <div className="flex w-full flex-col items-stretch gap-3 sm:items-start lg:col-span-4">
@@ -577,7 +530,6 @@ function Home() {
                   href={PLATFORM_SIGNUP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="primary"
                   size="lg"
                   withArrow
                 >
@@ -585,12 +537,12 @@ function Home() {
                 </Button>
                 <Button
                   as="a"
-                  href="mailto:indiquant@protonmail.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   variant="ghost"
                   size="lg"
                   className="text-[var(--blue)] hover:bg-[var(--blue)]/10 hover:text-[var(--blue)]"
                 >
-                  Talk to the desk
+                  Contact
                 </Button>
               </div>
             </div>

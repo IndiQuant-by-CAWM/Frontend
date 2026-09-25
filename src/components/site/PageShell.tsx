@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { SkipLink } from "./SkipLink";
+import { Eyebrow } from "./Section";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -14,8 +15,8 @@ export function PageShell({ children }: { children: ReactNode }) {
       // was then positioned against this div instead of the viewport.
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="relative min-h-screen bg-background text-foreground"
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="relative min-h-screen overflow-x-hidden bg-background text-foreground"
     >
       <div
         aria-hidden
@@ -33,91 +34,38 @@ export function PageShell({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * The subpage hero, on the same system as the home page: left-aligned on the
+ * ink ground, a mint label, an extrabold headline, and a single brand-blue
+ * light source rather than the template's purple/cyan glow.
+ */
 export function PageHero({
   eyebrow,
   title,
-  italic,
-  tail,
   description,
   children,
 }: {
   eyebrow: string;
   title: string;
-  italic?: string;
-  tail?: string;
-  description: string;
+  description: ReactNode;
   children?: ReactNode;
 }) {
   return (
-    <section className="relative isolate overflow-hidden pt-44 pb-28 sm:pt-56 sm:pb-36">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 grid-lines opacity-[0.28] [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_65%)]" />
-        <div className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(108,99,255,0.09),transparent_60%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background via-background/80 to-transparent" />
+    <section className="relative isolate overflow-hidden border-b border-white/10 pt-40 pb-20 sm:pt-48 sm:pb-24">
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 grid-lines opacity-60 [mask-image:radial-gradient(ellipse_70%_80%_at_20%_40%,black_10%,transparent_70%)]" />
+        <div className="absolute -top-40 right-[-10%] h-[720px] w-[720px] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,3,255,0.32),transparent_62%)]" />
       </div>
       <div className="container-page relative">
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-          }}
-          className="mx-auto max-w-[64rem] text-center"
-        >
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
-            }}
-          >
-            <BadgeEyebrow>{eyebrow}</BadgeEyebrow>
-          </motion.div>
-
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0, y: 18 },
-              show: { opacity: 1, y: 0, transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] } },
-            }}
-            className="mt-10 font-display text-[2.5rem] leading-[1.05] tracking-[-0.02em] text-white text-balance sm:text-6xl md:text-[5rem] md:leading-[1.02]"
-          >
-            {title}
-            {italic && (
-              <>
-                {" "}
-                <span className="italic text-white/65">{italic}</span>
-              </>
-            )}
-            {/* Punctuation, so no leading space. */}
-            {tail}
-          </motion.h1>
-
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 14 },
-              show: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
-            }}
-            className="mx-auto mt-10 max-w-xl text-[15px] leading-[1.7] text-white/60 sm:text-base"
-          >
-            {description}
-          </motion.p>
-
-          {children && (
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 12 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              className="mt-12 flex flex-wrap items-center justify-center gap-3"
-            >
-              {children}
-            </motion.div>
-          )}
-        </motion.div>
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h1 className="display-tight mt-7 max-w-[20ch] text-[clamp(40px,6vw,84px)] leading-[1] tracking-[-0.035em] text-white">
+          {title}
+        </h1>
+        <div className="mt-8 max-w-[60ch] text-[17px] leading-[1.65] text-white/72 sm:text-[19px]">
+          {description}
+        </div>
+        {children && <div className="mt-10 flex flex-wrap items-center gap-3">{children}</div>}
       </div>
     </section>
   );
 }
-
-// Local re-import to avoid cycle
-import { Badge as BadgeEyebrow } from "./Badge";

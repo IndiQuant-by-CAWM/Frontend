@@ -5,6 +5,11 @@ import { cn } from "@/lib/utils";
 // Brand buttons are the two-color identity in miniature: a blue field with mint
 // type, or a mint field with blue type. Radius is the 10px control default and
 // motion is quick with no bounce — press nudges 1px, it never scales.
+//
+// One primary action per surface, and it always looks the same: `primary` (blue
+// field, mint type) is the sign-up / main call to action on every ground, ink
+// or mint. `secondary` is the only style for a second action. Focus uses the
+// global :focus-visible ring from styles.css; buttons do not suppress it.
 type Variant = "primary" | "accent" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
 
@@ -64,7 +69,6 @@ export function Button({
   const base = cn(
     "group relative inline-flex items-center justify-center gap-2 rounded-[10px] font-bold tracking-[-0.01em]",
     "transition-[background-color,border-color,color,transform] duration-[180ms] ease-[cubic-bezier(0.2,0,0.1,1)]",
-    "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[rgba(0,3,255,0.28)]",
     sizes[size],
   );
 

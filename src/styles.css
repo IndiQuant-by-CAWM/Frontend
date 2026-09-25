@@ -4,6 +4,25 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Self-hosted type, latin subset only. Plus Jakarta Sans is one variable file
+   covering 400-800, so every weight the site uses costs a single request;
+   Space Mono ships its regular weight only; no mono text is set bold. There is no italic face on
+   purpose: the site sets no italics, so the browser never synthesises one. */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/plus-jakarta-sans-latin-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/space-mono-latin-400.woff2") format("woff2");
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -25,10 +44,8 @@
   --color-primary: var(--accent);
   --color-primary-foreground: var(--blue);
 
-  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
-    sans-serif;
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
-    sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -79,6 +96,20 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+  /* One focus ring for every interactive element: a 2px mint outline, offset
+     so it never sits on the control's own edge. Components do not remove it.
+     On the mint fields the ring switches to brand blue so it stays visible. */
+  :focus-visible {
+    outline: 2px solid var(--mint);
+    outline-offset: 2px;
+  }
+  [data-ground="mint"] :focus-visible {
+    outline-color: var(--blue);
+  }
+  em,
+  i {
+    font-style: normal;
+  }
   ::selection {
     background: var(--mint);
     color: var(--blue);
@@ -104,12 +135,7 @@
 }
 
 @utility hairline {
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.14),
-    transparent
-  );
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.14), transparent);
   height: 1px;
   width: 100%;
 }
@@ -117,7 +143,7 @@
 /* Eyebrow / label treatment — ALL-CAPS mono, per the brand voice. */
 @utility eyebrow {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }

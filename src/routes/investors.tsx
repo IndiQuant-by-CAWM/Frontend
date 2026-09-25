@@ -1,312 +1,236 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import {
-  Microscope,
-  Hourglass,
-  Users,
-  Brain,
-  Cpu,
-  Sigma,
-  LineChart,
-  Sparkles,
-  Network,
-  Compass,
-} from "lucide-react";
 
+import { CONTACT_EMAIL } from "@/lib/contact";
+import { HQ, INDIA_OFFICE } from "@/lib/entities";
+import { PLATFORM_TERMS_URL } from "@/lib/platform";
+import { pageHead } from "@/lib/seo";
+import {
+  CONTRIBUTOR_AGREEMENT,
+  FIRST_ROUND_DATE,
+  FIRST_SCORES,
+  GRANTS_PLANNED,
+  GRANTS_STATUS,
+  ROUND_WINDOW,
+} from "@/lib/schedule";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
-import { Card } from "@/components/site/Card";
-import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 
+/**
+ * A factual diligence page, not a pitch.
+ *
+ * The route and its nav label stay "Investors" for now (renaming it is a later
+ * decision), but nothing here invites investment: IndiQuant runs no fund and
+ * takes no client money. Every fact on this page comes from a shared constant
+ * (lib/schedule.ts, lib/entities.ts, lib/contact.ts) so it cannot drift from
+ * the rest of the site. There is deliberately no team section: no names are
+ * recorded anywhere in this codebase, and inventing them is not an option.
+ */
 export const Route = createFileRoute("/investors")({
-  head: () => ({
-    meta: [
-      { title: "Investors — IndiQuant" },
-      {
-        name: "description",
-        content:
-          "The long-term research vision behind IndiQuant: collective intelligence, AI-driven quantitative research, built for Indian equity markets. Indiquant Private Limited, Navi Mumbai.",
-      },
-      { property: "og:title", content: "Investors — IndiQuant" },
-      {
-        property: "og:description",
-        content:
-          "Our research philosophy, technology, and long-term vision, for partners who think in decades.",
-      },
-      { property: "og:url", content: "/investors" },
-    ],
-    links: [{ rel: "canonical", href: "/investors" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/investors",
+      title: "Investors and partners: IndiQuant",
+      description:
+        "What IndiQuant is, its current status, entity structure and regulatory posture. IndiQuant does not offer, manage or solicit investment in any fund, scheme or security.",
+    }),
   component: InvestorsPage,
 });
+
+const DISCLAIMER =
+  "IndiQuant does not offer, manage or solicit investment in any fund, scheme or security. Nothing on this site is an offer or investment advice.";
+
+const status = [
+  { label: "Platform", value: `Live since ${FIRST_ROUND_DATE}` },
+  { label: "Trading", value: "Paper only. No capital is traded." },
+  { label: "Rounds", value: ROUND_WINDOW },
+  { label: "First scores", value: `Expected ${FIRST_SCORES}` },
+  { label: "Research grants", value: `${GRANTS_STATUS} ${GRANTS_PLANNED}` },
+  { label: "Contributor agreement", value: CONTRIBUTOR_AGREEMENT },
+];
+
+const posture = [
+  "No client funds are accepted, held or managed. Contributors never pay a fee or deposit.",
+  "Nothing IndiQuant publishes is investment advice or a recommendation to buy, sell or hold any security.",
+  "IndiQuant does not claim any SEBI registration, and nothing it publishes should be read as if it held one.",
+  "Contributors work on anonymised data: no tickers and no company names reach the platform's participants.",
+];
+
+const MATERIALS_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Request for materials")}`;
 
 function InvestorsPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="For Investors"
-        title="Research"
-        italic="compounded"
-        tail="across a collective."
-        description="A long-horizon approach to quantitative research, built on AI, discipline, and the intelligence of many independent minds."
+        eyebrow="Investors and partners"
+        title="What IndiQuant is, and what it is not."
+        description={
+          <>
+            <p
+              role="note"
+              className="rounded-[14px] border border-[var(--mint)]/40 bg-[var(--mint)]/[0.06] px-5 py-4 text-[16px] leading-[1.6] font-semibold text-white sm:text-[17px]"
+            >
+              {DISCLAIMER}
+            </p>
+            <p className="mt-6">
+              A plain account of the company, the platform's status and its regulatory posture, for
+              anyone doing diligence.
+            </p>
+          </>
+        }
       >
-        <Button as="a" href="/contact" withArrow>
-          Get in touch
+        <Button as="a" href={MATERIALS_MAILTO} withArrow>
+          Request materials
         </Button>
       </PageHero>
 
-      <Philosophy />
-      <Technology />
-      <LongTermVision />
-      <WhyCollective />
-      <ContactCTA />
-    </PageShell>
-  );
-}
-
-function Philosophy() {
-  const items = [
-    {
-      icon: Microscope,
-      t: "Evidence over narrative.",
-      d: "Every conviction begins with a measurement, not a story.",
-    },
-    {
-      icon: Hourglass,
-      t: "Long-horizon discipline.",
-      d: "We optimize for durable edge over quarterly performance.",
-    },
-    {
-      icon: Compass,
-      t: "Repeatable process.",
-      d: "Structure protects the research from the mood of the market.",
-    },
-  ];
-  return (
-    <Section>
-      <Container>
-        <div className="mb-16 grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <Reveal variant="blur">
-              <Eyebrow>Research Philosophy</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
-                A discipline of measurement.
+      <Section className="border-t border-white/10">
+        <Container>
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <Eyebrow>What it is</Eyebrow>
+              <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
+                A research tournament for Indian equities.
               </h2>
-            </Reveal>
-          </div>
-          <div className="md:col-span-6 md:col-start-7">
-            <Reveal delay={0.1} variant="blur">
-              <p className="text-xl leading-relaxed text-white/85 text-balance">
-                We treat quantitative research the way great labs treat science, with skepticism,
-                patience, and rigor. Nothing enters the strategy that has not been tested against
-                reality.
+            </div>
+            <div className="space-y-5 text-[17px] leading-[1.7] text-white/75 md:col-span-7 md:col-start-6">
+              <p>
+                Independent contributors download anonymised, cross-sectional NSE data, build their
+                own models, and submit a prediction per name each round. The platform scores every
+                submission against realised market outcomes, on the same published rules for
+                everyone.
               </p>
-            </Reveal>
+              <p>
+                Signals that hold up are combined by a meta-model into a single strategy that runs
+                on paper. No capital is traded, and contributors never put money at risk.
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {items.map((it, i) => (
-            <Reveal key={it.t} delay={i * 0.08}>
-              <Card className="h-full">
-                <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
-                  <it.icon size={16} strokeWidth={1.5} className="text-white/80" />
-                </div>
-                <h3 className="mt-8 text-lg font-medium tracking-tight text-white">{it.t}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.d}</p>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
-}
+        </Container>
+      </Section>
 
-function Technology() {
-  const stack = [
-    { icon: Brain, t: "Artificial Intelligence", d: "Reads structure inside noisy market data." },
-    { icon: Cpu, t: "Machine Learning", d: "Adapts across regimes so no view dominates." },
-    { icon: Sigma, t: "Quantitative Research", d: "Grounds every model in measurable evidence." },
-    { icon: LineChart, t: "Statistics", d: "Distinguishes real edge from randomness." },
-    { icon: Network, t: "Signal Aggregation", d: "Combines contributor alpha into one strategy." },
-    {
-      icon: Sparkles,
-      t: "Continuous Evaluation",
-      d: "Every round is a fresh test against reality.",
-    },
-  ];
-  return (
-    <Section>
-      <Container>
-        <div className="mb-16 grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-6">
-            <Reveal>
-              <Eyebrow>Technology</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
-                The machinery behind the research.
-              </h2>
-            </Reveal>
-          </div>
-          <div className="md:col-span-5 md:col-start-8 md:self-end">
-            <Reveal delay={0.1}>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                A stack built to turn many independent ideas into one disciplined, continuously
-                evaluated strategy. Today it runs on paper; no client capital is managed.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border/60 sm:grid-cols-2 lg:grid-cols-3">
-          {stack.map((s, i) => (
-            <motion.div
-              key={s.t}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.04 }}
-              whileHover={{ backgroundColor: "rgba(255,255,255,0.02)" }}
-              className="group relative bg-background p-8"
-            >
-              <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
-                <s.icon size={16} strokeWidth={1.5} className="text-white/80" />
+      <Section className="border-t border-white/10">
+        <Container>
+          <Eyebrow>Status</Eyebrow>
+          <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
+            Where things stand.
+          </h2>
+          <dl className="mt-12 grid gap-px border border-white/14 bg-white/14 md:grid-cols-2">
+            {status.map((s) => (
+              <div key={s.label} className="bg-[var(--ink)] px-6 py-6 sm:px-8">
+                <dt className="font-mono text-[12px] tracking-[0.16em] text-[var(--mint)] uppercase">
+                  {s.label}
+                </dt>
+                <dd className="mt-2.5 max-w-[56ch] text-[16px] leading-[1.6] text-white/85">
+                  {s.value}
+                </dd>
               </div>
-              <h3 className="mt-6 text-base font-medium tracking-tight text-white">{s.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.d}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
-}
+            ))}
+          </dl>
+          <p className="mt-6 text-[15px] leading-[1.7] text-white/70">
+            Participation is governed by the{" "}
+            <a
+              href={PLATFORM_TERMS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white underline underline-offset-4"
+            >
+              Terms of Use
+            </a>{" "}
+            on the platform.
+          </p>
+        </Container>
+      </Section>
 
-function LongTermVision() {
-  return (
-    <Section className="relative overflow-hidden">
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 h-[700px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.06),transparent_65%)]" />
-      </div>
-      <Container>
-        <div className="mx-auto max-w-4xl text-center">
-          <Reveal variant="fade">
-            <Eyebrow>Long-Term Vision</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.15} variant="blur">
-            <h2 className="mt-8 font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
-              Building one of the world's leading{" "}
-              <span className="italic text-white/65">AI-powered</span> quantitative research
-              ecosystems.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.3} variant="fade">
-            <p className="mx-auto mt-10 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Not a product. Not a platform. An ecosystem, where research compounds, contributors
-              grow, and intelligence becomes truly collective.
-            </p>
-          </Reveal>
-        </div>
-      </Container>
-    </Section>
-  );
-}
+      <Section className="border-t border-white/10">
+        <Container>
+          <Eyebrow>Entity structure</Eyebrow>
+          <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
+            One company, two locations.
+          </h2>
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            <address className="rounded-[14px] border border-white/14 px-6 py-7 text-[16px] leading-[1.7] text-white/75 not-italic sm:px-8">
+              <span className="block font-mono text-[12px] tracking-[0.16em] text-[var(--mint)] uppercase">
+                Parent company · {HQ.role}
+              </span>
+              <span className="mt-3 block text-[20px] font-bold text-white">{HQ.name}</span>
+              {HQ.lines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+              <span className="mt-4 block text-white/70">
+                {HQ.dealsWith}. The platform terms are {HQ.name}'s.
+              </span>
+            </address>
+            <address className="rounded-[14px] border border-white/14 px-6 py-7 text-[16px] leading-[1.7] text-white/75 not-italic sm:px-8">
+              <span className="block font-mono text-[12px] tracking-[0.16em] text-[var(--mint)] uppercase">
+                Indian subsidiary · {INDIA_OFFICE.role}
+              </span>
+              <span className="mt-3 block text-[20px] font-bold text-white">
+                {INDIA_OFFICE.name}
+              </span>
+              {INDIA_OFFICE.lines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+              <span className="mt-4 block text-white/70">{INDIA_OFFICE.dealsWith}.</span>
+            </address>
+          </div>
+        </Container>
+      </Section>
 
-function WhyCollective() {
-  const items = [
-    {
-      icon: Users,
-      k: "01",
-      t: "Diversity of thought",
-      d: "Independent minds cover more ground than any single team.",
-    },
-    {
-      icon: Network,
-      k: "02",
-      t: "Resilience",
-      d: "A portfolio of ideas is more robust than any single view.",
-    },
-    {
-      icon: Sparkles,
-      k: "03",
-      t: "Compounding research",
-      d: "Every round leaves the system a little sharper than the last.",
-    },
-  ];
-  return (
-    <Section>
-      <Container>
-        <div className="mb-16 grid gap-16 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <Reveal>
-              <Eyebrow>Why Collective Intelligence</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl leading-tight tracking-tight text-white sm:text-5xl">
-                The edge in variance.
+      <Section className="border-t border-white/10">
+        <Container>
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <Eyebrow>Regulatory posture</Eyebrow>
+              <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
+                No client money, no advice.
               </h2>
-            </Reveal>
+            </div>
+            <ul className="space-y-4 md:col-span-7 md:col-start-6">
+              {posture.map((line) => (
+                <li
+                  key={line}
+                  className="border-l-2 border-[var(--mint)]/60 pl-5 text-[17px] leading-[1.65] text-white/80"
+                >
+                  {line}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="md:col-span-6 md:col-start-7">
-            <Reveal delay={0.1}>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                A single research team is a single point of view. A collective, properly aggregated,
-                is a broader lens on the market: more perspectives, more tested ideas, more chances
-                to see clearly.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {items.map((it, i) => (
-            <Reveal key={it.t} delay={i * 0.08}>
-              <Card className="h-full">
-                <div className="flex items-start justify-between">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg border border-border">
-                    <it.icon size={16} strokeWidth={1.5} className="text-white/80" />
-                  </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
-                    {it.k}
-                  </p>
-                </div>
-                <h3 className="mt-8 text-lg font-medium tracking-tight text-white">{it.t}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.d}</p>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
-}
+        </Container>
+      </Section>
 
-function ContactCTA() {
-  return (
-    <Section className="relative overflow-hidden">
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 h-[700px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(108,99,255,0.10),transparent_65%)]" />
-      </div>
-      <Container>
-        <Reveal variant="scale">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="font-display text-4xl leading-[1.08] tracking-tight text-white text-balance sm:text-5xl md:text-6xl">
-              A quiet conversation is often{" "}
-              <span className="italic text-white/65">the best place to begin</span>.
-            </h2>
-            <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-              For partners interested in the long horizon, we're happy to talk. The Indian
-              entity is Indiquant Private Limited, Sundar CHS, Sector 9, Koparkhairane, Navi
-              Mumbai, Maharashtra 400709.
-            </p>
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-              <Button as="a" href="/contact" withArrow>
-                Contact us
-              </Button>
-              <Button as="a" href="/about" variant="ghost">
-                Read the story
+      <Section data-ground="mint" className="bg-[var(--mint)] text-[var(--ink)]">
+        <Container>
+          <div className="grid items-end gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--blue)] uppercase">
+                Request materials
+              </p>
+              <h2 className="display-tight mt-6 text-[clamp(34px,4.6vw,64px)] text-[var(--blue)]">
+                Diligence questions go to one address.
+              </h2>
+              <p className="mt-6 max-w-[56ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
+                Write to{" "}
+                <a href={MATERIALS_MAILTO} className="font-bold underline underline-offset-4">
+                  {CONTACT_EMAIL}
+                </a>{" "}
+                with what you need, and we will reply by email.
+              </p>
+            </div>
+            <div className="lg:col-span-4">
+              <Button as="a" href={MATERIALS_MAILTO} size="lg" withArrow>
+                Request materials
               </Button>
             </div>
           </div>
-        </Reveal>
-      </Container>
-    </Section>
+        </Container>
+      </Section>
+    </PageShell>
   );
 }

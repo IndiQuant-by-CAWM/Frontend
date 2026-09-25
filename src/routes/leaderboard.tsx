@@ -6,6 +6,16 @@ import { PageHero, PageShell } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Section } from "@/components/site/Section";
 import { PLATFORM_SIGNIN_URL, PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import { pageHead } from "@/lib/seo";
+import {
+  FIRST_RANKED,
+  FIRST_ROUND_DATE,
+  FIRST_SCORES,
+  LEADERBOARD_MIN_ROUNDS,
+  RANKINGS_VISIBILITY,
+  SCORED_AFTER,
+  TARGET_SESSIONS,
+} from "@/lib/schedule";
 
 /**
  * A status page, not a board.
@@ -17,33 +27,26 @@ import { PLATFORM_SIGNIN_URL, PLATFORM_SIGNUP_URL } from "@/lib/platform";
  * and nothing has been scored yet, so the honest thing a public page can do is
  * say when scores exist and where to see them.
  *
- * DATED. The "late October 2026" sentence follows from Core rounds having
- * begun on 21 September 2026 with a 20-session target. Update it when the
- * first round resolves, or replace this page with a public board if one is
- * ever specified.
+ * DATED. The dates come from lib/schedule.ts and follow from Core rounds
+ * having begun on 21 September 2026 with a 20-session target. Update them there
+ * when the first round resolves.
  */
 export const Route = createFileRoute("/leaderboard")({
-  head: () => ({
-    meta: [
-      { title: "Rankings — IndiQuant" },
-      {
-        name: "description",
-        content:
-          "IndiQuant's rankings are earned on realised market outcomes. Core rounds began 21 September 2026; the first scores land in late October 2026.",
-      },
-      { property: "og:title", content: "Rankings — IndiQuant" },
-      { property: "og:url", content: "/leaderboard" },
-    ],
-    links: [{ rel: "canonical", href: "/leaderboard" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/leaderboard",
+      title: "Rankings: IndiQuant",
+      description: `IndiQuant's rankings are earned on realised market outcomes. Core rounds began ${FIRST_ROUND_DATE}; first scores land in ${FIRST_SCORES} and the first ranked models around ${FIRST_RANKED}.`,
+    }),
   component: RankingsPage,
 });
 
 const facts = [
-  { label: "First Core round", value: "21 September 2026" },
+  { label: "First Core round", value: FIRST_ROUND_DATE },
   { label: "Cadence", value: "One round per NSE session" },
-  { label: "Target", value: "20-session forward return" },
-  { label: "First scores", value: "Late October 2026" },
+  { label: "Target", value: `${TARGET_SESSIONS}-session forward return` },
+  { label: "First scores", value: `Expected ${FIRST_SCORES}` },
+  { label: "First ranked models", value: `Around ${FIRST_RANKED}` },
 ];
 
 function RankingsPage() {
@@ -51,18 +54,16 @@ function RankingsPage() {
     <PageShell>
       <PageHero
         eyebrow="Rankings"
-        title="Earned on"
-        italic="outcomes"
-        tail=", not backtests."
-        description="No round has resolved yet. Each Core round is scored twenty trading sessions after it opens, on what the market actually did."
+        title="Earned on outcomes, not backtests."
+        description={`No round has resolved yet. Each Core round is scored ${SCORED_AFTER}, on what the market actually did.`}
       />
-      <Section className="pt-0">
+      <Section className="pt-14 md:pt-20">
         <Container>
           <Reveal variant="blur">
-            <dl className="grid gap-px border border-white/14 bg-white/14 sm:grid-cols-2 lg:grid-cols-4">
+            <dl className="grid gap-px border border-white/14 bg-white/14 sm:grid-cols-2 lg:grid-cols-5">
               {facts.map((f) => (
                 <div key={f.label} className="bg-[var(--ink)] px-6 py-6">
-                  <dt className="font-mono text-[10px] tracking-[0.22em] text-white/50 uppercase">
+                  <dt className="font-mono text-[12px] tracking-[0.22em] text-white/60 uppercase">
                     {f.label}
                   </dt>
                   <dd className="mt-2 text-[17px] font-bold tracking-[-0.01em] text-white">
@@ -72,15 +73,28 @@ function RankingsPage() {
               ))}
             </dl>
             <p className="mt-10 max-w-[60ch] text-[16px] leading-[1.7] text-white/65">
-              Rankings are shown to signed-in contributors on the platform once rounds resolve.
-              Display names are public; email addresses and legal names never are. Sprint slots
-              are frozen until their scoring exists, so only Core rounds count.
+              {RANKINGS_VISIBILITY} A model joins the leaderboard after {LEADERBOARD_MIN_ROUNDS}{" "}
+              resolved rounds. Sprint slots are frozen until their scoring exists, so only Core
+              rounds count.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button as="a" href={PLATFORM_SIGNUP_URL} target="_blank" rel="noopener noreferrer" variant="primary" withArrow>
-                Register on the platform
+              <Button
+                as="a"
+                href={PLATFORM_SIGNUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                withArrow
+              >
+                Become a Contributor
               </Button>
-              <Button as="a" href={PLATFORM_SIGNIN_URL} target="_blank" rel="noopener noreferrer" variant="ghost">
+              <Button
+                as="a"
+                href={PLATFORM_SIGNIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="secondary"
+              >
                 Sign in
               </Button>
             </div>

@@ -1,12 +1,7 @@
 import type { ReactNode } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 
-export type RevealVariant =
-  | "fade"
-  | "up"
-  | "blur"
-  | "scale"
-  | "sequential";
+export type RevealVariant = "fade" | "up" | "blur" | "scale" | "sequential";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 

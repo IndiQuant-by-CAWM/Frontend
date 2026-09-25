@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CONTACT_EMAIL } from "@/lib/contact";
 import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import { pageHead } from "@/lib/seo";
 import { Button } from "@/components/site/Button";
 import { Container } from "@/components/site/Container";
 import { Reveal } from "@/components/site/Reveal";
@@ -8,23 +9,13 @@ import { Section, Eyebrow } from "@/components/site/Section";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 
 export const Route = createFileRoute("/careers")({
-  head: () => ({
-    meta: [
-      { title: "Careers — IndiQuant" },
-      {
-        name: "description",
-        content:
-          "IndiQuant is not hiring at the moment. Open roles will be listed here when they exist.",
-      },
-      { property: "og:title", content: "Careers — IndiQuant" },
-      {
-        property: "og:description",
-        content: "No open roles right now. Contributing is the way to work with IndiQuant today.",
-      },
-      { property: "og:url", content: "/careers" },
-    ],
-    links: [{ rel: "canonical", href: "/careers" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/careers",
+      title: "Careers: IndiQuant",
+      description:
+        "IndiQuant is not hiring at the moment. Open roles will be listed here when they exist; contributing is the way to work with IndiQuant today.",
+    }),
   component: CareersPage,
 });
 
@@ -55,13 +46,11 @@ function CareersPage() {
     <PageShell>
       <PageHero
         eyebrow="Careers"
-        title="No open roles"
-        italic="right now"
-        tail="."
+        title="No open roles right now."
         description="We're a small team and we're not hiring at the moment. When that changes, the roles will be listed on this page."
       />
 
-      <Section className="pt-0">
+      <Section className="pt-14 md:pt-20">
         <Container>{roles.length > 0 ? <OpenRoles /> : <NotHiring />}</Container>
       </Section>
     </PageShell>
@@ -74,7 +63,7 @@ function NotHiring() {
       <Reveal variant="blur" className="md:col-span-7">
         <div className="rounded-2xl border border-white/[0.07] bg-white/[0.015] p-8 sm:p-10">
           <Eyebrow>The short version</Eyebrow>
-          <h2 className="mt-5 font-display text-2xl leading-tight tracking-tight text-white sm:text-3xl">
+          <h2 className="mt-5 text-2xl font-extrabold leading-tight tracking-[-0.02em] text-white sm:text-3xl">
             We have nothing open, and we'd rather say so.
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-white/60">
@@ -92,13 +81,14 @@ function NotHiring() {
       <Reveal variant="blur" className="md:col-span-5">
         <div className="flex h-full flex-col rounded-2xl border border-[var(--mint)]/20 bg-[var(--mint)]/[0.04] p-8 sm:p-10">
           <Eyebrow>The way in today</Eyebrow>
-          <h2 className="mt-5 font-display text-2xl leading-tight tracking-tight text-white">
+          <h2 className="mt-5 text-2xl font-extrabold leading-tight tracking-[-0.02em] text-white">
             Contribute.
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-white/65">
             The platform is open to independent researchers now, and it is the honest route into
             IndiQuant: you build models, submit predictions, and your scores and rank become a
-            public track record. No grant has been paid yet. What accrues is standing.
+            scored track record that other signed-in contributors can see. No grant has been paid.
+            What accrues is standing.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-white/65">
             It is also how we get to know people's work before we ever get to know their CV.
@@ -109,12 +99,11 @@ function NotHiring() {
               href={PLATFORM_SIGNUP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              variant="accent"
               withArrow
             >
               Become a Contributor
             </Button>
-            <Button as="a" href="/contributors" variant="secondary">
+            <Button as="a" href="/contributors/" variant="secondary">
               Read the contributor journey
             </Button>
           </div>
@@ -124,22 +113,22 @@ function NotHiring() {
       <Reveal variant="fade" className="md:col-span-12">
         <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.015] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
           <div>
-            <h2 className="font-display text-xl leading-tight tracking-tight text-white">
+            <h2 className="text-xl font-extrabold leading-tight tracking-[-0.02em] text-white">
               Think you're the exception?
             </h2>
             <p className="mt-2 max-w-[52ch] text-sm leading-relaxed text-white/60">
-              If your work is genuinely unusual and you think we should know about it, write to the
-              desk. We read everything, and we answer honestly, including when the answer is that we
-              have nothing for you yet.
+              If your work is genuinely unusual and you think we should know about it, write to us.
+              We read everything, and we answer honestly, including when the answer is that we have
+              nothing for you yet.
             </p>
           </div>
           <Button
             as="a"
             href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Careers introduction")}`}
-            variant="ghost"
+            variant="secondary"
             className="shrink-0"
           >
-            Write to the desk
+            Email us
           </Button>
         </div>
       </Reveal>
@@ -160,10 +149,10 @@ function OpenRoles() {
             className="rounded-2xl border border-white/[0.07] bg-white/[0.015] p-8"
           >
             <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-              <h2 className="font-display text-2xl leading-tight tracking-tight text-white">
+              <h2 className="text-2xl font-extrabold leading-tight tracking-[-0.02em] text-white">
                 {role.title}
               </h2>
-              <span className="font-mono text-[11px] tracking-[0.18em] text-[var(--mint)]/80 uppercase">
+              <span className="font-mono text-[12px] tracking-[0.18em] text-[var(--mint)]/80 uppercase">
                 {role.team}
               </span>
             </div>
@@ -171,10 +160,10 @@ function OpenRoles() {
               {role.summary}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <span className="font-mono text-[11px] tracking-[0.14em] text-white/55 uppercase">
+              <span className="font-mono text-[12px] tracking-[0.14em] text-white/55 uppercase">
                 {role.location}
               </span>
-              <span className="font-mono text-[11px] tracking-[0.14em] text-white/55 uppercase">
+              <span className="font-mono text-[12px] tracking-[0.14em] text-white/55 uppercase">
                 {role.type}
               </span>
               <Button as="a" href={role.applyHref} variant="primary" withArrow className="ml-auto">
