@@ -36,7 +36,7 @@ export const Route = createFileRoute("/leaderboard")({
     pageHead({
       path: "/leaderboard",
       title: "Rankings: IndiQuant",
-      description: `IndiQuant's rankings are earned on realised market outcomes. Core rounds began ${FIRST_ROUND_DATE}; first scores land in ${FIRST_SCORES} and the first ranked models around ${FIRST_RANKED}.`,
+      description: `IndiQuant ranks models on realised market outcomes. Core rounds began ${FIRST_ROUND_DATE}. First scores land in ${FIRST_SCORES}, and the first ranked models around ${FIRST_RANKED}.`,
     }),
   component: RankingsPage,
 });
@@ -86,7 +86,7 @@ function RankingsPage() {
                 variant="primary"
                 withArrow
               >
-                Become a Contributor
+                Become a contributor
               </Button>
               <Button
                 as="a"

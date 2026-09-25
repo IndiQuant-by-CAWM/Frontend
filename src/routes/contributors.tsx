@@ -28,8 +28,10 @@ import {
   GRANTS_PLANNED,
   GRANTS_STATUS,
   MAX_MODELS,
+  ROUND_CLOSES_IST,
   ROUND_WINDOW,
   SCORED_AFTER,
+  TARGET_SESSIONS,
 } from "@/lib/schedule";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
@@ -44,7 +46,7 @@ export const Route = createFileRoute("/contributors")({
       path: "/contributors",
       title: "Contributors: IndiQuant",
       description:
-        "Build models on anonymised NSE data and get scored on realised market outcomes. Free to join, no deposit, paper-traded. For data scientists, ML engineers and quantitative researchers.",
+        "Build models on anonymised NSE data, get scored on realised returns, and earn weight in the meta-model behind IndiQuant's book. Free to join. For data scientists, ML engineers and quant researchers.",
     }),
   component: ContributorsPage,
 });
@@ -54,8 +56,8 @@ function ContributorsPage() {
     <PageShell>
       <PageHero
         eyebrow="Contributors"
-        title="Research that is scored on merit alone."
-        description={`Submit predictions on anonymised NSE data and build a scored track record. No titles, no gatekeepers. ${FREE_TO_JOIN}`}
+        title="Your model, scored on what the market does."
+        description={`Submit predictions on anonymised NSE data and build a scored track record. Models with a strong record feed the meta-model behind IndiQuant's book. ${FREE_TO_JOIN}`}
       >
         <Button
           as="a"
@@ -64,7 +66,7 @@ function ContributorsPage() {
           rel="noopener noreferrer"
           withArrow
         >
-          Become a Contributor
+          Become a contributor
         </Button>
         <Button as="a" href="/faq/" variant="secondary">
           Read the FAQ
@@ -85,18 +87,18 @@ function WhyJoin() {
   const items = [
     {
       icon: BarChart3,
-      t: "Ranked on performance.",
-      b: "Your standing follows the scored outcome of your models. Politics and seniority do not enter into it.",
+      t: "Ranked on results.",
+      b: "Your standing follows your models' scores. Seniority and job titles don't come into it.",
     },
     {
       icon: Sparkles,
-      t: "Work on real markets.",
-      b: "Every submission is evaluated against realised NSE outcomes, round after round.",
+      t: "Real market outcomes.",
+      b: "Every submission is scored against realised NSE returns, round after round.",
     },
     {
       icon: Users,
-      t: "Join a research collective.",
-      b: "Independent contributors, one shared strategy. Compare your work with others on the same rules.",
+      t: "Weight in the book.",
+      b: "Models with a strong record carry more weight in the meta-model the fund trades. During testnet that book trades paper capital.",
     },
   ];
   return (
@@ -104,9 +106,9 @@ function WhyJoin() {
       <Container>
         <div className="mb-16 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
           <Reveal>
-            <Eyebrow>Why Become a Contributor</Eyebrow>
+            <Eyebrow>Why contribute</Eyebrow>
             <h2 className="mt-6 max-w-2xl display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-              A place where research becomes a track record.
+              Research that turns into a track record.
             </h2>
           </Reveal>
         </div>
@@ -133,7 +135,7 @@ function WhoCanJoin() {
     "Data scientists exploring financial markets",
     "Machine learning engineers curious about live systems",
     "Quantitative researchers from any background",
-    "Software engineers who love clean signal from noisy data",
+    "Software engineers who like pulling signal out of noisy data",
     "Statisticians, mathematicians, physicists",
     "Self-taught practitioners with real projects to show",
   ];
@@ -143,17 +145,17 @@ function WhoCanJoin() {
         <div className="grid gap-16 md:grid-cols-12">
           <div className="md:col-span-4">
             <Reveal variant="blur">
-              <Eyebrow>Who Can Join</Eyebrow>
+              <Eyebrow>Who can join</Eyebrow>
               <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-                Talent has no résumé.
+                We look at the work, not the CV.
               </h2>
             </Reveal>
           </div>
           <div className="md:col-span-7 md:col-start-6">
             <Reveal delay={0.1} variant="blur">
               <p className="text-xl leading-relaxed text-white/85 text-balance">
-                We look at the work itself. If you can model markets, or want to learn, you belong
-                here.
+                If you can model data, or want to learn how, you can take part. You don't need a
+                finance background.
               </p>
               <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border/60 sm:grid-cols-2">
                 {rows.map((r) => (
@@ -172,12 +174,37 @@ function WhoCanJoin() {
 
 function JourneyHighLevel() {
   const steps = [
-    { k: "01", icon: Compass, t: "Discover", d: "Explore the platform and its research rounds." },
-    { k: "02", icon: Hammer, t: "Build", d: "Engineer features. Train models. Iterate." },
-    { k: "03", icon: Send, t: "Submit", d: "Submit each round for scoring on realised outcomes." },
-    { k: "04", icon: Repeat, t: "Improve", d: "Learn from your scores. Refine your model." },
-    { k: "05", icon: Share2, t: "Contribute", d: "Your best signals join the collective." },
-    { k: "06", icon: Sprout, t: "Grow", d: "Build a scored track record, round after round." },
+    {
+      k: "01",
+      icon: Compass,
+      t: "Discover",
+      d: "Read the rules and download the round's dataset.",
+    },
+    {
+      k: "02",
+      icon: Hammer,
+      t: "Build",
+      d: "Engineer features, train, iterate. Any method is fine.",
+    },
+    {
+      k: "03",
+      icon: Send,
+      t: "Submit",
+      d: `Send one prediction per name before ${ROUND_CLOSES_IST}.`,
+    },
+    {
+      k: "04",
+      icon: Repeat,
+      t: "Improve",
+      d: `Scores arrive once the ${TARGET_SESSIONS}-session outcome is known.`,
+    },
+    {
+      k: "05",
+      icon: Share2,
+      t: "Contribute",
+      d: "Strong models carry more weight in the meta-model.",
+    },
+    { k: "06", icon: Sprout, t: "Grow", d: "Your record builds under a public handle." },
   ];
   return (
     <Section>
@@ -185,17 +212,15 @@ function JourneyHighLevel() {
         <div className="mb-20 grid gap-16 md:grid-cols-12">
           <div className="md:col-span-5">
             <Reveal>
-              <Eyebrow>Contribution Journey</Eyebrow>
+              <Eyebrow>How it works</Eyebrow>
               <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-                A transparent path, end to end.
+                Six steps, repeated every round.
               </h2>
             </Reveal>
           </div>
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1}>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Six steps in a continuous loop. The details evolve; the shape stays clear.
-              </p>
+              <p className="text-base leading-relaxed text-muted-foreground">{ROUND_WINDOW}</p>
             </Reveal>
           </div>
         </div>
@@ -248,21 +273,29 @@ function Skills() {
   const items = [
     {
       icon: Brain,
-      t: "Machine Learning",
-      d: "Supervised, unsupervised, deep; the toolbox is open.",
+      t: "Machine learning",
+      d: "Supervised, unsupervised or deep. Use whatever works.",
     },
-    { icon: Code2, t: "Python", d: "Our lingua franca. NumPy, pandas, PyTorch, scikit-learn." },
+    {
+      icon: Code2,
+      t: "Python",
+      d: "What most contributors use: NumPy, pandas, scikit-learn, PyTorch.",
+    },
     {
       icon: Database,
-      t: "Feature Engineering",
-      d: "The craft of turning raw signals into intuition.",
+      t: "Feature engineering",
+      d: "Turning raw features into something a model can learn from.",
     },
-    { icon: LineChart, t: "Statistics", d: "Reasoning under uncertainty is the job." },
-    { icon: Sparkles, t: "Curiosity", d: "The one skill that keeps the others sharp." },
+    { icon: LineChart, t: "Statistics", d: "Knowing when a good result is only noise." },
+    {
+      icon: Sparkles,
+      t: "Curiosity",
+      d: "It keeps you testing new ideas after the first one fades.",
+    },
     {
       icon: GraduationCap,
       t: "Discipline",
-      d: "Consistency beats brilliance across enough rounds.",
+      d: "A steady model outscores an erratic one over enough rounds.",
     },
   ];
   return (
@@ -271,17 +304,17 @@ function Skills() {
         <div className="mb-16 grid gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
             <Reveal>
-              <Eyebrow>Skills That Help</Eyebrow>
+              <Eyebrow>Skills that help</Eyebrow>
               <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-                What tends to compound.
+                What tends to matter.
               </h2>
             </Reveal>
           </div>
           <div className="md:col-span-5 md:col-start-8 md:self-end">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                None of these are strict requirements. Many of the best contributors arrive missing
-                several, then grow into them.
+                None of these are requirements. Plenty of contributors start without several of them
+                and pick them up along the way.
               </p>
             </Reveal>
           </div>
@@ -314,11 +347,11 @@ function FAQ() {
   const qs = [
     {
       q: "Do I need a finance background?",
-      a: "No. Many contributors come from ML, physics, engineering or research rather than finance. Domain knowledge can be learned as you go.",
+      a: "No. A background in ML, physics, engineering or research is as useful as one in finance, and the market side can be learned as you go.",
     },
     {
       q: "Is there a cost to join?",
-      a: `Contributing to IndiQuant is free. No fee and no deposit, ever. You bring your ideas and your compute; we provide the data and the scoring. Each contributor may own up to ${MAX_MODELS} models.`,
+      a: `No. There is no fee and no deposit. You bring the ideas and the compute, and we provide the data and the scoring. Each contributor can own up to ${MAX_MODELS} models.`,
     },
     {
       q: "How is my work evaluated?",
@@ -334,7 +367,7 @@ function FAQ() {
       <Container>
         <div className="mb-14">
           <Reveal>
-            <Eyebrow>Frequently Asked</Eyebrow>
+            <Eyebrow>Common questions</Eyebrow>
             <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
               A few things worth knowing.
             </h2>
@@ -427,7 +460,7 @@ function FinalCTA() {
                 rel="noopener noreferrer"
                 withArrow
               >
-                Become a Contributor
+                Become a contributor
               </Button>
               <Button as="a" href="/contact/" variant="secondary">
                 Contact

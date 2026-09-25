@@ -6,7 +6,8 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi", "archive"] },
+  // public/draco holds the vendored three.js Draco decoders (minified, ~500 KB).
+  { ignores: ["dist", ".output", ".vinxi", "archive", "public/draco"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

@@ -16,7 +16,7 @@ import { PLATFORM_URL } from "@/lib/platform";
 export const Route = createFileRoute("/tournaments/")({
   head: () => ({
     meta: [
-      { title: "Rounds — IndiQuant" },
+      { title: "Rounds: IndiQuant" },
       { name: "description", content: "Rounds live on the IndiQuant participant platform." },
       { name: "robots", content: "noindex" },
     ],

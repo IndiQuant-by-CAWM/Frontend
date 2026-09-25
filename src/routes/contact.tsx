@@ -22,7 +22,7 @@ export const Route = createFileRoute("/contact")({
     pageHead({
       path: "/contact",
       title: "Contact: IndiQuant",
-      description: `Write to IndiQuant at ${CONTACT_EMAIL}. Registered office in Newark, Delaware; India office in Navi Mumbai.`,
+      description: `Write to IndiQuant at ${CONTACT_EMAIL}. For contributors, investors and partners. Registered office in Newark, Delaware; India office in Navi Mumbai.`,
     }),
   component: ContactPage,
 });
@@ -33,7 +33,7 @@ function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Write to us."
-        description="One address for contributors, partners and anyone else. We read every message and reply by email."
+        description="One address for contributors, investors, partners and press. We read every message and reply by email."
       />
 
       <Section className="pt-14 md:pt-20">
@@ -54,8 +54,8 @@ function ContactPage() {
                 {CONTACT_EMAIL}
               </a>
               <p className="mt-6 max-w-[48ch] text-[16px] leading-[1.7] text-white/70">
-                Copy the address into any mail client, or use the button to open a new message in
-                yours. There is no form on this site, so nothing is sent until you send it.
+                Copy the address into any mail client, or use the button to start a message in
+                yours. There is no form on this site.
               </p>
               <div className="mt-8">
                 <Button as="a" href={`mailto:${CONTACT_EMAIL}`} withArrow>
@@ -63,7 +63,7 @@ function ContactPage() {
                 </Button>
               </div>
               <p className="mt-12 max-w-sm text-[15px] leading-relaxed text-white/70">
-                For contributor questions, the fastest path is the{" "}
+                Contributor questions are often answered faster in the{" "}
                 <a href="/faq/" className="text-white underline underline-offset-4">
                   FAQ
                 </a>

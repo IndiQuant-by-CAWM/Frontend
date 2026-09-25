@@ -29,7 +29,7 @@ import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
 export const Route = createFileRoute("/sign-up")({
   head: () => ({
     meta: [
-      { title: "Create Account — IndiQuant" },
+      { title: "Create an account: IndiQuant" },
       {
         name: "description",
         content: "Create your IndiQuant account on the participant platform.",
@@ -48,7 +48,7 @@ function SignUpRedirect() {
   return (
     <AuthShell
       eyebrow="Join IndiQuant"
-      title="Create Account"
+      title="Create an account"
       description="Creating an account happens on the IndiQuant platform."
       footer={null}
     >

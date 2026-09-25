@@ -14,9 +14,9 @@ export const SITE_URL = "https://indiquantresearch.in";
 export const SITE_NAME = "IndiQuant";
 
 /** Bump the query when the card changes, so preview caches refetch it. */
-export const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg?v=2`;
+export const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg?v=3`;
 export const OG_IMAGE_ALT =
-  "IndiQuant: a research tournament for Indian equities. Anonymised data, paper-traded. INDIQUANT INC.";
+  "IndiQuant, a hedge fund in the making. Testnet phase: crowdsourced signals on Indian equities.";
 
 /** "/" -> "https://indiquantresearch.in/", "/about" -> ".../about/". */
 export function absoluteUrl(path: string): string {

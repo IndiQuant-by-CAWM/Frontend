@@ -19,7 +19,7 @@ import { PLATFORM_SIGNIN_URL } from "@/lib/platform";
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({
     meta: [
-      { title: "Forgot Password — IndiQuant" },
+      { title: "Reset your password: IndiQuant" },
       {
         name: "description",
         content: "Reset your IndiQuant password on the participant platform.",

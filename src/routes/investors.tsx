@@ -2,86 +2,116 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CONTACT_EMAIL } from "@/lib/contact";
 import { HQ, INDIA_OFFICE } from "@/lib/entities";
-import { PLATFORM_TERMS_URL } from "@/lib/platform";
+import { LIVE_CAPITAL_TIMING } from "@/lib/fund";
 import { pageHead } from "@/lib/seo";
-import {
-  CONTRIBUTOR_AGREEMENT,
-  FIRST_ROUND_DATE,
-  FIRST_SCORES,
-  GRANTS_PLANNED,
-  GRANTS_STATUS,
-  ROUND_WINDOW,
-} from "@/lib/schedule";
+import { FIRST_ROUND_DATE, ROUND_CLOSES_IST, TARGET_SESSIONS } from "@/lib/schedule";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 
 /**
- * A factual diligence page, not a pitch.
+ * The fund, for prospective investors and partners.
  *
- * The route and its nav label stay "Investors" for now (renaming it is a later
- * decision), but nothing here invites investment: IndiQuant runs no fund and
- * takes no client money. Every fact on this page comes from a shared constant
- * (lib/schedule.ts, lib/entities.ts, lib/contact.ts) so it cannot drift from
- * the rest of the site. There is deliberately no team section: no names are
- * recorded anywhere in this codebase, and inventing them is not an option.
+ * Only what the platform actually does is described here: the portfolio and
+ * execution facts follow the indiquant repo (Architecture §A2/§A5, BUILDLOG).
+ * There are no performance figures, returns, AUM, investor counts, team names or
+ * registration numbers on this page because none exist; do not add any. The
+ * phase and its timing come from lib/fund.ts, the entities from lib/entities.ts.
  */
 export const Route = createFileRoute("/investors")({
   head: () =>
     pageHead({
       path: "/investors",
-      title: "Investors and partners: IndiQuant",
+      title: "Investors: IndiQuant",
       description:
-        "What IndiQuant is, its current status, entity structure and regulatory posture. IndiQuant does not offer, manage or solicit investment in any fund, scheme or security.",
+        "IndiQuant is a quantitative hedge fund in the making for Indian equities. Testnet on paper capital now, live capital next. The thesis, the phases, how the book is built, and who to talk to.",
     }),
   component: InvestorsPage,
 });
 
-const DISCLAIMER =
-  "IndiQuant does not offer, manage or solicit investment in any fund, scheme or security. Nothing on this site is an offer or investment advice.";
+const TALK_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Investor enquiry")}`;
 
-const status = [
-  { label: "Platform", value: `Live since ${FIRST_ROUND_DATE}` },
-  { label: "Trading", value: "Paper only. No capital is traded." },
-  { label: "Rounds", value: ROUND_WINDOW },
-  { label: "First scores", value: `Expected ${FIRST_SCORES}` },
-  { label: "Research grants", value: `${GRANTS_STATUS} ${GRANTS_PLANNED}` },
-  { label: "Contributor agreement", value: CONTRIBUTOR_AGREEMENT },
+const phases = [
+  {
+    k: "01",
+    name: "Testnet",
+    when: "Now",
+    body: `The whole pipeline runs end to end on paper capital: daily rounds, scoring, the meta-model, the weekly portfolio and execution. The point is to prove each stage works, and keeps working, before real money is involved. Core rounds began on ${FIRST_ROUND_DATE}.`,
+    current: true,
+  },
+  {
+    k: "02",
+    name: "Live capital",
+    when: `Next, ${LIVE_CAPITAL_TIMING}`,
+    body: "The same pipeline and the same risk limits, trading real capital. Live order routing is switched on once the testnet record and our own checks say it is ready.",
+    current: false,
+  },
+  {
+    k: "03",
+    name: "Fund",
+    when: "After a live record",
+    body: "A fund for eligible investors, set up under the applicable regulation once live trading has a record to show.",
+    current: false,
+  },
 ];
 
-const posture = [
-  "No client funds are accepted, held or managed. Contributors never pay a fee or deposit.",
-  "Nothing IndiQuant publishes is investment advice or a recommendation to buy, sell or hold any security.",
-  "IndiQuant does not claim any SEBI registration, and nothing it publishes should be read as if it held one.",
-  "Contributors work on anonymised data: no tickers and no company names reach the platform's participants.",
+const book = [
+  {
+    label: "Signal",
+    text: `Contributors predict a ${TARGET_SESSIONS}-session, sector-neutral return for every name in the universe. Submissions close at ${ROUND_CLOSES_IST} each NSE session.`,
+  },
+  {
+    label: "Meta-model",
+    text: "After each session the meta-model is rebuilt from the latest scores. Each model is weighted by its trust, an estimate of skill from its scored record, and near-duplicate models are discounted so one idea sent twice does not count twice.",
+  },
+  {
+    label: "Rebalance",
+    text: `Weekly, on the first session of the week. With a ${TARGET_SESSIONS}-session target the book holds positions for weeks, not hours.`,
+  },
+  {
+    label: "Optimiser",
+    text: "A constrained optimiser sets the weights. Gross and net exposure, sector, liquidity and turnover limits sit inside the solver, and one-way turnover is capped at 30% per rebalance.",
+  },
+  {
+    label: "Costs",
+    text: "Trading costs are priced into the objective rather than subtracted afterwards, so a trade has to cover its cost before the optimiser will make it.",
+  },
+  {
+    label: "Execution",
+    text: "Orders are built inside the Execution Trust Zone, a separate environment with its own credentials. It re-checks every limit before trading, and stock-level signals never leave it.",
+  },
+  {
+    label: "Live guard",
+    text: "In testnet the Execution Trust Zone fills on paper. A runtime guard refuses live orders until live trading is deliberately switched on.",
+  },
 ];
-
-const MATERIALS_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Request for materials")}`;
 
 function InvestorsPage() {
   return (
     <PageShell>
       <PageHero
         eyebrow="Investors and partners"
-        title="What IndiQuant is, and what it is not."
+        title="A hedge fund in the making."
         description={
           <>
-            <p
-              role="note"
-              className="rounded-[14px] border border-[var(--mint)]/40 bg-[var(--mint)]/[0.06] px-5 py-4 text-[16px] leading-[1.6] font-semibold text-white sm:text-[17px]"
-            >
-              {DISCLAIMER}
+            <p>
+              IndiQuant trades Indian equities on signals from independent researchers. A
+              trust-weighted meta-model combines them, and a portfolio optimiser turns the result
+              into one risk-managed book.
             </p>
-            <p className="mt-6">
-              A plain account of the company, the platform's status and its regulatory posture, for
-              anyone doing diligence.
+            <p className="mt-5">
+              We are in the testnet phase. The full stack runs every session on paper capital, and
+              live capital follows {LIVE_CAPITAL_TIMING}.
             </p>
           </>
         }
       >
-        <Button as="a" href={MATERIALS_MAILTO} withArrow>
-          Request materials
+        <Button as="a" href={TALK_MAILTO} withArrow>
+          Talk to us
+        </Button>
+        <Button as="a" href="#book" variant="secondary">
+          How the book is built
         </Button>
       </PageHero>
 
@@ -89,21 +119,26 @@ function InvestorsPage() {
         <Container>
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-4">
-              <Eyebrow>What it is</Eyebrow>
+              <Eyebrow>Thesis</Eyebrow>
               <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
-                A research tournament for Indian equities.
+                Crowdsourced signals, one disciplined book.
               </h2>
             </div>
             <div className="space-y-5 text-[17px] leading-[1.7] text-white/75 md:col-span-7 md:col-start-6">
               <p>
-                Independent contributors download anonymised, cross-sectional NSE data, build their
-                own models, and submit a prediction per name each round. The platform scores every
-                submission against realised market outcomes, on the same published rules for
-                everyone.
+                Good equity signals are scarce, and they fade. A single research team tends to find
+                the same kind of signal over and over. We hand anonymised NSE data to a wide pool of
+                independent researchers, score what they send back against realised returns, and
+                keep what holds up out of sample.
               </p>
               <p>
-                Signals that hold up are combined by a meta-model into a single strategy that runs
-                on paper. No capital is traded, and contributors never put money at risk.
+                Contributors never see tickers or company names, and they never see the book. What
+                reaches the portfolio is the meta-model: their signals, weighted by each model's
+                scored record.
+              </p>
+              <p>
+                India is the market we chose to do this in. We trade NSE equities on a point-in-time
+                universe, with Indian trading costs built into the optimiser from the start.
               </p>
             </div>
           </div>
@@ -112,34 +147,61 @@ function InvestorsPage() {
 
       <Section className="border-t border-white/10">
         <Container>
-          <Eyebrow>Status</Eyebrow>
+          <Eyebrow>Phases</Eyebrow>
           <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
-            Where things stand.
+            Where we are.
           </h2>
-          <dl className="mt-12 grid gap-px border border-white/14 bg-white/14 md:grid-cols-2">
-            {status.map((s) => (
-              <div key={s.label} className="bg-[var(--ink)] px-6 py-6 sm:px-8">
-                <dt className="font-mono text-[12px] tracking-[0.16em] text-[var(--mint)] uppercase">
-                  {s.label}
-                </dt>
-                <dd className="mt-2.5 max-w-[56ch] text-[16px] leading-[1.6] text-white/85">
-                  {s.value}
-                </dd>
-              </div>
+          <ol className="mt-12 grid gap-px border border-white/14 bg-white/14 md:grid-cols-3">
+            {phases.map((p) => (
+              <li
+                key={p.k}
+                className={
+                  "flex flex-col px-6 py-8 sm:px-8 " +
+                  (p.current ? "bg-[var(--blue)]" : "bg-[var(--ink)]")
+                }
+              >
+                <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--mint)]/85">
+                  {p.k}
+                </p>
+                <h3 className="mt-5 text-[28px] font-extrabold tracking-[-0.03em] text-white">
+                  {p.name}
+                </h3>
+                <p className="mt-2 font-mono text-[12px] tracking-[0.16em] text-[var(--mint)] uppercase">
+                  {p.when}
+                </p>
+                <p className="mt-5 text-[16px] leading-[1.65] text-white/80">{p.body}</p>
+              </li>
             ))}
-          </dl>
-          <p className="mt-6 text-[15px] leading-[1.7] text-white/70">
-            Participation is governed by the{" "}
-            <a
-              href={PLATFORM_TERMS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white underline underline-offset-4"
-            >
-              Terms of Use
-            </a>{" "}
-            on the platform.
-          </p>
+          </ol>
+        </Container>
+      </Section>
+
+      <Section id="book" className="border-t border-white/10">
+        <Container>
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <Eyebrow>Portfolio and risk</Eyebrow>
+              <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
+                How the book is built.
+              </h2>
+              <p className="mt-6 max-w-[40ch] text-[16px] leading-[1.7] text-white/70">
+                Everything below runs in testnet today, on paper capital.
+              </p>
+            </div>
+            <dl className="md:col-span-7 md:col-start-6">
+              {book.map((b) => (
+                <div
+                  key={b.label}
+                  className="grid gap-2 border-t border-white/12 py-6 first:border-t-0 first:pt-0 sm:grid-cols-[150px_1fr] sm:gap-8"
+                >
+                  <dt className="font-mono text-[12px] tracking-[0.16em] text-[var(--mint)] uppercase sm:pt-1">
+                    {b.label}
+                  </dt>
+                  <dd className="text-[16px] leading-[1.7] text-white/80">{b.text}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </Container>
       </Section>
 
@@ -147,7 +209,7 @@ function InvestorsPage() {
         <Container>
           <Eyebrow>Entity structure</Eyebrow>
           <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
-            One company, two locations.
+            One company, two offices.
           </h2>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             <address className="rounded-[14px] border border-white/14 px-6 py-7 text-[16px] leading-[1.7] text-white/75 not-italic sm:px-8">
@@ -161,7 +223,8 @@ function InvestorsPage() {
                 </span>
               ))}
               <span className="mt-4 block text-white/70">
-                {HQ.dealsWith}. The platform terms are {HQ.name}'s.
+                The parent company, incorporated in Delaware. The platform terms are with this
+                entity.
               </span>
             </address>
             <address className="rounded-[14px] border border-white/14 px-6 py-7 text-[16px] leading-[1.7] text-white/75 not-italic sm:px-8">
@@ -182,50 +245,27 @@ function InvestorsPage() {
         </Container>
       </Section>
 
-      <Section className="border-t border-white/10">
-        <Container>
-          <div className="grid gap-12 md:grid-cols-12">
-            <div className="md:col-span-4">
-              <Eyebrow>Regulatory posture</Eyebrow>
-              <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
-                No client money, no advice.
-              </h2>
-            </div>
-            <ul className="space-y-4 md:col-span-7 md:col-start-6">
-              {posture.map((line) => (
-                <li
-                  key={line}
-                  className="border-l-2 border-[var(--mint)]/60 pl-5 text-[17px] leading-[1.65] text-white/80"
-                >
-                  {line}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Container>
-      </Section>
-
       <Section data-ground="mint" className="bg-[var(--mint)] text-[var(--ink)]">
         <Container>
           <div className="grid items-end gap-10 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--blue)] uppercase">
-                Request materials
+                Talk to us
               </p>
               <h2 className="display-tight mt-6 text-[clamp(34px,4.6vw,64px)] text-[var(--blue)]">
-                Diligence questions go to one address.
+                Follow the testnet with us.
               </h2>
               <p className="mt-6 max-w-[56ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
-                Write to{" "}
-                <a href={MATERIALS_MAILTO} className="font-bold underline underline-offset-4">
+                If you are a prospective investor, allocator or partner, write to{" "}
+                <a href={TALK_MAILTO} className="font-bold underline underline-offset-4">
                   {CONTACT_EMAIL}
-                </a>{" "}
-                with what you need, and we will reply by email.
+                </a>
+                . Tell us who you are and what you would like to see, and we will reply by email.
               </p>
             </div>
             <div className="lg:col-span-4">
-              <Button as="a" href={MATERIALS_MAILTO} size="lg" withArrow>
-                Request materials
+              <Button as="a" href={TALK_MAILTO} size="lg" withArrow>
+                Talk to us
               </Button>
             </div>
           </div>

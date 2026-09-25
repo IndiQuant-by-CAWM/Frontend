@@ -14,7 +14,7 @@ export const Route = createFileRoute("/careers")({
       path: "/careers",
       title: "Careers: IndiQuant",
       description:
-        "IndiQuant is not hiring at the moment. Open roles will be listed here when they exist; contributing is the way to work with IndiQuant today.",
+        "IndiQuant isn't hiring right now. Roles will be listed here when they open. Contributing is the way to work with us today.",
     }),
   component: CareersPage,
 });
@@ -47,7 +47,7 @@ function CareersPage() {
       <PageHero
         eyebrow="Careers"
         title="No open roles right now."
-        description="We're a small team and we're not hiring at the moment. When that changes, the roles will be listed on this page."
+        description="We're a small team building a fund, and we aren't hiring yet. When that changes, the roles will be listed here."
       />
 
       <Section className="pt-14 md:pt-20">
@@ -67,9 +67,8 @@ function NotHiring() {
             We have nothing open, and we'd rather say so.
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-white/60">
-            IndiQuant is early and deliberately small. Rather than keep a page of roles we are not
-            actually recruiting for, this one stays honest: when we open a position, it appears here
-            with a team, a location and a way to apply.
+            IndiQuant is early and deliberately small. We don't list roles we aren't recruiting for.
+            When a position opens it will appear here with a team, a location and a way to apply.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-white/60">
             There is no waiting list and no general application to submit. We would only be
@@ -85,13 +84,12 @@ function NotHiring() {
             Contribute.
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-white/65">
-            The platform is open to independent researchers now, and it is the honest route into
-            IndiQuant: you build models, submit predictions, and your scores and rank become a
-            scored track record that other signed-in contributors can see. No grant has been paid.
-            What accrues is standing.
+            The platform is open to independent researchers now. You build models, submit
+            predictions, and your scores and rank become a track record other signed-in contributors
+            can see. No grant has been paid yet.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-white/65">
-            It is also how we get to know people's work before we ever get to know their CV.
+            It is also how we get to know someone's work before we see their CV.
           </p>
           <div className="mt-auto flex flex-col gap-3 pt-8">
             <Button
@@ -101,10 +99,10 @@ function NotHiring() {
               rel="noopener noreferrer"
               withArrow
             >
-              Become a Contributor
+              Become a contributor
             </Button>
             <Button as="a" href="/contributors/" variant="secondary">
-              Read the contributor journey
+              How contributing works
             </Button>
           </div>
         </div>
@@ -114,12 +112,11 @@ function NotHiring() {
         <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.015] p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
           <div>
             <h2 className="text-xl font-extrabold leading-tight tracking-[-0.02em] text-white">
-              Think you're the exception?
+              Tell us about unusual work.
             </h2>
             <p className="mt-2 max-w-[52ch] text-sm leading-relaxed text-white/60">
-              If your work is genuinely unusual and you think we should know about it, write to us.
-              We read everything, and we answer honestly, including when the answer is that we have
-              nothing for you yet.
+              If you think we should know about it, write to us. We read everything and we will tell
+              you plainly if we have nothing for you yet.
             </p>
           </div>
           <Button

@@ -4,9 +4,8 @@
  * Mumbai) is the Indian subsidiary and the India office. Contributors contract
  * with the US company: the platform terms are INDIQUANT INC.'s.
  *
- * Neither entity offers, manages or solicits investment in any fund, scheme or
- * security, so neither is described here as an investment vehicle or as dealing
- * with investors and clients.
+ * Only what is stated here is said about either entity on this site: no
+ * registration numbers, licences or fund vehicles, because none are recorded.
  *
  * One constant each, because an address retyped on three surfaces is an
  * address that differs on one of them.

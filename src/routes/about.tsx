@@ -4,21 +4,26 @@ import {
   Users,
   Microscope,
   Hourglass,
-  Cpu,
+  Coins,
+  Database,
   Brain,
-  FlaskConical,
   Gauge,
-  Repeat,
   Network,
+  Briefcase,
   Eye,
-  Sparkles,
-  Handshake,
+  ShieldCheck,
+  Lock,
   Crosshair,
-  GraduationCap,
 } from "lucide-react";
 
 import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { pageHead } from "@/lib/seo";
+import {
+  LEADERBOARD_MIN_ROUNDS,
+  ROUND_CLOSES_IST,
+  ROUND_OPENS_IST,
+  TARGET_SESSIONS,
+} from "@/lib/schedule";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
@@ -32,7 +37,7 @@ export const Route = createFileRoute("/about")({
       path: "/about",
       title: "About: IndiQuant",
       description:
-        "Why IndiQuant exists: a machine-learning research platform for Indian equities where independent contributors are scored on the same rules, on realised outcomes.",
+        "IndiQuant is building a quantitative hedge fund for Indian equities on signals from independent researchers. Why we started it, what we believe and how the pipeline works.",
     }),
   component: AboutPage,
 });
@@ -42,8 +47,8 @@ function AboutPage() {
     <PageShell>
       <PageHero
         eyebrow="About IndiQuant"
-        title="A research platform built on measurement."
-        description="IndiQuant is a machine-learning research platform for Indian equities. Independent contributors build models on anonymised NSE data, and every submission is scored the same way, on what the market then did."
+        title="A hedge fund built on measured research."
+        description="IndiQuant is building a quantitative hedge fund for Indian equities. Its signals come from independent researchers working on anonymised NSE data, and every one of them is scored the same way, on what the market did next."
       >
         <Button
           as="a"
@@ -52,7 +57,7 @@ function AboutPage() {
           rel="noopener noreferrer"
           withArrow
         >
-          Become a Contributor
+          Become a contributor
         </Button>
       </PageHero>
       <WhyExist />
@@ -73,22 +78,22 @@ function WhyExist() {
         <div className="grid gap-16 md:grid-cols-12">
           <div className="md:col-span-4">
             <Reveal variant="blur">
-              <Eyebrow>Why We Exist</Eyebrow>
+              <Eyebrow>Why we started</Eyebrow>
               <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-                Research shouldn't live behind closed doors.
+                Most quant research happens behind closed doors.
               </h2>
             </Reveal>
           </div>
           <div className="md:col-span-7 md:col-start-6">
             <Reveal delay={0.15} variant="blur">
               <p className="text-xl leading-relaxed text-white/85 text-balance">
-                For decades, quantitative research has been confined to small internal teams, a
-                handful of minds, working in isolation, behind institutional walls.
+                At most funds a small internal team produces every signal the book trades. That
+                limits how many ideas get tested, and the ideas tend to look alike.
               </p>
               <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-                IndiQuant exists to test a different possibility: that many independent researchers,
-                scored on the same rules, may find structure a single team would miss. The platform
-                exists to measure whether they do.
+                We think a large, open pool of researchers, scored on identical rules, will find
+                signals one team would miss. IndiQuant is set up to test that with real measurement
+                now and real capital from the live phase.
               </p>
             </Reveal>
           </div>
@@ -103,23 +108,23 @@ function Philosophy() {
   const items = [
     {
       icon: Users,
-      title: "Collective Intelligence",
-      body: "The best signal rarely comes from the loudest voice. It comes from many independent minds, tested and combined with discipline.",
+      title: "Independent models",
+      body: "People who work apart are less likely to share the same blind spots. We combine their signals and weight them by evidence.",
     },
     {
       icon: Microscope,
-      title: "Research First",
-      body: "Every decision begins with evidence. We optimise for insight over narrative, for what can be measured and repeated.",
+      title: "Out-of-sample or nothing",
+      body: "A model counts for what it scores on data it has never seen. Backtests and credentials don't enter into it.",
     },
     {
       icon: Hourglass,
-      title: "Long-term Thinking",
-      body: "We care about research that holds up over many rounds, not a lucky week.",
+      title: "A long record",
+      body: `One good week is noise. A model earns weight over many rounds, and it needs ${LEADERBOARD_MIN_ROUNDS} resolved rounds before it appears on the leaderboard.`,
     },
     {
-      icon: Cpu,
-      title: "Technology with Purpose",
-      body: "Machine learning is a means, not a mission. We use it where it deepens research and clarifies decisions, never as decoration.",
+      icon: Coins,
+      title: "Costs are real",
+      body: "An edge that disappears after Indian trading costs was never an edge. Costs sit inside the portfolio optimiser.",
     },
   ];
 
@@ -128,9 +133,9 @@ function Philosophy() {
       <Container>
         <div className="mb-16 flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
           <Reveal>
-            <Eyebrow>Our Philosophy</Eyebrow>
+            <Eyebrow>What we believe</Eyebrow>
             <h2 className="mt-6 max-w-2xl display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-              Four convictions that shape everything we build.
+              Four views behind how the fund is built.
             </h2>
           </Reveal>
         </div>
@@ -156,19 +161,19 @@ function Philosophy() {
 /* ---------- APPROACH ---------- */
 function Approach() {
   const flow = [
+    { icon: Database, t: "Data", d: `Anonymised NSE features, published by ${ROUND_OPENS_IST}.` },
     {
       icon: Brain,
-      t: "Machine Learning",
-      d: "Models look for structure inside noisy data.",
+      t: "Models",
+      d: `One prediction per name, submitted before ${ROUND_CLOSES_IST}.`,
     },
-    { icon: FlaskConical, t: "Research", d: "Ideas become models. Models become hypotheses." },
-    { icon: Gauge, t: "Evaluation", d: "Every round is scored against realised outcomes." },
-    { icon: Repeat, t: "Continuous Improvement", d: "Each round's scores inform the next model." },
     {
-      icon: Network,
-      t: "Collective Intelligence",
-      d: "Signals from many minds converge into one.",
+      icon: Gauge,
+      t: "Scoring",
+      d: `Each submission is scored once its ${TARGET_SESSIONS}-session outcome is known.`,
     },
+    { icon: Network, t: "Meta-model", d: "Signals combined, weighted by each model's record." },
+    { icon: Briefcase, t: "Book", d: "A weekly, cost-aware portfolio. On paper during testnet." },
   ];
 
   return (
@@ -177,17 +182,17 @@ function Approach() {
         <div className="mb-20 grid gap-16 md:grid-cols-12">
           <div className="md:col-span-5">
             <Reveal>
-              <Eyebrow>Our Approach</Eyebrow>
+              <Eyebrow>The pipeline</Eyebrow>
               <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-                A discipline, not a formula.
+                From data to book in five stages.
               </h2>
             </Reveal>
           </div>
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                Our process is deliberately simple in shape and deep in practice: a continuous loop
-                where research, evaluation, and collaboration reinforce one another.
+                The same loop runs every NSE session. In testnet it ends in paper trades. In the
+                live phase it ends in real ones.
               </p>
             </Reveal>
           </div>
@@ -247,8 +252,7 @@ function Vision() {
         <div className="max-w-4xl">
           <Eyebrow>Vision</Eyebrow>
           <h2 className="display-tight mt-8 text-[clamp(36px,5vw,72px)] text-white">
-            A machine-learning research platform for Indian equities, where every model is scored on
-            the same rules.
+            An Indian equities fund built from the best models we can find, wherever they come from.
           </h2>
         </div>
       </Container>
@@ -259,15 +263,35 @@ function Vision() {
 /* ---------- PRINCIPLES ---------- */
 function Principles() {
   const items = [
-    { icon: Eye, t: "Transparency", d: "Clear rules. Clear evaluation. No hidden gatekeepers." },
-    { icon: Microscope, t: "Research", d: "Depth over volume. Evidence over opinion." },
-    { icon: Sparkles, t: "Innovation", d: "Curiosity is our raw material: everywhere, always." },
-    { icon: Handshake, t: "Collaboration", d: "The best minds sharpen against one another." },
-    { icon: Crosshair, t: "Precision", d: "Every detail matters when results are measured." },
     {
-      icon: GraduationCap,
-      t: "Continuous Learning",
-      d: "The moment we stop learning, we stop leading.",
+      icon: Eye,
+      t: "Published rules",
+      d: "Contributors know how they are scored before they submit.",
+    },
+    {
+      icon: Microscope,
+      t: "Evidence",
+      d: "Out-of-sample results settle arguments. Opinions don't.",
+    },
+    {
+      icon: ShieldCheck,
+      t: "Risk first",
+      d: "Limits live inside the optimiser, and execution checks them again before any trade.",
+    },
+    {
+      icon: Lock,
+      t: "Separation",
+      d: "Contributors see anonymised data. Stock-level signals stay inside the execution environment.",
+    },
+    {
+      icon: Crosshair,
+      t: "Reproducibility",
+      d: "Every round's dataset is fingerprinted, so any score can be traced to the data behind it.",
+    },
+    {
+      icon: Hourglass,
+      t: "Patience",
+      d: "We move to live capital when the testnet record supports it, and not before.",
     },
   ];
 
@@ -277,17 +301,17 @@ function Principles() {
         <div className="mb-16 grid gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
             <Reveal>
-              <Eyebrow>Core Principles</Eyebrow>
+              <Eyebrow>How we work</Eyebrow>
               <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
-                What we hold true.
+                Rules we hold ourselves to.
               </h2>
             </Reveal>
           </div>
           <div className="md:col-span-5 md:col-start-8 md:self-end">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                Six principles guide how we build, how we research, and how we treat every
-                contributor who joins us.
+                They apply to the research platform today and will apply to the fund when it trades
+                real capital.
               </p>
             </Reveal>
           </div>
@@ -327,8 +351,8 @@ function FinalCTA() {
             Bring a model. See how it scores.
           </h2>
           <p className="mt-8 max-w-xl text-base leading-relaxed text-white/70">
-            If you think in models, patterns and probabilities, there is a seat for you here.
-            Contribute your research and build a scored track record.
+            If you build models, there's room for yours. Contributing is free, and your record grows
+            with every round you submit to.
           </p>
           <div className="mt-12 flex flex-wrap items-center gap-3">
             <Button
@@ -338,10 +362,10 @@ function FinalCTA() {
               rel="noopener noreferrer"
               withArrow
             >
-              Become a Contributor
+              Become a contributor
             </Button>
             <Button as="a" href="/contributors/" variant="secondary">
-              Read the contributor journey
+              How contributing works
             </Button>
           </div>
         </div>

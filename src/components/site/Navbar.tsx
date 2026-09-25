@@ -96,7 +96,7 @@ export function Navbar() {
               size="sm"
               withArrow
             >
-              Become a Contributor
+              Become a contributor
             </Button>
           </div>
 
@@ -168,7 +168,7 @@ export function Navbar() {
                     withArrow
                     className="w-full"
                   >
-                    Become a Contributor
+                    Become a contributor
                   </Button>
                   <Button
                     as="a"

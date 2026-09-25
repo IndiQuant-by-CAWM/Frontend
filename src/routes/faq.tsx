@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import { LIVE_CAPITAL_TIMING } from "@/lib/fund";
 import { pageHead } from "@/lib/seo";
 import {
   CONTRIBUTOR_AGREEMENT,
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/faq")({
       path: "/faq",
       title: "FAQ: IndiQuant",
       description:
-        "What IndiQuant is, how rounds work, how submissions are scored, who can see rankings, and where the research-grant programme stands.",
+        "How IndiQuant works: the fund and its testnet phase, rounds, scoring, rankings, and where the research-grant programme stands.",
     }),
   component: FAQPage,
 });
@@ -40,28 +41,36 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
     items: [
       {
         q: "What is IndiQuant?",
-        a: "IndiQuant is a research tournament for Indian equities. Independent contributors build predictive models on anonymised NSE data; each submission is scored on realised outcomes, and the signals that hold up are combined into one paper-traded strategy. No client capital is managed and nothing is traded live.",
+        a: "IndiQuant is a quantitative hedge fund in the making, focused on Indian equities. Independent contributors build models on anonymised NSE data. Each submission is scored on realised returns, and a trust-weighted meta-model combines the signals that hold up into one risk-managed book.",
       },
       {
-        q: "What does crowdsourced research mean here?",
-        a: "Many independent models, built by different people using different approaches, are scored on the same rules and combined into one system. The hypothesis is that independent approaches may find structure a single team misses; the platform measures whether they do.",
+        q: "What is the testnet phase?",
+        a: `The whole pipeline (data, rounds, contributor models, the meta-model, the portfolio and execution) runs end to end every session, but on paper capital. It lets us find and fix problems before real money is involved. We expect to move to live capital ${LIVE_CAPITAL_TIMING}.`,
       },
       {
-        q: "Why focus on Indian equity markets?",
-        a: "The platform is built around one market: NSE-listed equities on a point-in-time universe, so every model is scored against the same data.",
+        q: "What does crowdsourced mean here?",
+        a: "Many independent models, built by different people in different ways, scored on the same rules and combined into one book. Our view is that independent approaches find signals a single team misses. The scores show whether they do.",
+      },
+      {
+        q: "Why Indian equities?",
+        a: "We would rather model one market closely than several loosely. The platform covers NSE-listed equities on a point-in-time universe, and Indian trading costs are built into the portfolio optimiser.",
+      },
+      {
+        q: "Can I invest in IndiQuant?",
+        a: "Not yet. Nothing is on offer today. Any future fund will be offered only to eligible investors, as permitted by applicable regulation. If you would like to talk about it, see the Investors page or write to us.",
       },
     ],
   },
   {
-    title: "For Contributors",
+    title: "For contributors",
     items: [
       {
         q: "Who can become a contributor?",
-        a: "Anyone with the curiosity and discipline to model markets. Data scientists, engineers, statisticians, physicists, self-taught practitioners. Background matters far less than the quality of the work.",
+        a: "Anyone who can model data carefully. Data scientists, engineers, statisticians, physicists and self-taught practitioners are all welcome. The quality of the work matters far more than your background.",
       },
       {
         q: "What skills are useful?",
-        a: "Python, machine learning, statistics, and a taste for feature engineering. Domain knowledge of markets helps, but it can be learned as you go.",
+        a: "Python, machine learning, statistics and some feel for feature engineering. Knowing how markets work helps, but you can learn that as you go.",
       },
       {
         q: "How do I get started?",
@@ -69,7 +78,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "Is there a cost to contribute?",
-        a: "No. Contributing is free: no fee, no deposit, and you never put capital at risk. You bring your ideas and your own compute; the platform provides the data and the evaluation.",
+        a: "No. There is no fee and no deposit, and you never put your own money at risk. You bring the ideas and the compute; we provide the data and the scoring.",
       },
     ],
   },
@@ -100,9 +109,9 @@ function FAQPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="Frequently Asked"
-        title="Questions, clearly answered."
-        description="Everything worth knowing about IndiQuant, in one place."
+        eyebrow="FAQ"
+        title="Frequently asked questions."
+        description="About the fund, the testnet, rounds, scoring and grants."
       />
 
       <Section className="pt-14 md:pt-20">
@@ -127,10 +136,10 @@ function FAQPage() {
           <Reveal variant="scale">
             <div className="max-w-3xl">
               <h2 className="display-tight text-[clamp(30px,3.6vw,44px)] text-white">
-                Still curious?
+                Ask us directly.
               </h2>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-                Write to us and we'll get back to you by email.
+                Write to us and we'll reply by email.
               </p>
               <div className="mt-10 flex flex-wrap items-center gap-3">
                 <Button
@@ -140,7 +149,7 @@ function FAQPage() {
                   rel="noopener noreferrer"
                   withArrow
                 >
-                  Become a Contributor
+                  Become a contributor
                 </Button>
                 <Button as="a" href="/contact/" variant="secondary">
                   Contact

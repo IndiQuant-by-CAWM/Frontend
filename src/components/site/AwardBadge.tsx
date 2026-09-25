@@ -32,7 +32,7 @@ export const F6S_PROFILE_URL = "https://www.f6s.com/indiquant";
 const BADGE_SRC = "/badges/f6s-top-company-research-aug-2026.png";
 const BADGE_INTRINSIC_WIDTH = 936;
 const BADGE_INTRINSIC_HEIGHT = 210;
-const BADGE_ALT = "F6S — ranked #2 Top Company in Research, August 2026";
+const BADGE_ALT = "F6S: ranked #2 Top Company in Research, August 2026";
 
 type Size = "sm" | "lg";
 

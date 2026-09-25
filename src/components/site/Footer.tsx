@@ -1,5 +1,6 @@
 import { CONTACT_EMAIL } from "@/lib/contact";
 import { HQ, INDIA_OFFICE } from "@/lib/entities";
+import { DISCLAIMER } from "@/lib/fund";
 import {
   PLATFORM_GRIEVANCE_URL,
   PLATFORM_PRIVACY_URL,
@@ -12,7 +13,7 @@ import { Container } from "./Container";
 
 const explore = [
   { href: "/about/", label: "About" },
-  { href: "/contributors/", label: "Contributor journey" },
+  { href: "/contributors/", label: "Contributors" },
   { href: "/leaderboard/", label: "Rankings" },
   { href: "/investors/", label: "Investors" },
   { href: "/careers/", label: "Careers" },
@@ -52,8 +53,8 @@ export function Footer() {
               INDIQUANT INC.
             </p>
             <p className="mt-5.5 max-w-[38ch] text-[15px] leading-[1.7] text-white/65">
-              A research tournament for Indian equities. Independent contributors build models on
-              anonymised NSE data and are scored on realised market outcomes.
+              A hedge fund in the making for Indian equities, trading signals from independent
+              researchers. Now in testnet, on paper capital.
             </p>
             <div className="mt-7">
               <AwardBadge size="sm" />
@@ -119,9 +120,7 @@ export function Footer() {
         </div>
 
         <p className="mt-14 border-t border-white/10 pt-8 text-[14px] leading-[1.75] text-white/70">
-          Research infrastructure. Nothing on this site is investment advice or a recommendation to
-          buy, sell or hold any security. No participant funds are held or traded. Contributors
-          never pay a fee or deposit.
+          {DISCLAIMER}
         </p>
 
         <p className="mt-6 text-[13px] leading-[1.8] text-white/60">

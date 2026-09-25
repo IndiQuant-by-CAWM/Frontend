@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { EyeOff, Boxes, FunctionSquare, LineChart, TrendingUp, Layers } from "lucide-react";
+import { EyeOff, Boxes, FunctionSquare, LineChart, ShieldCheck, Layers } from "lucide-react";
 
 import { PLATFORM_SIGNUP_URL, PLATFORM_URL } from "@/lib/platform";
 import { CONTACT_EMAIL } from "@/lib/contact";
 import { pageHead } from "@/lib/seo";
+import { LIVE_CAPITAL_TIMING, PHASE_LINE } from "@/lib/fund";
 import {
   ATTEMPTS_PER_ROUND,
   FIRST_RANKED,
@@ -15,6 +16,7 @@ import {
   LEADERBOARD_MIN_ROUNDS,
   MAX_MODELS,
   ROUND_CLOSES_IST,
+  ROUND_HOURS_IST,
   SCORED_AFTER,
   TARGET_SESSIONS,
 } from "@/lib/schedule";
@@ -33,68 +35,69 @@ export const Route = createFileRoute("/")({
   head: () =>
     pageHead({
       path: "/",
-      title: "IndiQuant: research tournament for Indian equities",
+      title: "IndiQuant: a hedge fund in the making for Indian equities",
       description:
-        "Build models on anonymised NSE data and get scored on what the market does next. Free to join, no deposit, paper-traded. Rounds close 09:00 IST every NSE session.",
+        "IndiQuant is building a quantitative hedge fund for Indian equities. Independent researchers model anonymised NSE data, a trust-weighted meta-model combines their signals, and the book trades paper capital during testnet.",
     }),
   component: Home,
 });
 
 const marqueeClaims = [
   "Because intuition is not a strategy",
-  "Scored on realised outcomes",
-  "Paper-traded, no client funds",
-  "Free to join, no deposit",
+  "Testnet phase on paper capital",
+  "Live capital next",
+  "Scored on realised returns",
+  "One risk-managed book",
 ];
 
-// The five numbers a contributor needs before deciding to sign up.
+// What the fund is doing today, in numbers that are true today.
 const heroStats = [
-  { value: "1 round", label: "every NSE session" },
-  { value: ROUND_CLOSES_IST, label: "submissions close" },
+  { value: "Testnet", label: "paper capital, today" },
+  { value: "NSE", label: "equities only" },
+  { value: ROUND_HOURS_IST, label: "round window" },
   { value: `${TARGET_SESSIONS}-session`, label: "prediction target" },
-  { value: `${ATTEMPTS_PER_ROUND} attempts`, label: "per round" },
-  { value: `${MAX_MODELS} models`, label: "per contributor" },
+  { value: "Weekly", label: "portfolio rebalance" },
 ];
 
 const approachFacts = [
-  { label: "Measured by", value: "Live outcomes" },
-  { label: "Ignored", value: "Backtests or titles" },
-  { label: "Re-scored", value: "Every round" },
+  { label: "Scored on", value: "Realised returns" },
+  { label: "Weighted by", value: "Track record" },
+  { label: "Traded as", value: "One weekly book" },
 ];
 
 const principles = [
   {
-    title: "Diversity is the hypothesis.",
-    body: "Independent approaches may find structure a single team misses; the platform measures whether they do.",
-    tag: "Collective",
+    title: "Many independent models.",
+    body: "One research desk tends to find the same kind of signal again and again. Many people working independently on the same data find different ones, and the meta-model uses that spread.",
+    tag: "Breadth",
   },
   {
-    title: "Every round is a fresh test.",
-    body: "New models and new predictions are scored every NSE session, on the same rules for everyone.",
-    tag: "Continuous",
+    title: "Weight is earned.",
+    body: "A model's say in the book follows its scored, out-of-sample record. Backtests and job titles count for nothing.",
+    tag: "Evidence",
   },
   {
-    title: "Merit is measurable.",
-    body: "Models are ranked on scored, out-of-sample results. No titles, no gatekeepers.",
-    tag: "Meritocratic",
+    title: "One market, studied closely.",
+    body: "NSE equities on a point-in-time universe, with Indian trading costs priced into the portfolio from the start.",
+    tag: "India",
   },
 ];
 
 const steps = [
-  { k: "01", t: "Discover", d: "Explore the platform and the research rounds." },
-  { k: "02", t: "Build", d: "Engineer features. Train models. Iterate." },
+  { k: "01", t: "Discover", d: "Read the rules and download the round's dataset." },
+  { k: "02", t: "Build", d: "Engineer features, train, iterate. Any method is fine." },
+  { k: "03", t: "Submit", d: `Send one prediction per name before ${ROUND_CLOSES_IST}.` },
   {
-    k: "03",
-    t: "Submit",
-    d: "Submit predictions each round for scoring on realised outcomes.",
+    k: "04",
+    t: "Improve",
+    d: `Scores come back once the ${TARGET_SESSIONS}-session outcome is known.`,
   },
-  { k: "04", t: "Improve", d: "Learn from your scores. Refine your model." },
   {
     k: "05",
     t: "Contribute",
-    d: "Signals that score well are weighed into a paper-traded meta-model.",
+    d: "Models with a strong record carry more weight in the meta-model.",
   },
-  { k: "06", t: "Grow", d: "Build a scored track record, round after round." },
+  { k: "06", t: "Grow", d: "Your record builds round by round, under a public handle." },
 ];
 
 // The columns the platform's leaderboard shows, so a visitor knows what a
@@ -110,7 +113,7 @@ const platformSteps = [
   {
     k: "02",
     t: "Build your model",
-    d: "Your machine, your tools, your method. Nothing about how you get there is prescribed.",
+    d: "Use whatever tools and methods you like, on your own machine. We only see the predictions.",
   },
   {
     k: "03",
@@ -122,40 +125,41 @@ const platformSteps = [
 const stacks = [
   {
     t: "Anonymised data",
-    d: "No tickers and no company names: features and a target, nothing else.",
+    d: "Contributors get features and a target. No tickers, no company names.",
     Icon: EyeOff,
   },
   {
-    t: "Machine Learning",
-    d: "Contributors bring their own methods; the platform scores the output.",
+    t: "Contributor models",
+    d: `Up to ${MAX_MODELS} models each, any method, ${ATTEMPTS_PER_ROUND} submission attempts per round.`,
     Icon: Boxes,
   },
   {
-    t: "Quantitative Research",
-    d: "Every model is judged on evidence, not on its description.",
+    t: "Scoring",
+    d: `Correlation with the realised ${TARGET_SESSIONS}-session return, reported with a standard error.`,
     Icon: FunctionSquare,
   },
   {
-    t: "Statistics",
-    d: "Scores carry a standard error, so noise is not mistaken for skill.",
+    t: "Meta-model",
+    d: "Signals weighted by each model's scored record. Near-duplicates are discounted.",
+    Icon: Layers,
+  },
+  {
+    t: "Portfolio",
+    d: "Rebalanced weekly by an optimiser that prices trading costs and holds sector, liquidity and turnover limits.",
     Icon: LineChart,
   },
   {
-    t: "Indian Equity Markets",
-    d: "NSE-listed equities, on a point-in-time universe.",
-    Icon: TrendingUp,
-  },
-  {
-    t: "Signal Aggregation",
-    d: "Scored signals are combined into one paper-traded meta-model.",
-    Icon: Layers,
+    t: "Execution",
+    d: "Runs in a separate, locked-down environment. Testnet fills are on paper; live routing stays off until the live phase.",
+    Icon: ShieldCheck,
   },
 ];
 
-const investorFacts = [
-  { label: "Contributors", value: "Independent researchers, open registration" },
-  { label: "Approach", value: "Research-driven, evidence-first" },
-  { label: "Focus", value: "Serious quantitative work" },
+// The three phases, in order. Only the first has started.
+const phases = [
+  { label: "Now", value: "Testnet on paper capital" },
+  { label: "Next", value: `Live capital, ${LIVE_CAPITAL_TIMING}` },
+  { label: "Then", value: "A fund for eligible investors" },
 ];
 
 function Home() {
@@ -165,24 +169,27 @@ function Home() {
       <GlobeScene />
       <Navbar />
       <main id="content">
-        {/* Hero: in the first five seconds, what it is, who it is for, what it
-          costs (nothing) and the numbers that define a round. */}
+        {/* Hero: what IndiQuant is, the phase it is in, and the two ways in. */}
         <section className="relative z-2 pt-[140px] pb-24 sm:pt-[164px] md:pb-[110px]">
           <Container>
-            <Badge>Research tournament for Indian equities</Badge>
+            <Badge>{PHASE_LINE}</Badge>
 
-            <h1 className="display-tight mt-8 max-w-[15ch] text-[clamp(40px,5.4vw,80px)] leading-[0.98] tracking-[-0.035em] sm:mt-10">
-              Build models on anonymised NSE data. Get scored on what the market does next.
+            <h1 className="display-tight mt-8 max-w-[14ch] text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em] sm:mt-10">
+              Many models. <span className="text-[var(--mint)]">One book.</span>
             </h1>
 
             <div className="mt-9 grid max-w-[1000px] items-end gap-8 md:mt-12 md:gap-14 lg:grid-cols-[1.1fr_1fr]">
               <div>
                 <p className="max-w-[52ch] text-[17px] leading-[1.6] text-white/75 sm:text-[19px]">
-                  For data scientists, ML engineers and quantitative researchers. Download the
-                  round's dataset, submit a prediction per name before {ROUND_CLOSES_IST}, and build
-                  a scored track record on realised returns.
+                  IndiQuant is a hedge fund in the making, trading Indian equities. Independent
+                  researchers build models on anonymised NSE data. We score every submission against
+                  what the market did, weight the models that hold up by their record, and trade the
+                  combined signal as one risk-managed book.
                 </p>
-                <p className="mt-5 text-[16px] font-semibold text-[var(--mint)]">{FREE_TO_JOIN}</p>
+                <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.6] font-semibold text-[var(--mint)]">
+                  Testnet is running now: the whole pipeline, every session, on paper capital. Live
+                  capital follows {LIVE_CAPITAL_TIMING}.
+                </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Button
@@ -193,10 +200,10 @@ function Home() {
                   size="lg"
                   withArrow
                 >
-                  Become a Contributor
+                  Become a contributor
                 </Button>
-                <Button as="a" href="#platform" variant="secondary" size="lg">
-                  See how it works
+                <Button as="a" href="/investors/" variant="secondary" size="lg">
+                  For investors
                 </Button>
               </div>
             </div>
@@ -261,7 +268,7 @@ function Home() {
             <div className="grid items-start gap-10 md:gap-20 lg:grid-cols-12">
               <div className="lg:col-span-5">
                 <p className="font-mono text-[12px] tracking-[0.22em] text-[var(--blue)] uppercase">
-                  Our approach
+                  How the fund works
                 </p>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)] text-[var(--blue)]">
                   Only skill gets scored.
@@ -269,14 +276,15 @@ function Home() {
               </div>
               <div className="lg:col-span-7">
                 <p className="max-w-[52ch] text-[22px] leading-[1.55] font-medium text-[var(--ink)]">
-                  Every round, contributors submit predictive signals on anonymised market data. The
-                  platform scores each one against what the market then did, and a meta-model weighs
-                  the signals that hold up into a single paper-traded strategy.
+                  Every NSE session, contributors send a prediction for each name in the round. Once
+                  the {TARGET_SESSIONS}-session outcome is in, each submission gets a score. The
+                  meta-model weights contributors by those scores, and the portfolio layer turns the
+                  result into a weekly, cost-aware book.
                 </p>
                 <p className="mt-6.5 max-w-[52ch] text-[17px] leading-[1.7] text-[var(--ink-700)]">
-                  Rankings measure out-of-sample predictive power, not backtests. Standing on the
-                  board is a running record of what a researcher's signals contributed, measured on
-                  realised outcomes. No capital is traded; the strategy runs on paper.
+                  Backtests don't count here. A model's rank and its weight both come from
+                  out-of-sample results. During testnet the book trades paper capital, so every
+                  stage can be checked end to end before real money goes in.
                 </p>
                 <dl className="mt-11 grid gap-px border border-[var(--blue)]/18 bg-[var(--blue)]/18 sm:grid-cols-3">
                   {approachFacts.map((f) => (
@@ -298,9 +306,9 @@ function Home() {
         {/* Principles */}
         <Section id="principles">
           <Container>
-            <Eyebrow>Why IndiQuant</Eyebrow>
+            <Eyebrow>The thesis</Eyebrow>
             <h2 className="display-tight mt-6.5 mb-[70px] max-w-[16ch] text-[clamp(38px,4.6vw,68px)]">
-              A different kind of research platform.
+              Why build a fund this way.
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {principles.map((p) => (
@@ -318,19 +326,19 @@ function Home() {
           </Container>
         </Section>
 
-        {/* Contributor journey */}
-        <Section id="journey" className="border-t border-white/10">
+        {/* For contributors */}
+        <Section id="contribute" className="border-t border-white/10">
           <Container>
             <div className="mb-12 grid items-end gap-8 md:mb-20 md:gap-20 lg:grid-cols-11">
               <div className="lg:col-span-6">
-                <Eyebrow>Contributor journey</Eyebrow>
+                <Eyebrow>For contributors</Eyebrow>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
                   From first model to a scored track record.
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/70 lg:col-span-5">
-                Six steps, no gatekeepers. Wherever your curiosity begins, the platform grows with
-                you.
+                {FREE_TO_JOIN} You bring the model and the compute. We supply the data, the scoring
+                and a place in the meta-model if your record earns it.
               </p>
             </div>
             <ol className="grid gap-px border border-white/14 bg-white/14 sm:grid-cols-2 lg:grid-cols-3">
@@ -360,12 +368,12 @@ function Home() {
               <div className="lg:col-span-6">
                 <Eyebrow>The platform</Eyebrow>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
-                  Where the work actually happens.
+                  Where contributors work.
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/70 lg:col-span-5">
-                This site explains the platform. Everything you do as a contributor happens on the
-                platform: data, models, submissions.
+                This site describes IndiQuant. Datasets, models and submissions all live on the
+                platform.
               </p>
             </div>
 
@@ -386,7 +394,7 @@ function Home() {
                   rel="noopener noreferrer"
                   withArrow
                 >
-                  Become a Contributor
+                  Become a contributor
                 </Button>
               </div>
 
@@ -444,7 +452,7 @@ function Home() {
                   withArrow
                   className="shrink-0 self-start md:self-auto"
                 >
-                  Become a Contributor
+                  Become a contributor
                 </Button>
               </div>
             </div>
@@ -456,14 +464,14 @@ function Home() {
           <Container>
             <div className="mb-12 grid items-end gap-8 md:mb-[70px] md:gap-20 lg:grid-cols-11">
               <div className="lg:col-span-6">
-                <Eyebrow>Technology</Eyebrow>
+                <Eyebrow>The stack</Eyebrow>
                 <h2 className="display-tight mt-6.5 text-[clamp(38px,4.6vw,68px)]">
-                  The machinery of collective research.
+                  From anonymised data to a risk-managed book.
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/70 lg:col-span-5">
-                Each layer plays a role in turning many independent ideas into one measured,
-                paper-traded strategy.
+                Six stages, with a signed hand-off between each. In testnet all of them run for
+                real, and the last one fills on paper.
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -493,10 +501,11 @@ function Home() {
               Vision
             </p>
             <p className="display-tight mx-auto mt-8 max-w-[20ch] text-[clamp(40px,5.6vw,88px)] leading-[0.98] tracking-[-0.035em] md:mt-12">
-              A research platform for Indian markets where every model is scored on the same rules.
+              An Indian equities fund built from the best models we can find, wherever they come
+              from.
             </p>
             <dl className="mt-12 grid gap-px border border-[var(--mint)]/25 bg-[var(--mint)]/25 text-left sm:grid-cols-3 md:mt-20">
-              {investorFacts.map((f) => (
+              {phases.map((f) => (
                 <div key={f.label} className="bg-[var(--blue)] px-7 py-7.5">
                   <dt className="font-mono text-[12px] tracking-[0.16em] text-[var(--mint)]/90 uppercase">
                     {f.label}
@@ -520,8 +529,11 @@ function Home() {
                   Because intuition is not a strategy.
                 </h2>
                 <p className="mt-7 max-w-[52ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
-                  If you have the skills, there is a seat for you. Your research, scored on realised
-                  outcomes. {GRANTS_PLANNED} {GRANTS_STATUS}
+                  If you can build a model that scores, there's room for it in the book. Investors
+                  and partners who want to follow the testnet can write to us.
+                </p>
+                <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.65] text-[var(--ink-700)]">
+                  {GRANTS_PLANNED} {GRANTS_STATUS}
                 </p>
               </div>
               <div className="flex w-full flex-col items-stretch gap-3 sm:items-start lg:col-span-4">
@@ -533,7 +545,7 @@ function Home() {
                   size="lg"
                   withArrow
                 >
-                  Become a Contributor
+                  Become a contributor
                 </Button>
                 <Button
                   as="a"
@@ -542,7 +554,7 @@ function Home() {
                   size="lg"
                   className="text-[var(--blue)] hover:bg-[var(--blue)]/10 hover:text-[var(--blue)]"
                 >
-                  Contact
+                  Talk to us
                 </Button>
               </div>
             </div>
