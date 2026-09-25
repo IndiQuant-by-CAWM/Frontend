@@ -1,0 +1,5 @@
+Plus Jakarta Sans (Copyright 2020 The Plus Jakarta Sans Project Authors) and
+Space Mono (Copyright 2016 Google Inc.) are licensed under the SIL Open Font
+License, Version 1.1: https://openfontlicense.org
+
+The .woff2 files here are the unmodified latin subsets served by Google Fonts.

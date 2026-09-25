@@ -6,10 +6,11 @@
 <title>Page not found — IndiQuant</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Mono:wght@400&display=swap">
 <style>
+  @font-face { font-family:"Plus Jakarta Sans"; font-weight:400 800; font-display:swap;
+               src:url("/fonts/plus-jakarta-sans-latin-var.woff2") format("woff2"); }
+  @font-face { font-family:"Space Mono"; font-weight:400; font-display:swap;
+               src:url("/fonts/space-mono-latin-400.woff2") format("woff2"); }
   :root { --ink:#08081a; --mint:#c8ffc7; --blue:#0003ff; }
   * { box-sizing:border-box }
   html,body { height:100% }
@@ -19,7 +20,7 @@
     display:grid; place-items:center; padding:1.5rem; text-align:center;
     -webkit-font-smoothing:antialiased;
   }
-  .code { font-family:"Space Mono", ui-monospace, monospace; font-size:.7rem;
+  .code { font-family:"Space Mono", ui-monospace, monospace; font-size:.75rem;
           letter-spacing:.22em; text-transform:uppercase; color:var(--mint); }
   h1 { font-size:clamp(2.2rem,7vw,3.5rem); font-weight:800; letter-spacing:-.03em;
        line-height:1.05; margin:1.5rem 0 0; text-wrap:balance }
@@ -32,7 +33,7 @@
   .primary:hover { background:#0002d6 }
   .ghost { border:1.5px solid rgba(255,255,255,.25); color:rgba(255,255,255,.9) }
   .ghost:hover { border-color:var(--mint); color:#fff }
-  a:focus-visible { outline:3px solid rgba(0,3,255,.5); outline-offset:2px }
+  a:focus-visible { outline:2px solid var(--mint); outline-offset:2px }
 </style>
 </head>
 <body>
