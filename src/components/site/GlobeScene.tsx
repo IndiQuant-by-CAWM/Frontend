@@ -1,19 +1,14 @@
 import { useEffect, useRef } from "react";
-import type { BufferGeometry, Material, Mesh } from "three";
+import type { BufferGeometry, InstancedMesh, Material, Mesh, Object3D } from "three";
+import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // Fixed, full-viewport WebGL scene behind the landing page: the earth on a
-// scroll-driven flight path, turned so the Indian subcontinent faces the
-// viewer at rest.
+// scroll-driven flight path, a Starlink constellation with Hubble, the ISS and
+// the Moon orbiting it. Ported from the AURA design canvas.
 //
-// It is decoration only. Every word on the page is legible without it, so it
-// is skipped entirely when:
-//   - the viewport is narrower than 768px (the globe would sit behind the copy),
-//   - the visitor prefers reduced motion,
-//   - the browser asks for reduced data (Save-Data),
-//   - or WebGL is unavailable.
-// When it does run, three.js is imported only after the browser is idle, so it
-// never competes with the first paint. Satellite models were dropped: they
-// cost ~3.7 MB for a few pixels of movement.
+// It is decoration only — every word on the page is legible without it, and the
+// scene is skipped entirely when the viewer prefers reduced motion or the
+// browser cannot give us a WebGL context.
 
 /** Smoothstep-interpolated keyframe track: stops are [progress, value] pairs. */
 function kf(p: number, stops: [number, number][]): number {
@@ -28,54 +23,29 @@ function kf(p: number, stops: [number, number][]): number {
   return stops[stops.length - 1][1];
 }
 
-/**
- * Yaw that brings longitude ~78°E (central India) to the camera-facing side.
- *
- * three.js maps an equirectangular texture so that, at rotation 0, longitude
- * -90° faces +z. A point at texture-u sits at phi = u·2π and ends up facing the
- * camera when phi + yaw = π/2. India's u is (78 + 180) / 360. The globe rests to
- * the right of the camera, so the side we actually see is turned ~0.35 rad
- * towards -x; the small offset puts India on the visible centre-right of the
- * disc, clear of the text column on the left.
- */
-const INDIA_YAW = Math.PI / 2 - ((78 + 180) / 360) * Math.PI * 2 - 0.12;
-
-function shouldRender(): boolean {
-  if (typeof window === "undefined") return false;
-  if (!window.matchMedia?.("(min-width: 768px)").matches) return false;
-  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return false;
-  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-  if (connection?.saveData) return false;
-  return true;
-}
-
-function whenIdle(fn: () => void): () => void {
-  const w = window as Window & {
-    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-    cancelIdleCallback?: (id: number) => void;
-  };
-  if (w.requestIdleCallback) {
-    const id = w.requestIdleCallback(fn, { timeout: 2500 });
-    return () => w.cancelIdleCallback?.(id);
-  }
-  const id = window.setTimeout(fn, 1200);
-  return () => window.clearTimeout(id);
-}
-
 export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !shouldRender()) return;
+    if (!canvas) return;
+
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
 
     let alive = true;
     let raf = 0;
     let dispose: (() => void) | undefined;
 
-    const start = async () => {
+    void (async () => {
       try {
-        const THREE = await import("three");
+        // three.js and the model loaders are fetched together, off the eager
+        // route chunk; the loaders import three themselves, so a static import
+        // here would pull the whole library into the page's first download.
+        const [THREE, { GLTFLoader }, { DRACOLoader }] = await Promise.all([
+          import("three"),
+          import("three/examples/jsm/loaders/GLTFLoader.js"),
+          import("three/examples/jsm/loaders/DRACOLoader.js"),
+        ]);
         if (!alive) return;
 
         const renderer = new THREE.WebGLRenderer({
@@ -104,18 +74,18 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
           t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
           return t;
         };
-        const dayMap = tex("/earth/earth-color-2k.webp", true);
-        const nightMap = tex("/earth/earth-night-2k.webp", true);
-        const cloudMap = tex("/earth/earth-clouds-1k.webp", true);
-        const specMap = tex("/earth/earth-spec-1k.webp", false);
-        const bumpMap = tex("/earth/earth-bump-1k.webp", false);
+        const dayMap = tex("/earth/earth-color-4k.jpg", true);
+        const nightMap = tex("/earth/earth-night-4k.jpg", true);
+        const cloudMap = tex("/earth/earth-clouds-2k.jpg", true);
+        const specMap = tex("/earth/earth-spec-2k.jpg", false);
+        const bumpMap = tex("/earth/earth-bump-2k.jpg", false);
 
         const earthGroup = new THREE.Group();
         scene.add(earthGroup);
 
         const R = 2;
         const globe = new THREE.Mesh(
-          new THREE.SphereGeometry(R, 96, 96),
+          new THREE.SphereGeometry(R, 128, 128),
           new THREE.MeshPhongMaterial({
             map: dayMap,
             bumpMap,
@@ -131,13 +101,13 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
         earthGroup.add(globe);
 
         const clouds = new THREE.Mesh(
-          new THREE.SphereGeometry(R * 1.012, 72, 72),
+          new THREE.SphereGeometry(R * 1.012, 96, 96),
           new THREE.MeshPhongMaterial({
             map: cloudMap,
             bumpMap,
             bumpScale: 0.6,
             transparent: true,
-            opacity: 0.3,
+            opacity: 0.34,
             blending: THREE.AdditiveBlending,
             depthWrite: false,
           }),
@@ -148,6 +118,144 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
         const sun = new THREE.DirectionalLight(0xffffff, 1.5);
         sun.position.set(4, 2, 4);
         scene.add(sun);
+
+        // Contributor network: real craft on individual orbits — a Starlink
+        // constellation plus Hubble, the ISS and the Moon. They live on
+        // earthGroup so they ride the scroll flight path with the planet
+        // instead of drifting free of it.
+        const STARLINK_COUNT = 14;
+
+        const gltfLoader = new GLTFLoader();
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath("/draco/");
+        gltfLoader.setDRACOLoader(dracoLoader);
+
+        // Everything is authored at its own real-world scale, so each model is
+        // normalised to a target size in globe radii rather than trusted.
+        const fitToSize = (object: Object3D, target: number) => {
+          const box = new THREE.Box3().setFromObject(object);
+          const span = Math.max(...box.getSize(new THREE.Vector3()).toArray());
+          object.scale.multiplyScalar(target / (span || 1));
+        };
+
+        const orbitFor = (radius: number, speedScale: number) => {
+          const inclination = Math.acos(2 * Math.random() - 1);
+          const node = Math.random() * Math.PI * 2;
+          const normal = new THREE.Vector3(
+            Math.sin(inclination) * Math.cos(node),
+            Math.cos(inclination),
+            Math.sin(inclination) * Math.sin(node),
+          ).normalize();
+          const u = new THREE.Vector3()
+            .crossVectors(normal, Math.abs(normal.y) > 0.9 ? xAxis : yAxis)
+            .normalize();
+          const v = new THREE.Vector3().crossVectors(normal, u).normalize();
+          return {
+            radius,
+            u,
+            v,
+            normal,
+            phase: Math.random() * Math.PI * 2,
+            speed: (speedScale / Math.pow(radius / R, 1.5)) * (Math.random() < 0.5 ? -1 : 1),
+          };
+        };
+
+        const yAxis = new THREE.Vector3(0, 1, 0);
+        const xAxis = new THREE.Vector3(1, 0, 0);
+
+        // Reused every frame so orienting the swarm allocates nothing.
+        const satPos = new THREE.Vector3();
+        const satFwd = new THREE.Vector3();
+        const satUp = new THREE.Vector3();
+        const satRight = new THREE.Vector3();
+        const satMatrix = new THREE.Matrix4();
+
+        type Orbit = ReturnType<typeof orbitFor>;
+        const orient = (o: Orbit, angle: number, scale: number) => {
+          const ca = Math.cos(angle);
+          const sa = Math.sin(angle);
+          satPos
+            .copy(o.u)
+            .multiplyScalar(ca * o.radius)
+            .addScaledVector(o.v, sa * o.radius);
+          satFwd.copy(o.u).multiplyScalar(-sa).addScaledVector(o.v, ca).normalize();
+          satUp.copy(o.normal);
+          satRight.crossVectors(satUp, satFwd).normalize();
+          satUp.crossVectors(satFwd, satRight).normalize();
+          satMatrix.makeBasis(satRight, satUp, satFwd);
+          satMatrix.scale(new THREE.Vector3(scale, scale, scale));
+          satMatrix.setPosition(satPos);
+          return satMatrix;
+        };
+
+        // Starlink is a constellation, so it is drawn as one instanced mesh; the
+        // single-craft models are added as ordinary objects.
+        let starlinks: InstancedMesh | null = null;
+        let starlinkOrbits: Orbit[] = [];
+        const solo: { object: Object3D; orbit: Orbit; scale: number }[] = [];
+
+        const load = (url: string) =>
+          new Promise<GLTF>((resolve, reject) => gltfLoader.load(url, resolve, undefined, reject));
+
+        // The scene renders from the first frame; craft appear as they arrive.
+        void (async () => {
+          try {
+            const [starlinkGltf, hubbleGltf, issGltf, moonGltf] = await Promise.all([
+              load("/models/starlink.glb"),
+              load("/models/hubble.glb"),
+              load("/models/iss.glb"),
+              load("/models/moon.glb"),
+            ]);
+            if (!alive) return;
+
+            let source: Mesh | null = null;
+            starlinkGltf.scene.traverse((child) => {
+              if (!source && (child as Mesh).isMesh) source = child as Mesh;
+            });
+            if (source) {
+              const mesh = source as Mesh;
+              mesh.updateWorldMatrix(true, false);
+              const geometry = mesh.geometry.clone().applyMatrix4(mesh.matrixWorld);
+              geometry.computeBoundingBox();
+              const span = Math.max(
+                ...geometry.boundingBox!.getSize(new THREE.Vector3()).toArray(),
+              );
+              geometry.scale(0.14 / span, 0.14 / span, 0.14 / span);
+              starlinks = new THREE.InstancedMesh(
+                geometry,
+                mesh.material as Material,
+                STARLINK_COUNT,
+              );
+              starlinks.frustumCulled = false;
+              starlinkOrbits = Array.from({ length: STARLINK_COUNT }, () =>
+                orbitFor(R * (1.28 + Math.pow(Math.random(), 0.85) * 0.75), 0.3),
+              );
+              earthGroup.add(starlinks);
+            }
+
+            const addSolo = (gltf: GLTF, size: number, radius: number, speed: number) => {
+              const object = gltf.scene;
+              fitToSize(object, size);
+              object.updateMatrixWorld(true);
+              const holder = new THREE.Group();
+              holder.add(object);
+              holder.frustumCulled = false;
+              earthGroup.add(holder);
+              solo.push({ object: holder, orbit: orbitFor(radius, speed), scale: 1 });
+            };
+
+            // Orbits are kept inside the camera's visible span at the globe
+            // plane, so each craft actually comes around into frame.
+            addSolo(hubbleGltf, 0.2, R * 1.55, 0.26);
+            addSolo(issGltf, 0.34, R * 1.33, 0.3);
+            // The Moon is a natural satellite: much larger, further out, and far
+            // slower than anything crewed.
+            addSolo(moonGltf, 0.62, R * 2.3, 0.075);
+          } catch (err) {
+            // Models are decoration on top of decoration; the globe stands alone.
+            console.error("IndiQuant satellite models failed to load:", err);
+          }
+        })();
 
         const onResize = () => {
           camera.aspect = window.innerWidth / window.innerHeight;
@@ -163,26 +271,24 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
         };
         window.addEventListener("pointermove", onMove, { passive: true });
 
-        const startedAt = performance.now();
         let p = 0;
         const tick = () => {
           if (!alive) return;
           const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
           const target = Math.min(1, Math.max(0, window.scrollY / max));
           p += (target - p) * 0.065;
-          const t = (performance.now() - startedAt) * 0.001;
+          const t = performance.now() * 0.001;
 
-          // Scroll-driven flight path. At rest the globe sits right of the
-          // text column.
+          // Scroll-driven flight path around the globe.
           earthGroup.position.x = kf(p, [
-            [0, 2.35],
+            [0, 2.3],
             [0.2, -1.75],
             [0.45, 1.9],
             [0.72, -1.6],
             [1, 0.2],
           ]);
           earthGroup.position.y = kf(p, [
-            [0, -0.2],
+            [0, -0.25],
             [0.2, 0.8],
             [0.45, -0.95],
             [0.72, 0.7],
@@ -197,7 +303,7 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
           ]);
           earthGroup.scale.setScalar(
             kf(p, [
-              [0, 1.12],
+              [0, 1.16],
               [0.2, 0.9],
               [0.45, 1.02],
               [0.72, 0.94],
@@ -205,22 +311,35 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
             ]),
           );
 
-          // India faces the viewer at rest; a very slow drift and the scroll
-          // position turn it from there.
-          globe.rotation.y = INDIA_YAW + t * 0.004 * spinSpeed + p * 3.4;
+          // India-facing at rest, then a slow rotation as the page advances.
+          globe.rotation.y = -1.35 + t * 0.035 * spinSpeed + p * 3.4;
           globe.rotation.z = 0.41;
-          clouds.rotation.y = globe.rotation.y + t * 0.006;
+          clouds.rotation.y = globe.rotation.y + t * 0.012;
           clouds.rotation.z = 0.41;
-          // A slight forward tilt brings the northern tropics (India sits at
-          // ~8-35°N) towards the camera.
           earthGroup.rotation.x = kf(p, [
-            [0, 0.32],
+            [0, 0.06],
             [0.45, -0.22],
             [1, 0.3],
           ]);
+          // Each craft advances along its own orbit; scroll nudges the whole
+          // constellation forward so the sky keeps moving as the page does.
+          const clock = t + p * 14;
+          if (starlinks) {
+            for (let i = 0; i < STARLINK_COUNT; i++) {
+              const o = starlinkOrbits[i];
+              starlinks.setMatrixAt(i, orient(o, o.phase + clock * o.speed, 1));
+            }
+            starlinks.instanceMatrix.needsUpdate = true;
+          }
+          for (const s of solo) {
+            const o = s.orbit;
+            s.object.matrix.copy(orient(o, o.phase + clock * o.speed, s.scale));
+            s.object.matrixAutoUpdate = false;
+            s.object.matrixWorldNeedsUpdate = true;
+          }
 
-          camera.position.x = mouse.x * 0.3;
-          camera.position.y = -mouse.y * 0.22;
+          camera.position.x = mouse.x * 0.36;
+          camera.position.y = -mouse.y * 0.28;
           camera.lookAt(earthGroup.position.x * 0.35, earthGroup.position.y * 0.3, 0);
 
           canvas.style.opacity = kf(p, [
@@ -246,6 +365,8 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
             if (Array.isArray(mat)) mat.forEach((m) => m.dispose());
             else mat?.dispose?.();
           });
+          starlinks?.dispose();
+          dracoLoader.dispose();
           [dayMap, nightMap, cloudMap, specMap, bumpMap].forEach((tx) => tx.dispose());
           renderer.dispose();
         };
@@ -254,13 +375,10 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
         // page reads correctly on the flat ink ground without the scene.
         console.error("IndiQuant globe scene failed to initialise:", err);
       }
-    };
-
-    const cancelIdle = whenIdle(() => void start());
+    })();
 
     return () => {
       alive = false;
-      cancelIdle();
       cancelAnimationFrame(raf);
       dispose?.();
     };
@@ -271,14 +389,26 @@ export function GlobeScene({ spinSpeed = 1 }: { spinSpeed?: number }) {
       <canvas
         ref={canvasRef}
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-0 hidden h-full w-full opacity-0 transition-opacity duration-700 md:block"
+        className="pointer-events-none fixed inset-0 z-0 h-full w-full"
       />
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-1 hidden md:block"
+        className="pointer-events-none fixed inset-0 z-1"
         style={{
           background:
             "radial-gradient(ellipse 70% 55% at 22% 38%, rgba(8,8,26,0.86), transparent 72%)",
+        }}
+      />
+      {/* On narrow viewports the globe fills the frame behind the copy. A flat
+          veil hid it almost entirely, so instead the ground is weighted toward
+          the top and bottom edges, where the text sits, and left open through
+          the middle where the earth reads. */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-1 md:hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(8,8,26,0.82) 0%, rgba(8,8,26,0.30) 38%, rgba(8,8,26,0.30) 62%, rgba(8,8,26,0.82) 100%)",
         }}
       />
     </>
