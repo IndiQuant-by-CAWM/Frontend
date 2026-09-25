@@ -10,7 +10,42 @@ import {
 import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { CONTACT_EMAIL } from "@/lib/contact";
+import { HQ } from "@/lib/entities";
+import { OG_IMAGE_ALT, OG_IMAGE_URL, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { F6S_PROFILE_URL } from "@/components/site/AwardBadge";
 import faviconUrl from "../assets/favicon.ico?url";
+
+/**
+ * Organization + WebSite structured data. Only facts the code already states:
+ * the legal name and registered office from lib/entities.ts, the public contact
+ * address, and the one external profile the site links to.
+ */
+const STRUCTURED_DATA = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    legalName: HQ.name,
+    url: `${SITE_URL}/`,
+    email: CONTACT_EMAIL,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: HQ.lines[0],
+      addressLocality: "Newark",
+      addressRegion: "Delaware",
+      postalCode: "19702",
+      addressCountry: "US",
+    },
+    sameAs: [F6S_PROFILE_URL],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+  },
+];
 
 function NotFoundComponent() {
   return (
@@ -74,49 +109,40 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "IndiQuant — Crowdsourced AI Quantitative Research" },
+      // Fallbacks only: every indexable route sets its own title, description,
+      // canonical and social text through pageHead() in lib/seo.ts.
+      { title: "IndiQuant: research tournament for Indian equities" },
       {
         name: "description",
         content:
-          "IndiQuant is a crowdsourced quantitative research platform for Indian equities: independent contributors build models on obfuscated NSE data and are scored on live market outcomes.",
+          "IndiQuant is a research tournament for Indian equities: contributors build models on anonymised NSE data and are scored on realised market outcomes. Paper-traded.",
       },
       { name: "theme-color", content: "#08081a" },
-      { property: "og:title", content: "IndiQuant — Crowdsourced AI Quantitative Research" },
-      {
-        property: "og:description",
-        content:
-          "A crowdsourced quantitative research platform for Indian equities.",
-      },
       { property: "og:type", content: "website" },
-      // Absolute URLs: link previews are fetched by other people's servers,
-      // which cannot resolve a site-relative path.
-      { property: "og:url", content: "https://indiquantresearch.in/" },
-      { property: "og:image", content: "https://indiquantresearch.in/og-image.jpg" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:image", content: OG_IMAGE_URL },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      {
-        property: "og:image:alt",
-        content:
-          "IndiQuant — Many models. One truth. A crowdsourced quantitative research platform for Indian equities.",
-      },
-      { name: "twitter:image", content: "https://indiquantresearch.in/og-image.jpg" },
-      { property: "og:site_name", content: "IndiQuant" },
+      { property: "og:image:alt", content: OG_IMAGE_ALT },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "IndiQuant — Crowdsourced AI Quantitative Research" },
-      {
-        name: "twitter:description",
-        content:
-          "A crowdsourced quantitative research platform for Indian equities.",
-      },
+      { name: "twitter:image", content: OG_IMAGE_URL },
+      { name: "twitter:image:alt", content: OG_IMAGE_ALT },
     ],
     links: [
+      {
+        rel: "preload",
+        href: "/fonts/plus-jakarta-sans-latin-var.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: faviconUrl, type: "image/x-icon" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+    ],
+    scripts: [
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap",
+        type: "application/ld+json",
+        children: JSON.stringify(STRUCTURED_DATA),
       },
     ],
   }),

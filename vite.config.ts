@@ -12,10 +12,9 @@ export default defineConfig({
             crawlLinks: true,
             failOnError: true,
           },
-          sitemap: {
-            enabled: true,
-            host: "https://indiquantresearch.in",
-          },
+          // scripts/write-sitemap.mjs writes the sitemap after the build, from
+          // the prerendered pages, excluding noindex routes.
+          sitemap: { enabled: false },
         }
       : {}),
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
