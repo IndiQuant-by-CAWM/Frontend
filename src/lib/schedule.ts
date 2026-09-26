@@ -11,17 +11,17 @@
  * resolves.
  */
 
-/** Rounds open at this time on every NSE trading session (IST). */
-export const ROUND_OPENS_IST = "07:00 IST";
+/** Rounds open at this time on the evening before each NSE trading session (IST). */
+export const ROUND_OPENS_IST = "19:00 IST";
 
 /** Submissions lock at this time on every NSE trading session (IST). */
 export const ROUND_CLOSES_IST = "09:00 IST";
 
-/** The window as a compact range, for stat strips: "07:00–09:00 IST". */
+/** The window as a compact range, for stat strips: "19:00–09:00 IST", overnight. */
 export const ROUND_HOURS_IST = `${ROUND_OPENS_IST.replace(" IST", "")}–${ROUND_CLOSES_IST}`;
 
 /** One sentence for the schedule, so the two times are never quoted apart. */
-export const ROUND_WINDOW = `Rounds open at ${ROUND_OPENS_IST} and close at ${ROUND_CLOSES_IST} every NSE trading session.`;
+export const ROUND_WINDOW = `Each round opens at ${ROUND_OPENS_IST} the evening before an NSE trading session and closes at ${ROUND_CLOSES_IST} on the session day. Over weekends and holidays it stays open until ${ROUND_CLOSES_IST} on the next session.`;
 
 /** The prediction target is a forward return over this many sessions. */
 export const TARGET_SESSIONS = 20;
