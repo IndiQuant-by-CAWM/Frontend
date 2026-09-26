@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   Brain,
   Sparkles,
@@ -20,7 +20,7 @@ import {
   BookOpen,
 } from "lucide-react";
 
-import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import { PLATFORM_CONTRIBUTOR_AGREEMENT_URL, PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { pageHead } from "@/lib/seo";
 import {
   CONTRIBUTOR_AGREEMENT,
@@ -359,7 +359,12 @@ function FAQ() {
     },
     {
       q: "Do I own my models?",
-      a: `You retain ownership of your models. ${CONTRIBUTOR_AGREEMENT} ${GRANTS_PLANNED} ${GRANTS_STATUS}`,
+      a: (
+        <>
+          You retain ownership of your models. {CONTRIBUTOR_AGREEMENT} <AgreementLink />.{" "}
+          {GRANTS_PLANNED} {GRANTS_STATUS}
+        </>
+      ),
     },
   ];
   return (
@@ -391,7 +396,21 @@ function FAQ() {
   );
 }
 
-export function Accordion({ items }: { items: { q: string; a: string }[] }) {
+/** A link to the contributor agreement, for FAQ answers that mention it. */
+export function AgreementLink() {
+  return (
+    <a
+      href={PLATFORM_CONTRIBUTOR_AGREEMENT_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-white underline underline-offset-4"
+    >
+      Read the contributor agreement
+    </a>
+  );
+}
+
+export function Accordion({ items }: { items: { q: string; a: ReactNode }[] }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">

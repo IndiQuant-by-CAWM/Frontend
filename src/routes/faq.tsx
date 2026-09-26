@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PLATFORM_SIGNUP_URL } from "@/lib/platform";
+import type { ReactNode } from "react";
+
+import { CONTACT_EMAIL, GRIEVANCE_OFFICER } from "@/lib/contact";
+import { PLATFORM_GRIEVANCE_URL, PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { LIVE_CAPITAL_TIMING } from "@/lib/fund";
 import { pageHead } from "@/lib/seo";
 import {
@@ -22,7 +25,7 @@ import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Reveal } from "@/components/site/Reveal";
 import { PageShell, PageHero } from "@/components/site/PageShell";
-import { Accordion } from "./contributors";
+import { Accordion, AgreementLink } from "./contributors";
 
 export const Route = createFileRoute("/faq")({
   head: () =>
@@ -35,7 +38,7 @@ export const Route = createFileRoute("/faq")({
   component: FAQPage,
 });
 
-const groups: { title: string; items: { q: string; a: string }[] }[] = [
+const groups: { title: string; items: { q: string; a: ReactNode }[] }[] = [
   {
     title: "About IndiQuant",
     items: [
@@ -99,7 +102,47 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "Do I retain ownership of my work?",
-        a: `Yes. You own your models. ${CONTRIBUTOR_AGREEMENT}`,
+        a: (
+          <>
+            Yes. You own your models. {CONTRIBUTOR_AGREEMENT} <AgreementLink />.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    title: "Complaints and contact",
+    items: [
+      {
+        q: "How do I raise a complaint?",
+        a: (
+          <>
+            Write to our Grievance Officer, {GRIEVANCE_OFFICER.name} ({GRIEVANCE_OFFICER.role}), at{" "}
+            <a
+              href={`mailto:${GRIEVANCE_OFFICER.email}`}
+              className="break-all text-white underline underline-offset-4"
+            >
+              {GRIEVANCE_OFFICER.email}
+            </a>
+            . Tell us what happened and which account it concerns. The{" "}
+            <a
+              href={PLATFORM_GRIEVANCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white underline underline-offset-4"
+            >
+              grievance procedure
+            </a>{" "}
+            on the platform explains how complaints are handled. For anything else, write to{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="break-all text-white underline underline-offset-4"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            .
+          </>
+        ),
       },
     ],
   },

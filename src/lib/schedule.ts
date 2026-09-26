@@ -60,7 +60,7 @@ export const GRANTS_STATUS = "No grant has been paid.";
 
 /** The contributor agreement, in the only wording this site uses for it. */
 export const CONTRIBUTOR_AGREEMENT =
-  "The contributor agreement is being finalised with counsel and will be presented for acceptance before any grant cycle. Until then the Terms of Use govern participation.";
+  "Version 1 of the contributor agreement is in force and published on the platform, alongside the Terms of Use.";
 
 /** What joining costs. */
 export const FREE_TO_JOIN = "Free to join. No fee, no deposit.";

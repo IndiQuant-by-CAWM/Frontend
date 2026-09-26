@@ -6,4 +6,14 @@
  * footer — so the page whose whole job is to be reachable was the one surface
  * pointing somewhere else.
  */
-export const CONTACT_EMAIL = "indiquant@protonmail.com";
+export const CONTACT_EMAIL = "office@indiquantresearch.in";
+
+/**
+ * The Grievance Officer. The platform carries the full procedure at
+ * /legal/grievance; this site names the officer and links there.
+ */
+export const GRIEVANCE_OFFICER = {
+  name: "Diganta Sarkar",
+  role: "Co-Founder & CFO",
+  email: "digantasarkar@indiquantresearch.in",
+} as const;

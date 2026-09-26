@@ -22,10 +22,11 @@ export const PLATFORM_SIGNUP_URL = `${PLATFORM_URL}/register`;
 export const PLATFORM_SIGNIN_URL = `${PLATFORM_URL}/login`;
 
 /**
- * The platform's legal pages. They are drafts that exist on the platform's
- * redesign branch and go live with its next deploy; this site links to them
- * rather than keeping a second copy that could disagree.
+ * The platform's legal pages, in force as version 1. They live on the platform
+ * because that is the service they govern; this site links to them rather than
+ * keeping a second copy that could disagree.
  */
 export const PLATFORM_TERMS_URL = `${PLATFORM_URL}/legal/terms`;
 export const PLATFORM_PRIVACY_URL = `${PLATFORM_URL}/legal/privacy`;
 export const PLATFORM_GRIEVANCE_URL = `${PLATFORM_URL}/legal/grievance`;
+export const PLATFORM_CONTRIBUTOR_AGREEMENT_URL = `${PLATFORM_URL}/legal/contributor-agreement`;

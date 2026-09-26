@@ -1,7 +1,8 @@
-import { CONTACT_EMAIL } from "@/lib/contact";
+import { CONTACT_EMAIL, GRIEVANCE_OFFICER } from "@/lib/contact";
 import { HQ, INDIA_OFFICE } from "@/lib/entities";
 import { DISCLAIMER } from "@/lib/fund";
 import {
+  PLATFORM_CONTRIBUTOR_AGREEMENT_URL,
   PLATFORM_GRIEVANCE_URL,
   PLATFORM_PRIVACY_URL,
   PLATFORM_SIGNIN_URL,
@@ -36,7 +37,8 @@ const platform = [
 const legal = [
   { href: PLATFORM_TERMS_URL, label: "Terms of Use" },
   { href: PLATFORM_PRIVACY_URL, label: "Privacy" },
-  { href: PLATFORM_GRIEVANCE_URL, label: "Grievance officer" },
+  { href: PLATFORM_CONTRIBUTOR_AGREEMENT_URL, label: "Contributor agreement" },
+  { href: PLATFORM_GRIEVANCE_URL, label: "Grievance" },
 ];
 
 const heading = "font-mono text-[12px] tracking-[0.2em] text-white/65 uppercase";
@@ -123,14 +125,39 @@ export function Footer() {
           {DISCLAIMER}
         </p>
 
-        <p className="mt-6 text-[13px] leading-[1.8] text-white/60">
-          <span className="text-white/85">{HQ.role}:</span> {HQ.name}, {HQ.city}
-          <span aria-hidden className="mx-3 text-white/60">
-            /
-          </span>
-          <span className="text-white/85">{INDIA_OFFICE.role}:</span> {INDIA_OFFICE.name},{" "}
-          {INDIA_OFFICE.city}
-        </p>
+        <div className="mt-6 space-y-2 text-[13px] leading-[1.8] text-white/60">
+          <p>
+            <span className="text-white/85">{INDIA_OFFICE.name}</span>
+            <Dot />
+            CIN {INDIA_OFFICE.cin}
+            <Dot />
+            {INDIA_OFFICE.region}
+          </p>
+          <p>
+            <span className="text-white/85">{HQ.name}</span>
+            <Dot />
+            {HQ.city}, United States
+          </p>
+          <p>
+            <span className="text-white/85">Grievance Officer:</span> {GRIEVANCE_OFFICER.name}
+            <Dot />
+            <a
+              href={`mailto:${GRIEVANCE_OFFICER.email}`}
+              className="break-all underline decoration-white/30 underline-offset-4 hover:text-[var(--mint)]"
+            >
+              {GRIEVANCE_OFFICER.email}
+            </a>
+          </p>
+          <p>
+            <span className="text-white/85">Contact:</span>{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="break-all underline decoration-white/30 underline-offset-4 hover:text-[var(--mint)]"
+            >
+              {CONTACT_EMAIL}
+            </a>
+          </p>
+        </div>
 
         <div className="mt-12 flex flex-wrap justify-between gap-6 border-t border-white/10 pt-6.5 font-mono text-[12px] tracking-[0.16em] text-white/60 uppercase">
           <span>© {new Date().getFullYear()} INDIQUANT INC. All rights reserved.</span>
@@ -138,5 +165,13 @@ export function Footer() {
         </div>
       </Container>
     </footer>
+  );
+}
+
+function Dot() {
+  return (
+    <span aria-hidden className="mx-2 text-white/40">
+      ·
+    </span>
   );
 }

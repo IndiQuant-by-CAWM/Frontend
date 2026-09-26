@@ -5,7 +5,8 @@ import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { PageShell, PageHero } from "@/components/site/PageShell";
-import { CONTACT_EMAIL } from "@/lib/contact";
+import { CONTACT_EMAIL, GRIEVANCE_OFFICER } from "@/lib/contact";
+import { PLATFORM_GRIEVANCE_URL } from "@/lib/platform";
 import { OFFICES } from "@/lib/entities";
 import { pageHead } from "@/lib/seo";
 
@@ -61,6 +62,30 @@ function ContactPage() {
                 <Button as="a" href={`mailto:${CONTACT_EMAIL}`} withArrow>
                   Email IndiQuant
                 </Button>
+              </div>
+              <div className="mt-12 max-w-[48ch] border-t border-white/12 pt-8">
+                <Eyebrow>Grievance Officer</Eyebrow>
+                <p className="mt-4 text-[16px] leading-[1.7] text-white/75">
+                  For a complaint about the platform or how we handle your data, write to{" "}
+                  <span className="text-white">{GRIEVANCE_OFFICER.name}</span>,{" "}
+                  {GRIEVANCE_OFFICER.role}, at{" "}
+                  <a
+                    href={`mailto:${GRIEVANCE_OFFICER.email}`}
+                    className="break-all text-white underline underline-offset-4"
+                  >
+                    {GRIEVANCE_OFFICER.email}
+                  </a>
+                  . The{" "}
+                  <a
+                    href={PLATFORM_GRIEVANCE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white underline underline-offset-4"
+                  >
+                    grievance procedure
+                  </a>{" "}
+                  is published on the platform.
+                </p>
               </div>
               <p className="mt-12 max-w-sm text-[15px] leading-relaxed text-white/70">
                 Contributor questions are often answered faster in the{" "}
