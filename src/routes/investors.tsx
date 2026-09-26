@@ -9,15 +9,18 @@ import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { PageShell, PageHero } from "@/components/site/PageShell";
+import { TeamGrid } from "@/components/site/Team";
 
 /**
  * The fund, for prospective investors and partners.
  *
  * Only what the platform actually does is described here: the portfolio and
  * execution facts follow the indiquant repo (Architecture §A2/§A5, BUILDLOG).
- * There are no performance figures, returns, AUM, investor counts, team names or
- * registration numbers on this page because none exist; do not add any. The
- * phase and its timing come from lib/fund.ts, the entities from lib/entities.ts.
+ * There are no performance figures, returns, AUM or investor counts on this page
+ * because none exist; do not add any. Live capital comes through an execution
+ * partner who is not named here, and no capital amount is stated: keep it that
+ * way. The phase and its timing come from lib/fund.ts, the entities from
+ * lib/entities.ts, the people from lib/team.ts.
  */
 export const Route = createFileRoute("/investors")({
   head: () =>
@@ -44,7 +47,7 @@ const phases = [
     k: "02",
     name: "Live capital",
     when: `Next, ${LIVE_CAPITAL_TIMING}`,
-    body: "The same pipeline and the same risk limits, trading real capital. Live order routing is switched on once the testnet record and our own checks say it is ready.",
+    body: "Live capital, through an institutional execution partner, trading on IndiQuant's signals. The pipeline and the risk limits stay the same, and it starts once the testnet record and our own checks say it is ready.",
     current: false,
   },
   {
@@ -241,6 +244,18 @@ function InvestorsPage() {
               ))}
               <span className="mt-4 block text-white/70">{INDIA_OFFICE.dealsWith}.</span>
             </address>
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="border-t border-white/10">
+        <Container>
+          <Eyebrow>Team</Eyebrow>
+          <h2 className="display-tight mt-6 text-[clamp(34px,4.2vw,56px)] text-white">
+            The founders.
+          </h2>
+          <div className="mt-12">
+            <TeamGrid variant="compact" />
           </div>
         </Container>
       </Section>

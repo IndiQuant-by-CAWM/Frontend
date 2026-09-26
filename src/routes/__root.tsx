@@ -11,16 +11,28 @@ import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { CONTACT_EMAIL } from "@/lib/contact";
-import { HQ } from "@/lib/entities";
+import { HQ, INDIA_OFFICE } from "@/lib/entities";
+import { CO_FOUNDER, FOUNDER, type TeamMember } from "@/lib/team";
 import { OG_IMAGE_ALT, OG_IMAGE_URL, SITE_NAME, SITE_URL } from "@/lib/seo";
 import { F6S_PROFILE_URL } from "@/components/site/AwardBadge";
 import faviconUrl from "../assets/favicon.ico?url";
 
 /**
  * Organization + WebSite structured data. Only facts the code already states:
- * the legal name and registered office from lib/entities.ts, the public contact
- * address, and the one external profile the site links to.
+ * the legal name and registered office from lib/entities.ts, the Indian
+ * subsidiary and its CIN, the public contact address, the two founders from
+ * lib/team.ts, and the one external profile the site links to.
  */
+function person(m: TeamMember) {
+  return {
+    "@type": "Person",
+    name: m.name,
+    jobTitle: m.role,
+    image: `${SITE_URL}${m.photo}`,
+    sameAs: [m.linkedin],
+  };
+}
+
 const STRUCTURED_DATA = [
   {
     "@context": "https://schema.org",
@@ -38,6 +50,24 @@ const STRUCTURED_DATA = [
       addressRegion: "Delaware",
       postalCode: "19702",
       addressCountry: "US",
+    },
+    founder: person(FOUNDER),
+    employee: [person(CO_FOUNDER)],
+    member: [person(CO_FOUNDER)],
+    subOrganization: {
+      "@type": "Organization",
+      legalName: INDIA_OFFICE.name,
+      identifier: {
+        "@type": "PropertyValue",
+        propertyID: "CIN",
+        value: INDIA_OFFICE.cin,
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Navi Mumbai",
+        addressRegion: "Maharashtra",
+        addressCountry: "IN",
+      },
     },
     sameAs: [F6S_PROFILE_URL],
   },

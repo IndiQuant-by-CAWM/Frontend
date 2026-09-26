@@ -30,6 +30,7 @@ import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Card } from "@/components/site/Card";
 import { Reveal } from "@/components/site/Reveal";
+import { TeamGrid } from "@/components/site/Team";
 
 export const Route = createFileRoute("/about")({
   head: () =>
@@ -65,6 +66,7 @@ function AboutPage() {
       <Approach />
       <Vision />
       <Principles />
+      <Team />
       <FinalCTA />
     </PageShell>
   );
@@ -336,6 +338,29 @@ function Principles() {
             </motion.div>
           ))}
         </div>
+      </Container>
+    </Section>
+  );
+}
+
+/* ---------- TEAM ---------- */
+function Team() {
+  return (
+    <Section id="team" className="border-t border-white/10">
+      <Container>
+        <div className="mb-14 max-w-2xl">
+          <Reveal>
+            <Eyebrow>Team</Eyebrow>
+            <h2 className="mt-6 display-tight text-[clamp(34px,4.2vw,56px)] text-white">
+              Who is building it.
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+              The two people responsible for IndiQuant. Reach either of us on LinkedIn, or write to
+              the office address on the contact page.
+            </p>
+          </Reveal>
+        </div>
+        <TeamGrid />
       </Container>
     </Section>
   );
