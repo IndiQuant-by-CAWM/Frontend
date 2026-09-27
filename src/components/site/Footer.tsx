@@ -20,8 +20,14 @@ const explore = [
   { href: "/careers/", label: "Careers" },
 ];
 
+// "Email us", not the address itself. The address is 192px wide and this column
+// is 172px at every width past `lg` (the page container caps at 1232), so the
+// full string could only ever wrap mid-domain — "indiquantr / esearch.in",
+// which reads like a typo. Nothing is lost: the address is rendered verbatim,
+// and selectable, in the legal block below, and the mailto href here is
+// unchanged, so the link still does exactly what it did.
 const contact = [
-  { href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
+  { href: `mailto:${CONTACT_EMAIL}`, label: "Email us" },
   { href: "/faq/", label: "FAQ" },
   { href: "/contact/", label: "Contact" },
 ];
@@ -42,16 +48,37 @@ const legal = [
 ];
 
 const heading = "font-mono text-[12px] tracking-[0.2em] text-white/65 uppercase";
+
+// `block`, not `flex`, and `wrap-anywhere`, not `break-words`. Both halves
+// matter and both were wrong, which is why `platform.indiquantresearch.in` and
+// `office@indiquantresearch.in` painted over the columns beside them:
+//
+//   * a flex container lays its single anonymous text item out on ONE line
+//     (`flex-wrap` defaults to `nowrap`), so the string could not wrap at all;
+//   * `overflow-wrap: break-word` does not reduce a box's *min-content* width,
+//     so even without the flex the column could not shrink to fit it.
+//     `anywhere` is the one value that does.
+//
+// Measured before the fix at 820px: the email needed 202px in a 95px column.
+// The tap target stays >=44px (WCAG 2.5.8) via padding rather than a flex
+// centreing trick, so a link that wraps to two lines simply gets taller.
 const link =
-  "flex min-h-[44px] items-center break-words text-white/75 transition-colors duration-200 hover:text-[var(--mint)] md:min-h-0";
+  "block py-[10px] wrap-anywhere text-white/75 transition-colors duration-200 hover:text-[var(--mint)] md:py-0";
 
 export function Footer() {
   return (
     <footer className="relative z-2 border-t border-white/12 bg-[var(--ink)] pt-20 pb-11">
       <Container>
-        <div className="grid gap-14 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-3">
-            <p className="text-[40px] leading-none font-extrabold tracking-[-0.035em] text-[var(--mint)]">
+        {/* Five columns need ~1024px, not 768px. At `md` the brand and Platform
+            share the top row and the three short lists sit beneath; the 3/3/2/2/2
+            row only appears at `lg`, where a col-span-2 is wide enough to hold a
+            wrapped email without looking broken. */}
+        <div className="grid gap-14 md:grid-cols-12 md:gap-x-10 md:gap-y-12">
+          <div className="md:col-span-6 lg:col-span-3">
+            {/* 40px is 227px wide for "INDIQUANT" alone — wider than a
+                col-span-3 until the viewport is past ~1280. Scale it instead of
+                letting it hang over the next column. */}
+            <p className="text-[34px] leading-none font-extrabold tracking-[-0.035em] text-[var(--mint)] lg:text-[36px] xl:text-[40px]">
               INDIQUANT INC.
             </p>
             <p className="mt-5.5 max-w-[38ch] text-[15px] leading-[1.7] text-white/65">
@@ -63,9 +90,9 @@ export function Footer() {
             </div>
           </div>
 
-          <nav aria-label="Platform" className="md:col-span-3">
+          <nav aria-label="Platform" className="md:col-span-6 lg:col-span-3">
             <p className={heading}>Platform</p>
-            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3">
+            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3.5">
               {platform.map((l) => (
                 <li key={l.href}>
                   <a
@@ -81,9 +108,9 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Explore" className="md:col-span-2">
+          <nav aria-label="Explore" className="md:col-span-4 lg:col-span-2">
             <p className={heading}>Explore</p>
-            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3">
+            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3.5">
               {explore.map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className={link}>
@@ -94,9 +121,9 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Contact" className="md:col-span-2">
+          <nav aria-label="Contact" className="md:col-span-4 lg:col-span-2">
             <p className={heading}>Contact</p>
-            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3">
+            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3.5">
               {contact.map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className={link}>
@@ -107,9 +134,9 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Legal" className="md:col-span-2">
+          <nav aria-label="Legal" className="md:col-span-4 lg:col-span-2">
             <p className={heading}>Legal</p>
-            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3">
+            <ul className="mt-4 flex flex-col text-[15px] md:mt-5.5 md:gap-3.5">
               {legal.map((l) => (
                 <li key={l.href}>
                   <a href={l.href} target="_blank" rel="noopener noreferrer" className={link}>
