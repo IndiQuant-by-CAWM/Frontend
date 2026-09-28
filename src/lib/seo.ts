@@ -14,7 +14,7 @@ export const SITE_URL = "https://indiquantresearch.in";
 export const SITE_NAME = "IndiQuant";
 
 /** Bump the query when the card changes, so preview caches refetch it. */
-export const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg?v=3`;
+export const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg?v=4`;
 export const OG_IMAGE_ALT =
   "IndiQuant, a hedge fund in the making: crowdsourced signals on Indian equities.";
 
