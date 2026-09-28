@@ -184,8 +184,8 @@ function Home() {
                   combined signal as one risk-managed book.
                 </p>
                 <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.6] font-semibold text-[var(--mint)]">
-                  The whole pipeline runs every NSE session, from the dataset to the book. Live
-                  capital follows {LIVE_CAPITAL_TIMING}.
+                  Rounds, scoring and the meta-model run every NSE session. Paper trading of the
+                  book starts next, and live capital follows {LIVE_CAPITAL_TIMING}.
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">

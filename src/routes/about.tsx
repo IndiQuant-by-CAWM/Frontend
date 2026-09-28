@@ -193,7 +193,8 @@ function Approach() {
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                The same loop runs every NSE session, from the round's dataset to the weekly book.
+                The loop runs every NSE session, from the round's dataset to the meta-model. The
+                weekly paper book starts trading next.
               </p>
             </Reveal>
           </div>

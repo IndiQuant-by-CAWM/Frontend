@@ -104,7 +104,8 @@ function InvestorsPage() {
               into one risk-managed book.
             </p>
             <p className="mt-5">
-              The full stack runs every NSE session today, and live capital follows{" "}
+              Rounds, scoring and the meta-model run every NSE session today. Paper trading of
+              the book starts next, and live capital follows{" "}
               {LIVE_CAPITAL_TIMING}.
             </p>
           </>
