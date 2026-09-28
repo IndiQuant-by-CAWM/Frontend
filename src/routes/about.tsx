@@ -175,7 +175,7 @@ function Approach() {
       d: `Each submission is scored once its ${TARGET_SESSIONS}-session outcome is known.`,
     },
     { icon: Network, t: "Meta-model", d: "Signals combined, weighted by each model's record." },
-    { icon: Briefcase, t: "Book", d: "A weekly, cost-aware portfolio. On paper during testnet." },
+    { icon: Briefcase, t: "Book", d: "A weekly, cost-aware portfolio." },
   ];
 
   return (
@@ -193,8 +193,7 @@ function Approach() {
           <div className="md:col-span-6 md:col-start-7">
             <Reveal delay={0.1}>
               <p className="text-base leading-relaxed text-muted-foreground">
-                The same loop runs every NSE session. In testnet it ends in paper trades. In the
-                live phase it ends in real ones.
+                The same loop runs every NSE session, from the round's dataset to the weekly book.
               </p>
             </Reveal>
           </div>
@@ -293,7 +292,7 @@ function Principles() {
     {
       icon: Hourglass,
       t: "Patience",
-      d: "We move to live capital when the testnet record supports it, and not before.",
+      d: "We move to live capital when the record supports it, and not before.",
     },
   ];
 

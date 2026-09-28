@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 
 import { PLATFORM_SIGNIN_URL, PLATFORM_SIGNUP_URL } from "@/lib/platform";
 import { Button } from "./Button";
+import { StatusStrip } from "./StatusStrip";
 
 const links = [
   { href: "/about/", label: "About" },
@@ -109,6 +110,9 @@ export function Navbar() {
             <Menu size={18} />
           </button>
         </div>
+
+        {/* Where the company stands today, on every page. */}
+        <StatusStrip />
 
         <div className="h-0.5 w-full bg-[var(--mint)]/10">
           <div

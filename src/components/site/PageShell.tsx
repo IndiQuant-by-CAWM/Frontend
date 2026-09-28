@@ -51,7 +51,7 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative isolate overflow-hidden border-b border-white/10 pt-40 pb-20 sm:pt-48 sm:pb-24">
+    <section className="relative isolate overflow-hidden border-b border-white/10 pt-48 pb-20 sm:pt-56 sm:pb-24">
       <div aria-hidden className="absolute inset-0 -z-10">
         <div className="absolute inset-0 grid-lines opacity-60 [mask-image:radial-gradient(ellipse_70%_80%_at_20%_40%,black_10%,transparent_70%)]" />
         <div className="absolute -top-40 right-[-10%] h-[720px] w-[720px] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,3,255,0.32),transparent_62%)]" />

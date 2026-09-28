@@ -82,8 +82,8 @@ export function Footer() {
               INDIQUANT INC.
             </p>
             <p className="mt-5.5 max-w-[38ch] text-[15px] leading-[1.7] text-white/65">
-              A hedge fund in the making for Indian equities, trading signals from independent
-              researchers. Now in testnet, on paper capital.
+              A hedge fund in the making for Indian equities, built on signals from independent
+              researchers.
             </p>
             <div className="mt-7">
               <AwardBadge size="sm" />

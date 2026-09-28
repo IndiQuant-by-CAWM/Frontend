@@ -98,7 +98,7 @@ function WhyJoin() {
     {
       icon: Users,
       t: "Weight in the book.",
-      b: "Models with a strong record carry more weight in the meta-model the fund trades. During testnet that book trades paper capital.",
+      b: "Models with a strong record carry more weight in the meta-model the fund trades.",
     },
   ];
   return (

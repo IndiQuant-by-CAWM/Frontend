@@ -4,7 +4,7 @@ import { EyeOff, Boxes, FunctionSquare, LineChart, ShieldCheck, Layers } from "l
 import { PLATFORM_SIGNUP_URL, PLATFORM_URL } from "@/lib/platform";
 import { CONTACT_EMAIL } from "@/lib/contact";
 import { pageHead } from "@/lib/seo";
-import { LIVE_CAPITAL_TIMING, PHASE_LINE } from "@/lib/fund";
+import { LIVE_CAPITAL_TIMING } from "@/lib/fund";
 import {
   ATTEMPTS_PER_ROUND,
   FIRST_RANKED,
@@ -26,7 +26,6 @@ import { Container } from "@/components/site/Container";
 import { Section, Eyebrow } from "@/components/site/Section";
 import { Button } from "@/components/site/Button";
 import { Card } from "@/components/site/Card";
-import { Badge } from "@/components/site/Badge";
 import { AwardBadge } from "@/components/site/AwardBadge";
 import { GlobeScene } from "@/components/site/GlobeScene";
 import { SkipLink } from "@/components/site/SkipLink";
@@ -37,22 +36,21 @@ export const Route = createFileRoute("/")({
       path: "/",
       title: "IndiQuant: a hedge fund in the making for Indian equities",
       description:
-        "IndiQuant is building a quantitative hedge fund for Indian equities. Independent researchers model anonymised NSE data, a trust-weighted meta-model combines their signals, and the book trades paper capital during testnet.",
+        "IndiQuant is building a quantitative hedge fund for Indian equities. Independent researchers model anonymised NSE data, and a trust-weighted meta-model combines their signals into one risk-managed book.",
     }),
   component: Home,
 });
 
 const marqueeClaims = [
   "Because intuition is not a strategy",
-  "Testnet phase on paper capital",
-  "Live capital next",
   "Scored on realised returns",
+  "Weight is earned",
   "One risk-managed book",
 ];
 
 // What the fund is doing today, in numbers that are true today.
 const heroStats = [
-  { value: "Testnet", label: "paper capital, today" },
+  { value: "Daily", label: "rounds, each NSE session" },
   { value: "NSE", label: "equities only" },
   { value: ROUND_HOURS_IST, label: "round window" },
   { value: `${TARGET_SESSIONS}-session`, label: "prediction target" },
@@ -150,14 +148,14 @@ const stacks = [
   },
   {
     t: "Execution",
-    d: "Runs in a separate, locked-down environment. Testnet fills are on paper; live routing stays off until the live phase.",
+    d: "Runs in a separate, locked-down environment with its own credentials. Live order routing stays off until it is deliberately switched on.",
     Icon: ShieldCheck,
   },
 ];
 
 // The three phases, in order. Only the first has started.
 const phases = [
-  { label: "Now", value: "Testnet on paper capital" },
+  { label: "Now", value: "The full pipeline, every session" },
   { label: "Next", value: `Live capital, ${LIVE_CAPITAL_TIMING}` },
   { label: "Then", value: "A fund for eligible investors" },
 ];
@@ -169,12 +167,11 @@ function Home() {
       <GlobeScene />
       <Navbar />
       <main id="content">
-        {/* Hero: what IndiQuant is, the phase it is in, and the two ways in. */}
-        <section className="relative z-2 pt-[140px] pb-24 sm:pt-[164px] md:pb-[110px]">
+        {/* Hero: what IndiQuant is and the two ways in. The current phase is in
+            the status strip under the navigation bar, not here. */}
+        <section className="relative z-2 pt-[164px] pb-24 sm:pt-[196px] md:pb-[110px]">
           <Container>
-            <Badge>{PHASE_LINE}</Badge>
-
-            <h1 className="display-tight mt-8 max-w-[14ch] text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em] sm:mt-10">
+            <h1 className="display-tight max-w-[14ch] text-[clamp(52px,8.6vw,132px)] leading-[0.94] tracking-[-0.035em] sm:mt-10">
               Many models. <span className="text-[var(--mint)]">One book.</span>
             </h1>
 
@@ -187,7 +184,7 @@ function Home() {
                   combined signal as one risk-managed book.
                 </p>
                 <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.6] font-semibold text-[var(--mint)]">
-                  Testnet is running now: the whole pipeline, every session, on paper capital. Live
+                  The whole pipeline runs every NSE session, from the dataset to the book. Live
                   capital follows {LIVE_CAPITAL_TIMING}.
                 </p>
               </div>
@@ -283,8 +280,7 @@ function Home() {
                 </p>
                 <p className="mt-6.5 max-w-[52ch] text-[17px] leading-[1.7] text-[var(--ink-700)]">
                   Backtests don't count here. A model's rank and its weight both come from
-                  out-of-sample results. During testnet the book trades paper capital, so every
-                  stage can be checked end to end before real money goes in.
+                  out-of-sample results.
                 </p>
                 <dl className="mt-11 grid gap-px border border-[var(--blue)]/18 bg-[var(--blue)]/18 sm:grid-cols-3">
                   {approachFacts.map((f) => (
@@ -470,8 +466,7 @@ function Home() {
                 </h2>
               </div>
               <p className="text-[17px] leading-[1.7] text-white/70 lg:col-span-5">
-                Six stages, with a signed hand-off between each. In testnet all of them run for
-                real, and the last one fills on paper.
+                Six stages, with a signed hand-off between each, and all six run every session.
               </p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -530,7 +525,7 @@ function Home() {
                 </h2>
                 <p className="mt-7 max-w-[52ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
                   If you can build a model that scores, there's room for it in the book. Investors
-                  and partners who want to follow the testnet can write to us.
+                  and partners who want to follow our progress can write to us.
                 </p>
                 <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.65] text-[var(--ink-700)]">
                   {GRANTS_PLANNED} {GRANTS_STATUS}

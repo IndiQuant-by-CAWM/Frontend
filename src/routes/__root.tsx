@@ -40,7 +40,7 @@ const STRUCTURED_DATA = [
     name: SITE_NAME,
     legalName: HQ.name,
     description:
-      "A quantitative hedge fund in the making for Indian equities, built on signals from independent researchers. Currently in a testnet phase on paper capital.",
+      "A quantitative hedge fund in the making for Indian equities, built on signals from independent researchers.",
     url: `${SITE_URL}/`,
     email: CONTACT_EMAIL,
     address: {
@@ -147,7 +147,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "IndiQuant is building a quantitative hedge fund for Indian equities on signals from independent researchers. Testnet phase: the book trades paper capital, with live capital next.",
+          "IndiQuant is building a quantitative hedge fund for Indian equities on signals from independent researchers, combined by a trust-weighted meta-model into one risk-managed book.",
       },
       { name: "theme-color", content: "#08081a" },
       { property: "og:type", content: "website" },

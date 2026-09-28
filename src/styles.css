@@ -86,6 +86,9 @@
     border-color: var(--color-border);
   }
   html {
+    /* The fixed header (68px bar + 30px status strip + 2px progress line)
+       would otherwise cover the target of an in-page link. */
+    scroll-padding-top: 108px;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -168,5 +171,65 @@
 @media (prefers-reduced-motion: reduce) {
   .iq-marquee-track {
     animation: none !important;
+  }
+}
+
+/* Status strip under the navigation bar (components/site/StatusStrip.tsx).
+   One transform animation on a track holding two identical halves; -50% lands
+   exactly on the start of the second half, so the loop is seamless. The
+   duration is set inline from the measured half width, for a constant px/s. */
+@keyframes iq-status-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.iq-status-viewport {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 24px,
+    black calc(100% - 24px),
+    transparent
+  );
+}
+.iq-status-track {
+  animation-name: iq-status-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.iq-status:hover .iq-status-track,
+.iq-status:focus-within .iq-status-track,
+.iq-status[data-paused] .iq-status-track {
+  animation-play-state: paused;
+}
+.iq-status-sep {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-inline: 18px;
+  border-radius: 9999px;
+  background: var(--mint);
+  opacity: 0.45;
+}
+.iq-status-static {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .iq-status-track {
+    display: none;
+  }
+  .iq-status-static {
+    display: block;
+    line-height: 30px;
+  }
+  .iq-status-toggle {
+    display: none;
+  }
+  .iq-status-viewport {
+    mask-image: none;
   }
 }

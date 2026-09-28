@@ -33,7 +33,7 @@ export const Route = createFileRoute("/faq")({
       path: "/faq",
       title: "FAQ: IndiQuant",
       description:
-        "How IndiQuant works: the fund and its testnet phase, rounds, scoring, rankings, and where the research-grant programme stands.",
+        "How IndiQuant works: the fund and its phases, rounds, scoring, rankings, and where the research-grant programme stands.",
     }),
   component: FAQPage,
 });
@@ -47,8 +47,8 @@ const groups: { title: string; items: { q: string; a: ReactNode }[] }[] = [
         a: "IndiQuant is a quantitative hedge fund in the making, focused on Indian equities. Independent contributors build models on anonymised NSE data. Each submission is scored on realised returns, and a trust-weighted meta-model combines the signals that hold up into one risk-managed book.",
       },
       {
-        q: "What is the testnet phase?",
-        a: `The whole pipeline (data, rounds, contributor models, the meta-model, the portfolio and execution) runs end to end every session, but on paper capital. It lets us find and fix problems before real money is involved. We expect to move to live capital ${LIVE_CAPITAL_TIMING}.`,
+        q: "Is IndiQuant trading real money yet?",
+        a: `Not yet. The whole pipeline (data, rounds, contributor models, the meta-model, the portfolio and execution) runs end to end every session, so we can find and fix problems before real money is involved. We expect to move to live capital ${LIVE_CAPITAL_TIMING}.`,
       },
       {
         q: "What does crowdsourced mean here?",
@@ -154,7 +154,7 @@ function FAQPage() {
       <PageHero
         eyebrow="FAQ"
         title="Frequently asked questions."
-        description="About the fund, the testnet, rounds, scoring and grants."
+        description="About the fund, rounds, scoring and grants."
       />
 
       <Section className="pt-14 md:pt-20">

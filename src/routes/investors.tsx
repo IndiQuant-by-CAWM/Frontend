@@ -28,7 +28,7 @@ export const Route = createFileRoute("/investors")({
       path: "/investors",
       title: "Investors: IndiQuant",
       description:
-        "IndiQuant is a quantitative hedge fund in the making for Indian equities. Testnet on paper capital now, live capital next. The thesis, the phases, how the book is built, and who to talk to.",
+        "IndiQuant is a quantitative hedge fund in the making for Indian equities. The thesis, the phases, how the book is built, and who to talk to.",
     }),
   component: InvestorsPage,
 });
@@ -38,16 +38,16 @@ const TALK_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Inves
 const phases = [
   {
     k: "01",
-    name: "Testnet",
+    name: "Proving",
     when: "Now",
-    body: `The whole pipeline runs end to end on paper capital: daily rounds, scoring, the meta-model, the weekly portfolio and execution. The point is to prove each stage works, and keeps working, before real money is involved. Core rounds began on ${FIRST_ROUND_DATE}.`,
+    body: `The whole pipeline runs end to end every session: daily rounds, scoring, the meta-model, the weekly portfolio and execution. The point is to prove each stage works, and keeps working, before real money is involved. Core rounds began on ${FIRST_ROUND_DATE}.`,
     current: true,
   },
   {
     k: "02",
     name: "Live capital",
     when: `Next, ${LIVE_CAPITAL_TIMING}`,
-    body: "Live capital, through an institutional execution partner, trading on IndiQuant's signals. The pipeline and the risk limits stay the same, and it starts once the testnet record and our own checks say it is ready.",
+    body: "Live capital, through an institutional execution partner, trading on IndiQuant's signals. The pipeline and the risk limits stay the same, and it starts once the record from the first phase and our own checks say it is ready.",
     current: false,
   },
   {
@@ -86,7 +86,7 @@ const book = [
   },
   {
     label: "Live guard",
-    text: "In testnet the Execution Trust Zone fills on paper. A runtime guard refuses live orders until live trading is deliberately switched on.",
+    text: "The Execution Trust Zone routes no real orders yet. A runtime guard refuses live orders until live trading is deliberately switched on.",
   },
 ];
 
@@ -104,8 +104,8 @@ function InvestorsPage() {
               into one risk-managed book.
             </p>
             <p className="mt-5">
-              We are in the testnet phase. The full stack runs every session on paper capital, and
-              live capital follows {LIVE_CAPITAL_TIMING}.
+              The full stack runs every NSE session today, and live capital follows{" "}
+              {LIVE_CAPITAL_TIMING}.
             </p>
           </>
         }
@@ -188,7 +188,7 @@ function InvestorsPage() {
                 How the book is built.
               </h2>
               <p className="mt-6 max-w-[40ch] text-[16px] leading-[1.7] text-white/70">
-                Everything below runs in testnet today, on paper capital.
+                Everything below runs every session today, ahead of live capital.
               </p>
             </div>
             <dl className="md:col-span-7 md:col-start-6">
@@ -268,7 +268,7 @@ function InvestorsPage() {
                 Talk to us
               </p>
               <h2 className="display-tight mt-6 text-[clamp(34px,4.6vw,64px)] text-[var(--blue)]">
-                Follow the testnet with us.
+                Follow the build with us.
               </h2>
               <p className="mt-6 max-w-[56ch] text-[18px] leading-[1.65] text-[var(--ink-800)]">
                 If you are a prospective investor, allocator or partner, write to{" "}
